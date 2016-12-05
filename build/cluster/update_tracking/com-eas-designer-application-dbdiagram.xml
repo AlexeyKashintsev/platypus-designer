@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.designer.application.dbdiagram/5">
-    <module_version install_time="1471267061291" last="true" origin="installer" specification_version="5.0.17">
-        <file crc="3461716882" name="config/Modules/com-eas-designer-application-dbdiagram.xml"/>
-        <file crc="3687084608" name="modules/com-eas-designer-application-dbdiagram.jar"/>
-    </module_version>
-</module>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.designer.datamodel/5">
-    <module_version install_time="1471267035103" last="true" origin="installer" specification_version="5.0.16">
-        <file crc="1060448697" name="config/Modules/com-eas-designer-datamodel.xml"/>
-        <file crc="763387096" name="modules/com-eas-designer-datamodel.jar"/>
-    </module_version>
-</module>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.designer.explorer/5">
-    <module_version install_time="1471267045025" last="true" origin="installer" specification_version="5.0.30">
-        <file crc="1568812712" name="config/Modules/com-eas-designer-explorer.xml"/>
-        <file crc="3713070512" name="modules/com-eas-designer-explorer.jar"/>
-    </module_version>
-</module>

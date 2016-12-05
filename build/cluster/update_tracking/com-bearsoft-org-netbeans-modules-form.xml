@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="com.bearsoft.org.netbeans.modules.form/5">
-    <module_version install_time="1471267088338" last="true" origin="installer" specification_version="5.0.32">
-        <file crc="4225089339" name="config/Modules/com-bearsoft-org-netbeans-modules-form.xml"/>
-        <file crc="218532654" name="modules/com-bearsoft-org-netbeans-modules-form.jar"/>
-        <file crc="2258511914" name="modules/ext/AbsoluteLayout.jar"/>
-    </module_version>
-</module>

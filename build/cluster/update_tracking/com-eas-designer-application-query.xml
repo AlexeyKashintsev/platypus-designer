@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.designer.application.query/5">
-    <module_version install_time="1471267054369" last="true" origin="installer" specification_version="5.0.29">
-        <file crc="971643058" name="config/Modules/com-eas-designer-application-query.xml"/>
-        <file crc="2352385242" name="modules/com-eas-designer-application-query.jar"/>
-    </module_version>
-</module>

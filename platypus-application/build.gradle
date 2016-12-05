@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "cz.kubacki.gradle.plugins:gradle-nbm-plugin:1.12.0"
+        gradleApi()
+    }
+}
+apply plugin: 'java'
+apply plugin: 'cz.kubacki.nbm'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'http://bits.netbeans.org/maven2/'
+    }
+}
+
+version = '5.11.0'
+nbm {
+    moduleName = 'com.eas.designer.application'
+    implementationVersion = '88'
+    moduleInstall = 'com.eas.designer.application.Installer'
+    localizingBundle = 'com/eas/designer/application/Bundle.properties'
+    // Module signing data
+    keyStore {
+         keyStoreFile = project.file('keystore')
+         username = 'myself'
+         password = 'specialsauce'
+    }
+}
+
+dependencies {
+    //compile 'org.netbeans.api:org-openide-util:RELEASE74'
+
+    // Use 'implementation' configured if implementation dependency is needed for some module
+    // implementation 'org.netbeans.api:org-netbeans-api-annotations-common:RELEASE74'
+
+    // example of dependency that will be copied to modules/ext and added to ClassPath: attribute in MANIFEST.MF
+    compile 'platypus-js:core:5.11.0'
+    compile 'platypus-js:datamodel:5.11.0'
+    compile 'org.netbeans.api:org-openide-filesystems:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-api-search:RELEASE81'
+    compile 'org.netbeans.modules:org-netbeans-modules-projectapi-nb:RELEASE81'
+    compile 'org.netbeans.modules:org-netbeans-modules-parsing-nb:RELEASE81'
+    compile 'org.netbeans.modules:org-netbeans-modules-dbapi:RELEASE81'
+}
+
+// set netbeansInstallDir project property
+
+task netBeansRun(type: Exec) {
+    doFirst {
+        def confFile = project.file("$project.buildDir/testuserdir/etc/netbeans.conf")
+        confFile.parentFile.mkdirs()
+        confFile.write "netbeans_extraclusters=\"$project.buildDir/module\""
+    }
+
+    workingDir "${project.buildDir}"
+
+    def executable = System.getProperty('os.name').toLowerCase().contains('windows') ? 'netbeans.exe' : 'netbeans'
+    if (project.hasProperty('netBeansInstallDir')) {
+        executable = netBeansInstallDir + '/bin/' + executable
+    } else {
+        logger.warn('netBeansInstallDir property is not specified. Assuming \'netbeans\' executable is on PATH.')
+    }
+    commandLine executable, '--userdir', "$project.buildDir/testuserdir"
+}
