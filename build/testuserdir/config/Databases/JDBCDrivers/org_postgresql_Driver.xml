@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<!DOCTYPE driver PUBLIC '-//NetBeans//DTD JDBC Driver 1.1//EN' 'http://www.netbeans.org/dtds/jdbc-driver-1_1.dtd'>
+<driver>
+  <name value='PostgreSQL'/>
+  <display-name value='PostgreSQL'/>
+  <class value='org.postgresql.Driver'/>
+  <urls>
+    <url value='file:/C:/projects/PlatypusJS/application/lib/thirdparty/postgresql/postgis-jdbc-2.1.0.jar'/>
+    <url value='file:/C:/projects/PlatypusJS/application/lib/thirdparty/postgresql/postgresql-9.4-1206.jdbc42.jar'/>
+  </urls>
+</driver>

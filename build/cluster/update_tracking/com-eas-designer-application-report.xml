@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.designer.application.report/5">
+    <module_version install_time="1471267070322" last="true" origin="installer" specification_version="5.0.16">
+        <file crc="1158143791" name="config/Modules/com-eas-designer-application-report.xml"/>
+        <file crc="1870622803" name="modules/com-eas-designer-application-report.jar"/>
+    </module_version>
+</module>

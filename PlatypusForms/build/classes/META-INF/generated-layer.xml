@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Services">
+        <folder name="MIMEResolver">
+            <file name="com-bearsoft-org-netbeans-modules-form-palette-PaletteItemDataObject-Extension.xml">
+                <!--com.bearsoft.org.netbeans.modules.form.palette.PaletteItemDataObject-->
+                <attr
+                    methodvalue="org.openide.filesystems.MIMEResolver.create" name="instanceCreate"/>
+                <attr name="instanceClass" stringvalue="org.openide.filesystems.MIMEResolver"/>
+                <attr name="mimeType" stringvalue="text/x-palette-item"/>
+                <attr name="ext.0" stringvalue="palette_item"/>
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.palette.Bundle#PROP_PaletteItemLoader_Name" name="displayName"/>
+            </file>
+            <file name="com-bearsoft-org-netbeans-modules-form-PlatypusLayoutDataObject-Namespace.xml">
+                <!--com.bearsoft.org.netbeans.modules.form.PlatypusLayoutDataObject-->
+                <attr
+                    methodvalue="org.openide.filesystems.MIMEResolver.create" name="instanceCreate"/>
+                <attr name="instanceClass" stringvalue="org.openide.filesystems.MIMEResolver"/>
+                <attr name="mimeType" stringvalue="text/layout+xml"/>
+                <attr name="ext.0" stringvalue="layout"/>
+                <attr name="element" stringvalue="layout"/>
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.Bundle#LBL_Form_Layout_Files" name="displayName"/>
+            </file>
+        </folder>
+        <folder name="PropertyEditorManager">
+            <file name="Class-com-bearsoft-org-netbeans-modules-form-editors-ComponentChooserEditor.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.editors.ComponentChooserEditor-->
+                <attr
+                    methodvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport.createClassRegistration" name="instanceCreate"/>
+                <attr name="propertyEditorClass" stringvalue="com.bearsoft.org.netbeans.modules.form.editors.ComponentChooserEditor"/>
+                <attr name="instanceOf" stringvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport$PEClassRegistration"/>
+                <attr name="targetType.1" stringvalue="javax.swing.JComponent"/>
+                <attr name="targetType.2" stringvalue="javax.swing.JPopupMenu"/>
+                <attr name="targetType.3" stringvalue="com.eas.client.forms.containers.ButtonGroup"/>
+            </file>
+            <file name="Class-com-bearsoft-org-netbeans-modules-form-editors-CursorEditor.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.editors.CursorEditor-->
+                <attr
+                    methodvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport.createClassRegistration" name="instanceCreate"/>
+                <attr name="propertyEditorClass" stringvalue="com.bearsoft.org.netbeans.modules.form.editors.CursorEditor"/>
+                <attr name="instanceOf" stringvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport$PEClassRegistration"/>
+                <attr name="targetType.1" stringvalue="java.awt.Cursor"/>
+            </file>
+            <file name="Class-com-bearsoft-org-netbeans-modules-form-editors-IconEditor.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.editors.IconEditor-->
+                <attr
+                    methodvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport.createClassRegistration" name="instanceCreate"/>
+                <attr name="propertyEditorClass" stringvalue="com.bearsoft.org.netbeans.modules.form.editors.IconEditor"/>
+                <attr name="instanceOf" stringvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport$PEClassRegistration"/>
+                <attr name="targetType.1" stringvalue="javax.swing.Icon"/>
+                <attr name="targetType.2" stringvalue="java.awt.Image"/>
+                <attr name="targetType.3" stringvalue="javax.swing.ImageIcon"/>
+            </file>
+            <file name="Class-com-bearsoft-org-netbeans-modules-form-editors-KeyStrokeEditor.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.editors.KeyStrokeEditor-->
+                <attr
+                    methodvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport.createClassRegistration" name="instanceCreate"/>
+                <attr name="propertyEditorClass" stringvalue="com.bearsoft.org.netbeans.modules.form.editors.KeyStrokeEditor"/>
+                <attr name="instanceOf" stringvalue="org.netbeans.modules.openide.nodes.NodesRegistrationSupport$PEClassRegistration"/>
+                <attr name="targetType.1" stringvalue="javax.swing.KeyStroke"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="com-bearsoft-org-netbeans-modules-form-actions-InspectorAction.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.actions.InspectorAction-->
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.actions.Bundle#CTL_InspectorAction" name="displayName"/>
+                <attr name="instanceCreate" newvalue="com.bearsoft.org.netbeans.modules.form.actions.InspectorAction"/>
+            </file>
+        </folder>
+        <folder name="Form">
+            <file name="com-bearsoft-org-netbeans-modules-form-actions-TestAction.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.actions.TestAction-->
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.actions.Bundle#ACT_TestMode" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.bearsoft.org.netbeans.modules.form.actions.TestAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+            <file name="com-bearsoft-org-netbeans-modules-form-actions-EditContainerAction.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.actions.menu.EditContainerAction-->
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.actions.menu.Bundle#ACT_EditContainer" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.bearsoft.org.netbeans.modules.form.actions.menu.EditContainerAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+            <file name="com-bearsoft-org-netbeans-modules-form-actions-InPlaceEditAction.instance">
+                <!--com.bearsoft.org.netbeans.modules.form.actions.menu.InPlaceEditAction-->
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.actions.menu.Bundle#ACT_InPlaceEdit" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.bearsoft.org.netbeans.modules.form.actions.menu.InPlaceEditAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <folder name="Navigator">
+                <file name="InspectorAction.shadow">
+                    <!--com.bearsoft.org.netbeans.modules.form.actions.InspectorAction-->
+                    <attr name="originalFile" stringvalue="Actions/Window/com-bearsoft-org-netbeans-modules-form-actions-InspectorAction.instance"/>
+                    <attr intvalue="200" name="position"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Loaders">
+        <folder name="text">
+            <folder name="layout+xml">
+                <folder name="Factories">
+                    <file name="com-bearsoft-org-netbeans-modules-form-PlatypusLayoutDataLoader.instance">
+                        <!--com.bearsoft.org.netbeans.modules.form.PlatypusLayoutDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.Bundle#Loaders/text/layout+xml/Factories/com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance" name="displayName"/>
+                    </file>
+                    <file name="com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance">
+                        <!--com.bearsoft.org.netbeans.modules.form.PlatypusFormDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.Bundle#Loaders/text/layout+xml/Factories/com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="x-palette-item">
+                <folder name="Factories">
+                    <file name="com-bearsoft-org-netbeans-modules-form-palette-PaletteItemDataObject$PaletteItemDataLoader.instance">
+                        <!--com.bearsoft.org.netbeans.modules.form.palette.PaletteItemDataObject.PaletteItemDataLoader-->
+                        <attr intvalue="100" name="position"/>
+                        <attr
+                            bundlevalue="com.bearsoft.org.netbeans.modules.form.palette.Bundle#PROP_PaletteItemLoader_Name" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="javascript">
+                <folder name="Factories">
+                    <file name="com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance">
+                        <!--com.bearsoft.org.netbeans.modules.form.PlatypusFormDataLoader-->
+                        <attr intvalue="100" name="position"/>
+                        <attr
+                            bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.Bundle#Loaders/text/javascript/Factories/com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="model+xml">
+                <folder name="Factories">
+                    <file name="com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance">
+                        <!--com.bearsoft.org.netbeans.modules.form.PlatypusFormDataLoader-->
+                        <attr intvalue="300" name="position"/>
+                        <attr
+                            bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.Bundle#Loaders/text/model+xml/Factories/com-bearsoft-org-netbeans-modules-form-PlatypusFormDataLoader.instance" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Templates">
+        <folder name="Platypus">
+            <file name="PlatypusAMDFormTemplate.layout" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusAMDFormTemplate.layout">
+                <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                <attr intvalue="0" name="position"/>
+            </file>
+            <file name="PlatypusAMDFormTemplate.model" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusAMDFormTemplate.model">
+                <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                <attr intvalue="0" name="position"/>
+            </file>
+            <file name="PlatypusAMDFormTemplate.js" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusAMDFormTemplate.js">
+                <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                <attr boolvalue="true" name="template"/>
+                <attr intvalue="400" name="position"/>
+                <attr
+                    bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.templates.Bundle#Templates/Other/PlatypusAMDFormTemplate" name="displayName"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/Form.html"/>
+                <attr
+                    methodvalue="com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator" name="instantiatingIterator"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr boolvalue="true" name="requireProject"/>
+            </file>
+            <folder name="Global modules">
+                <file name="PlatypusFormTemplate.layout" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusFormTemplate.layout">
+                    <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                    <attr intvalue="0" name="position"/>
+                </file>
+                <file name="PlatypusFormTemplate.model" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusFormTemplate.model">
+                    <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                    <attr intvalue="0" name="position"/>
+                </file>
+                <file name="PlatypusFormTemplate.js" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusFormTemplate.js">
+                    <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="400" name="position"/>
+                    <attr
+                        bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.templates.Bundle#Templates/Other/PlatypusFormTemplate" name="displayName"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/Form.html"/>
+                    <attr
+                        methodvalue="com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator" name="instantiatingIterator"/>
+                    <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+            </folder>
+            <folder name="Resources">
+                <file name="PlatypusLayoutTemplate.layout" url="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/PlatypusLayoutTemplate.layout">
+                    <!--com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="410" name="position"/>
+                    <attr
+                        bundlevalue="com.bearsoft.org.netbeans.modules.form.resources.templates.Bundle#Templates/Other/PlatypusLayoutTemplate" name="displayName"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/bearsoft/org/netbeans/modules/form/resources/templates/Layout.html"/>
+                    <attr
+                        methodvalue="com.bearsoft.org.netbeans.modules.form.resources.templates.NewFormWizardIterator.createIterator" name="instantiatingIterator"/>
+                    <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

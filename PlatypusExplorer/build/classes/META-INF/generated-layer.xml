@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="File">
+            <file name="com-eas-designer-explorer-actions-GotoAction.instance">
+                <!--com.eas.designer.explorer.actions.GotoAction-->
+                <attr
+                    bundlevalue="com.eas.designer.explorer.actions.Bundle#CTL_GotoAction" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.eas.designer.explorer.actions.GotoAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+            <file name="WhereUsedAction.instance">
+                <!--com.eas.designer.explorer.actions.WhereUsedAction-->
+                <attr
+                    bundlevalue="com.eas.designer.explorer.actions.Bundle#CTL_WhereUsedAction" name="displayName"/>
+                <attr methodvalue="org.openide.awt.Actions.context" name="instanceCreate"/>
+                <attr name="type" stringvalue="com.eas.designer.explorer.DataObjectProvider"/>
+                <attr methodvalue="org.openide.awt.Actions.inject" name="delegate"/>
+                <attr name="injectable" stringvalue="com.eas.designer.explorer.actions.WhereUsedAction"/>
+                <attr name="selectionType" stringvalue="EXACTLY_ONE"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-CheckPlatformUpdateAction.instance">
+                <!--com.eas.designer.explorer.platform.CheckPlatformUpdateAction-->
+                <attr
+                    bundlevalue="com.eas.designer.explorer.platform.Bundle#CTL_Check_Platform_Update_Title" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.eas.designer.explorer.platform.CheckPlatformUpdateAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-PlatformDirectoryAction.instance">
+                <!--com.eas.designer.explorer.platform.PlatformDirectoryAction-->
+                <attr
+                    bundlevalue="com.eas.designer.explorer.platform.Bundle#CTL_Platypus_Platform_Title" name="displayName"/>
+                <attr
+                    methodvalue="org.openide.awt.Actions.alwaysEnabled" name="instanceCreate"/>
+                <attr name="delegate" newvalue="com.eas.designer.explorer.platform.PlatformDirectoryAction"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+        </folder>
+        <folder name="Project">
+            <file name="com-eas-designer-explorer-actions-InfoAction.instance">
+                <!--com.eas.designer.explorer.actions.InfoAction-->
+                <attr
+                    bundlevalue="com.eas.designer.explorer.actions.Bundle#CTL_InfoAction" name="displayName"/>
+                <attr methodvalue="org.openide.awt.Actions.context" name="instanceCreate"/>
+                <attr name="type" stringvalue="org.openide.loaders.DataObject"/>
+                <attr methodvalue="org.openide.awt.Actions.inject" name="delegate"/>
+                <attr name="injectable" stringvalue="com.eas.designer.explorer.actions.InfoAction"/>
+                <attr name="selectionType" stringvalue="EXACTLY_ONE"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="File">
+            <file name="com-eas-designer-explorer-actions-GotoAction.shadow">
+                <!--com.eas.designer.explorer.actions.GotoAction-->
+                <attr name="originalFile" stringvalue="Actions/File/com-eas-designer-explorer-actions-GotoAction.instance"/>
+                <attr intvalue="618" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-actions-InfoAction.shadow">
+                <!--com.eas.designer.explorer.actions.InfoAction-->
+                <attr name="originalFile" stringvalue="Actions/Project/com-eas-designer-explorer-actions-InfoAction.instance"/>
+                <attr intvalue="632" name="position"/>
+            </file>
+        </folder>
+        <folder name="Tools">
+            <file name="com-eas-designer-explorer-platform-CheckPlatformUpdateAction.shadow">
+                <!--com.eas.designer.explorer.platform.CheckPlatformUpdateAction-->
+                <attr name="originalFile" stringvalue="Actions/File/com-eas-designer-explorer-platform-CheckPlatformUpdateAction.instance"/>
+                <attr intvalue="806" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-CheckPlatformUpdateAction-separatorAfter.instance">
+                <!--com.eas.designer.explorer.platform.CheckPlatformUpdateAction-->
+                <attr name="instanceCreate" newvalue="javax.swing.JSeparator"/>
+                <attr intvalue="807" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-CheckPlatformUpdateAction-separatorBefore.instance">
+                <!--com.eas.designer.explorer.platform.CheckPlatformUpdateAction-->
+                <attr name="instanceCreate" newvalue="javax.swing.JSeparator"/>
+                <attr intvalue="802" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-PlatformDirectoryAction.shadow">
+                <!--com.eas.designer.explorer.platform.PlatformDirectoryAction-->
+                <attr name="originalFile" stringvalue="Actions/File/com-eas-designer-explorer-platform-PlatformDirectoryAction.instance"/>
+                <attr intvalue="805" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-PlatformDirectoryAction-separatorAfter.instance">
+                <!--com.eas.designer.explorer.platform.PlatformDirectoryAction-->
+                <attr name="instanceCreate" newvalue="javax.swing.JSeparator"/>
+                <attr intvalue="807" name="position"/>
+            </file>
+            <file name="com-eas-designer-explorer-platform-PlatformDirectoryAction-separatorBefore.instance">
+                <!--com.eas.designer.explorer.platform.PlatformDirectoryAction-->
+                <attr name="instanceCreate" newvalue="javax.swing.JSeparator"/>
+                <attr intvalue="802" name="position"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Shortcuts">
+        <file name="DS-G.shadow">
+            <!--com.eas.designer.explorer.actions.GotoAction-->
+            <attr name="originalFile" stringvalue="Actions/File/com-eas-designer-explorer-actions-GotoAction.instance"/>
+        </file>
+        <file name="DS-I.shadow">
+            <!--com.eas.designer.explorer.actions.InfoAction-->
+            <attr name="originalFile" stringvalue="Actions/Project/com-eas-designer-explorer-actions-InfoAction.instance"/>
+        </file>
+    </folder>
+    <folder name="Templates">
+        <folder name="Project">
+            <folder name="Platypus.js">
+                <file name="NewPlatypusApplicationProject" url="nbresloc:/com/eas/designer/explorer/project/wizard/NewPlatypusApplicationProject">
+                    <!--com.eas.designer.explorer.project.wizard.NewPlatypusProjectWizard.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="100" name="position"/>
+                    <attr
+                        bundlevalue="com.eas.designer.explorer.project.wizard.Bundle#Templates/Project/Platypus/NewPlatypusApplicationProject" name="displayName"/>
+                    <attr name="iconBase" stringvalue="com/eas/designer/explorer/project/pencil-ruler.png"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/explorer/project/wizard/NewPlatypusApplicationDescription.html"/>
+                    <attr
+                        methodvalue="com.eas.designer.explorer.project.wizard.NewPlatypusProjectWizard.createIterator" name="instantiatingIterator"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+                <file name="WithSourcesPlatypusApplicationProject" url="nbresloc:/com/eas/designer/explorer/project/wizard/WithSourcesPlatypusApplicationProject">
+                    <!--com.eas.designer.explorer.project.wizard.WithSourcesPlatypusProjectWizard.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="110" name="position"/>
+                    <attr
+                        bundlevalue="com.eas.designer.explorer.project.wizard.Bundle#Templates/Project/Platypus/WithSourcesPlatypusApplicationProject" name="displayName"/>
+                    <attr name="iconBase" stringvalue="com/eas/designer/explorer/project/pencil-ruler.png"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/explorer/project/wizard/WithSourcesPlatypusApplicationDescription.html"/>
+                    <attr
+                        methodvalue="com.eas.designer.explorer.project.wizard.WithSourcesPlatypusProjectWizard.createIterator" name="instantiatingIterator"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Projects">
+        <folder name="org-netbeans-modules-platypus">
+            <folder name="Customizer">
+                <folder name="running">
+                    <!--com.eas.designer.explorer.project.ui.RunningCategoryProvider-->
+                    <file name="Self.instance">
+                        <!--com.eas.designer.explorer.project.ui.RunningCategoryProvider-->
+                        <attr name="instanceClass" stringvalue="com.eas.designer.explorer.project.ui.RunningCategoryProvider"/>
+                        <attr intvalue="0" name="position"/>
+                    </file>
+                    <attr
+                        bundlevalue="com.eas.designer.explorer.project.ui.Bundle#running" name="displayName"/>
+                    <attr intvalue="10" name="position"/>
+                </folder>
+            </folder>
+            <folder name="Nodes">
+                <file name="com-eas-designer-explorer-project-ui-PlatypusProjectNodesFactory.instance">
+                    <!--com.eas.designer.explorer.project.ui.PlatypusProjectNodesFactory-->
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="xml">
+        <folder name="entities">
+            <folder name="com_eas_designer_application_module_windows">
+                <file name="ModelInspector" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
+                    <!--com.eas.designer.explorer.model.windows.ModelInspector-->
+                    <attr name="hint.originalPublicID" stringvalue="-//com.eas.designer.application.module.windows//ModelInspector//EN"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="memory">
+            <folder name="com">
+                <folder name="eas">
+                    <folder name="designer">
+                        <folder name="explorer">
+                            <folder name="model">
+                                <folder name="windows">
+                                    <file name="ModelInspector">
+                                    <!--com.eas.designer.explorer.model.windows.ModelInspector-->
+                                    <attr
+                                    name="settings.providerPath" stringvalue="xml/lookups//com_eas_designer_application_module_windows/ModelInspector.instance"/>
+                                    </file>
+                                </folder>
+                            </folder>
+                        </folder>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
+        <folder name="lookups">
+            <folder name="com_eas_designer_application_module_windows">
+                <file name="ModelInspector.instance">
+                    <!--com.eas.designer.explorer.model.windows.ModelInspector-->
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
+                    <attr name="settings.instanceClass" stringvalue="com.eas.designer.explorer.model.windows.ModelInspector"/>
+                    <attr name="settings.instanceOf" stringvalue="com.eas.designer.explorer.model.windows.ModelInspector"/>
+                    <attr boolvalue="true" name="xmlproperties.preventStoring"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

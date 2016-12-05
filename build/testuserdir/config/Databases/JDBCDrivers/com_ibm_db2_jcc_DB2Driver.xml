@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<!DOCTYPE driver PUBLIC '-//NetBeans//DTD JDBC Driver 1.1//EN' 'http://www.netbeans.org/dtds/jdbc-driver-1_1.dtd'>
+<driver>
+  <name value='DB2'/>
+  <display-name value='DB2'/>
+  <class value='com.ibm.db2.jcc.DB2Driver'/>
+  <urls>
+    <url value='file:/C:/projects/PlatypusJS/application/lib/thirdparty/db2/db2jcc.jar'/>
+    <url value='file:/C:/projects/PlatypusJS/application/lib/thirdparty/db2/db2jcc_license_cu.jar'/>
+  </urls>
+</driver>

@@ -1,0 +1,16 @@
+C:\Program Files\NetBeans 8.1\platform=1464699630637
+cluster.C:/projects/PlatypusJS/designer/build/cluster=1471267096495
+cluster.C:/Program Files/NetBeans 8.1/enterprise=1464699631687
+cluster.C:/Program Files/NetBeans 8.1/extide=1464699039928
+cluster.C:/Program Files/NetBeans 8.1/ide=1464699656208
+cluster.C:/Program Files/NetBeans 8.1/java=1464699636234
+cluster.C:/Program Files/NetBeans 8.1/nb=1464698910417
+cluster.C:/Program Files/NetBeans 8.1/platform=1464699630637
+cluster.C:/Program Files/NetBeans 8.1/webcommon=1464699640062
+cluster.C:/Program Files/NetBeans 8.1/websvccommon=1464699039982
+user=1471267096495
+crc=7
+locale=ru_RU
+branding=platypusdesigner
+java.version=1.8.0_91
+java.vm.version=25.91-b14

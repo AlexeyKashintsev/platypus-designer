@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Services">
+        <folder name="MIMEResolver">
+            <file name="com-eas-designer-application-report-PlatypusReportDataObject-&lt;init>-Extension.xml">
+                <!--com.eas.designer.application.report.PlatypusReportDataObject.PlatypusReportDataObject(org.openide.filesystems.FileObject,org.openide.loaders.MultiFileLoader)-->
+                <attr
+                    methodvalue="org.openide.filesystems.MIMEResolver.create" name="instanceCreate"/>
+                <attr name="instanceClass" stringvalue="org.openide.filesystems.MIMEResolver"/>
+                <attr name="mimeType" stringvalue="application/ms-excel-x"/>
+                <attr name="ext.0" stringvalue="xlsx"/>
+                <attr
+                    bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_layout_file" name="displayName"/>
+            </file>
+            <file name="com-eas-designer-application-report-PlatypusReportDataObjectXLS-&lt;init>-Extension.xml">
+                <!--com.eas.designer.application.report.PlatypusReportDataObjectXLS.PlatypusReportDataObjectXLS(org.openide.filesystems.FileObject,org.openide.loaders.MultiFileLoader)-->
+                <attr
+                    methodvalue="org.openide.filesystems.MIMEResolver.create" name="instanceCreate"/>
+                <attr name="instanceClass" stringvalue="org.openide.filesystems.MIMEResolver"/>
+                <attr name="mimeType" stringvalue="application/ms-excel"/>
+                <attr name="ext.0" stringvalue="xls"/>
+                <attr
+                    bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_layout_file" name="displayName"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Actions">
+        <folder name="File">
+            <file name="com-eas-designer-application-report-OpenTemplateAction.instance">
+                <!--com.eas.designer.application.report.OpenTemplateAction-->
+                <attr
+                    bundlevalue="com.eas.designer.application.report.Bundle#CTL_OpenTemplateAction" name="displayName"/>
+                <attr methodvalue="org.openide.awt.Actions.context" name="instanceCreate"/>
+                <attr name="type" stringvalue="org.openide.loaders.DataObject"/>
+                <attr methodvalue="org.openide.awt.Actions.inject" name="delegate"/>
+                <attr name="injectable" stringvalue="com.eas.designer.application.report.OpenTemplateAction"/>
+                <attr name="selectionType" stringvalue="EXACTLY_ONE"/>
+                <attr boolvalue="false" name="noIconInMenu"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Loaders">
+        <folder name="application">
+            <folder name="ms-excel-x">
+                <folder name="Actions">
+                    <file name="com-eas-designer-application-report-OpenTemplateAction.shadow">
+                        <!--com.eas.designer.application.report.OpenTemplateAction-->
+                        <attr name="originalFile" stringvalue="Actions/File/com-eas-designer-application-report-OpenTemplateAction.instance"/>
+                        <attr intvalue="0" name="position"/>
+                    </file>
+                </folder>
+                <folder name="Factories">
+                    <file name="com-eas-designer-application-report-PlatypusReportTemplateDataLoader.instance">
+                        <!--com.eas.designer.application.report.PlatypusReportTemplateDataLoader-->
+                        <attr intvalue="210" name="position"/>
+                        <attr
+                            bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_loader_name" name="displayName"/>
+                    </file>
+                    <file name="com-eas-designer-application-report-PlatypusReportDataLoader.instance">
+                        <!--com.eas.designer.application.report.PlatypusReportDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_loader_name" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="ms-excel">
+                <folder name="Factories">
+                    <file name="com-eas-designer-application-report-PlatypusReportDataLoader.instance">
+                        <!--com.eas.designer.application.report.PlatypusReportDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_loader_name" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+        <folder name="text">
+            <folder name="javascript">
+                <folder name="Factories">
+                    <file name="com-eas-designer-application-report-PlatypusReportDataLoader.instance">
+                        <!--com.eas.designer.application.report.PlatypusReportDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_loader_name" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+            <folder name="model+xml">
+                <folder name="Factories">
+                    <file name="com-eas-designer-application-report-PlatypusReportDataLoader.instance">
+                        <!--com.eas.designer.application.report.PlatypusReportDataLoader-->
+                        <attr intvalue="200" name="position"/>
+                        <attr
+                            bundlevalue="com.eas.designer.application.report.Bundle#LBL_PlatypusReport_loader_name" name="displayName"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Templates">
+        <folder name="Platypus">
+            <file name="PlatypusAMDReportTemplate.model" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusAMDReportTemplate.model">
+                <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                <attr intvalue="0" name="position"/>
+            </file>
+            <file name="PlatypusAMDReportTemplate.xlsx" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusAMDReportTemplate.xlsx">
+                <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                <attr intvalue="0" name="position"/>
+            </file>
+            <file name="PlatypusAMDReportTemplate.js" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusAMDReportTemplate.js">
+                <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                <attr boolvalue="true" name="template"/>
+                <attr intvalue="300" name="position"/>
+                <attr
+                    bundlevalue="com.eas.designer.application.report.templates.Bundle#Templates/Other/PlatypusAMDReportTemplate" name="displayName"/>
+                <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/application/report/templates/Report.html"/>
+                <attr
+                    methodvalue="com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator" name="instantiatingIterator"/>
+                <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                <attr boolvalue="true" name="requireProject"/>
+            </file>
+            <folder name="Global modules">
+                <file name="PlatypusReportTemplate.model" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusReportTemplate.model">
+                    <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                    <attr intvalue="0" name="position"/>
+                </file>
+                <file name="PlatypusReportTemplate.xlsx" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusReportTemplate.xlsx">
+                    <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                    <attr intvalue="0" name="position"/>
+                </file>
+                <file name="PlatypusReportTemplate.js" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusReportTemplate.js">
+                    <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="300" name="position"/>
+                    <attr
+                        bundlevalue="com.eas.designer.application.report.templates.Bundle#Templates/Other/PlatypusReportTemplate" name="displayName"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/application/report/templates/Report.html"/>
+                    <attr
+                        methodvalue="com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator" name="instantiatingIterator"/>
+                    <attr name="javax.script.ScriptEngine" stringvalue="freemarker"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+            </folder>
+            <folder name="Resources">
+                <file name="PlatypusReportTemplateTemplate.xlsx" url="nbresloc:/com/eas/designer/application/report/templates/PlatypusReportTemplateTemplate.xlsx">
+                    <!--com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator()-->
+                    <attr boolvalue="true" name="template"/>
+                    <attr intvalue="310" name="position"/>
+                    <attr
+                        bundlevalue="com.eas.designer.application.report.templates.Bundle#Templates/Other/PlatypusReportTemplateTemplate" name="displayName"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/application/report/templates/ReportTemplate.html"/>
+                    <attr
+                        methodvalue="com.eas.designer.application.report.templates.NewReportWizardIterator.createIterator" name="instantiatingIterator"/>
+                    <attr boolvalue="true" name="requireProject"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

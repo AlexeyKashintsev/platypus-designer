@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.eas.samples">
+    <module_version install_time="1471267096432" last="true" origin="installer" specification_version="1.0.3">
+        <file crc="2561728422" name="config/Modules/com-eas-samples.xml"/>
+        <file crc="3440426290" name="modules/com-eas-samples.jar"/>
+    </module_version>
+</module>
