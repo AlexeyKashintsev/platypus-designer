@@ -1,0 +1,44 @@
+version = '5.11.0'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "cz.kubacki.gradle.plugins:gradle-nbm-plugin:1.12.0"
+        gradleApi()
+    }
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'cz.kubacki.nbm'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'http://bits.netbeans.org/maven2/'
+        }
+    }
+}
+
+// set netbeansInstallDir project property
+
+task netBeansRun(type: Exec) {
+    doFirst {
+        def confFile = project.file("$project.buildDir/testuserdir/etc/netbeans.conf")
+        confFile.parentFile.mkdirs()
+        confFile.write "netbeans_extraclusters=\"$project.buildDir/module\""
+    }
+
+    workingDir "${project.buildDir}"
+
+    def executable = System.getProperty('os.name').toLowerCase().contains('windows') ? 'netbeans.exe' : 'netbeans'
+    if (project.hasProperty('netBeansInstallDir')) {
+        executable = netBeansInstallDir + '/bin/' + executable
+    } else {
+        logger.warn('netBeansInstallDir property is not specified. Assuming \'netbeans\' executable is on PATH.')
+    }
+    commandLine executable, '--userdir', "$project.buildDir/testuserdir"
+}
