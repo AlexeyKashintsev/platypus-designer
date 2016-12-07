@@ -21,6 +21,13 @@ subprojects{
             url 'http://bits.netbeans.org/maven2/'
         }
     }
+    
+    task crazyNetBeansAnnotationsProcessorsResources(type: Copy){
+        from "src/main/resources"
+        into "build/classes/main"
+    }
+
+    compileJava.dependsOn crazyNetBeansAnnotationsProcessorsResources
 }
 
 // set netbeansInstallDir project property

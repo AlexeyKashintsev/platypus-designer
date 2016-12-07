@@ -36,6 +36,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -207,7 +208,7 @@ public class PlatypusProjectImpl implements PlatypusProject {
         basesProxy = new ScriptedDatabasesClient(settings.getDefaultDataSourceName(), indexer, false, BearResourcePool.DEFAULT_MAXIMUM_SIZE) {
 
             @Override
-            protected JSObject createModule(String aModuleName) throws Exception {
+            protected JSObject createModule(String aModuleName) {
                 return createLocalEngineModule(aModuleName);
             }
 
@@ -234,10 +235,14 @@ public class PlatypusProjectImpl implements PlatypusProject {
         basesProxy.setQueries(queries);
     }
 
-    protected JSObject createLocalEngineModule(String aModuleName) throws Exception {
+    protected JSObject createLocalEngineModule(String aModuleName) {
         FileObject jsFo = IndexerQuery.appElementId2File(PlatypusProjectImpl.this, aModuleName);
         if (jsFo != null) {
-            Scripts.getSpace().exec(aModuleName, jsFo.toURL());
+            try {
+                Scripts.getSpace().exec(aModuleName, jsFo.toURL());
+            } catch (ScriptException | URISyntaxException ex) {
+                return null;
+            }
             return Scripts.getSpace().createModule(aModuleName);
         } else {
             return null;
