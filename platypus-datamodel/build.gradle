@@ -1,5 +1,6 @@
 nbm {
     moduleName = 'com.eas.designer.datamodel'
+    specificationVersion = '5'
     implementationVersion = '16'
     localizingBundle = 'com/eas/designer/datamodel/Bundle.properties'
     // Module signing data

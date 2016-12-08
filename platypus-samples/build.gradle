@@ -1,5 +1,6 @@
 nbm {
     moduleName = 'com.eas.samples'
+    specificationVersion = '5'
     implementationVersion = '3'
     localizingBundle = 'com/eas/samples/Bundle.properties'
     // Module signing data
@@ -11,4 +12,8 @@ nbm {
 }
 
 dependencies {
+    compile 'platypus-js:common-utils:5.11.0'
+    compile 'org.netbeans.modules:org-netbeans-modules-j2ee-common:RELEASE81'
+    compile project(':platypus-application')
+    compile project(':platypus-explorer')
 }

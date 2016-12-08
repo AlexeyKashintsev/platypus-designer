@@ -1,6 +1,7 @@
 nbm {
     moduleName = 'com.eas.designer.explorer'
     implementationVersion = '30'
+    specificationVersion = '5'
     localizingBundle = 'com/eas/designer/explorer/Bundle.properties'
     requires = ['org.openide.windows.WindowManager']
     // Module signing data

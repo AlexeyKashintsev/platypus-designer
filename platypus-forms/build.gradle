@@ -1,5 +1,6 @@
 nbm {
     moduleName = 'com.bearsoft.org.netbeans.modules.form'
+    specificationVersion = '5'
     implementationVersion = '32'
     localizingBundle = 'com/bearsoft/org/netbeans/modules/form/Bundle.properties'
     // Module signing data
@@ -13,5 +14,8 @@ nbm {
 dependencies {
     compile 'platypus-js:forms:5.11.0'
     compile 'org.netbeans.api:org-openide-nodes:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-spi-palette:RELEASE81'
+    compile project(':platypus-application')
     compile project(':platypus-explorer')
+    compile project(':platypus-modules')
 }

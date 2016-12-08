@@ -1,9 +1,9 @@
 nbm {
     moduleName = 'com.eas.designer.application.module'
+    specificationVersion = '5'
     implementationVersion = '35'
     localizingBundle = 'com/eas/designer/application/module/Bundle.properties'
     requires = ['org.openide.windows.WindowManager', 'org.netbeans.api.debugger.jpda.JPDADebuggerEngineImpl', 'org.netbeans.spi.debugger.ui']
-    //dependencies = 'com.sun.jdi[VirtualMachineManager]'
     // Module signing data
     keyStore {
          keyStoreFile = project.file('keystore')
@@ -13,4 +13,8 @@ nbm {
 }
 
 dependencies {
+    compileOnly files(org.gradle.internal.jvm.Jvm.current().toolsJar)
+    compile 'org.netbeans.modules:org-netbeans-modules-debugger-jpda-ui:RELEASE81'
+    compile project(':platypus-application')
+    compile project(':platypus-explorer')
 }

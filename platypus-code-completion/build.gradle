@@ -1,5 +1,6 @@
 nbm {
     moduleName = 'com.eas.designer.codecompletion'
+    specificationVersion = '5'
     implementationVersion = '2'
     moduleInstall = 'com.eas.designer.codecompletion.Installer'
     localizingBundle = 'com/eas/designer/codecompletion/Bundle.properties'
@@ -12,7 +13,7 @@ nbm {
 }
 
 dependencies {
-    compile 'org.netbeans.modules:org-netbeans-modules-lexer:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-lexer:RELEASE81'
     compile 'org.netbeans.modules:org-netbeans-modules-javascript2-editor:RELEASE81'
     compile project(':platypus-forms')
 }
