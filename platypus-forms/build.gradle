@@ -3,12 +3,6 @@ nbm {
     specificationVersion = '5'
     implementationVersion = '32'
     localizingBundle = 'com/bearsoft/org/netbeans/modules/form/Bundle.properties'
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }
 }
 
 dependencies {

@@ -4,12 +4,6 @@ nbm {
     implementationVersion = '35'
     localizingBundle = 'com/eas/designer/application/module/Bundle.properties'
     requires = ['org.openide.windows.WindowManager', 'org.netbeans.api.debugger.jpda.JPDADebuggerEngineImpl', 'org.netbeans.spi.debugger.ui']
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }
 }
 
 dependencies {

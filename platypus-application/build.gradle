@@ -5,12 +5,6 @@ nbm {
     moduleInstall = 'com.eas.designer.application.Installer'
     localizingBundle = 'com/eas/designer/application/Bundle.properties'
     friendPackages.add 'com.eas.designer.application.indexer'
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }
 }
 
 dependencies {

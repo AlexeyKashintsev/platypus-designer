@@ -4,12 +4,6 @@ nbm {
     specificationVersion = '5'
     localizingBundle = 'com/eas/designer/explorer/Bundle.properties'
     requires = ['org.openide.windows.WindowManager']
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }
 }
 
 dependencies {

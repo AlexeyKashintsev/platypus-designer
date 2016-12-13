@@ -3,12 +3,6 @@ nbm {
     specificationVersion = '5'
     implementationVersion = '16'
     localizingBundle = 'com/eas/designer/datamodel/Bundle.properties'
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }   
 }
 
 dependencies {

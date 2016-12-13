@@ -4,12 +4,6 @@ nbm {
     implementationVersion = '2'
     moduleInstall = 'com.eas.designer.codecompletion.Installer'
     localizingBundle = 'com/eas/designer/codecompletion/Bundle.properties'
-    // Module signing data
-    keyStore {
-         keyStoreFile = project.file('keystore')
-         username = 'myself'
-         password = 'specialsauce'
-    }
 }
 
 dependencies {
