@@ -7,7 +7,18 @@ nbm {
 
 dependencies {
     compile 'platypus-js:common-utils:5.11.0'
-    compile 'org.netbeans.modules:org-netbeans-modules-j2ee-common:RELEASE81'
-    compile project(':platypus-application')
+    compile 'org.netbeans.api:org-openide-awt:RELEASE81'
+    compile 'org.netbeans.api:org-openide-util:RELEASE81'
+    compile 'org.netbeans.api:org-openide-dialogs:RELEASE81'
+    compile 'org.netbeans.api:org-openide-util-ui:RELEASE81'
+    compile 'org.netbeans.api:org-openide-util-lookup:RELEASE81'
+    compile 'org.netbeans.api:org-openide-filesystems:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-api-progress:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-db:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-server:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-projectapi:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-j2eeserver:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-projectuiapi:RELEASE81'
     compile project(':platypus-explorer')
+    compile project(':platypus-application')
 }

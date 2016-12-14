@@ -6,8 +6,27 @@ nbm {
 }
 
 dependencies {
+    compile 'platypus-js:common-utils:5.11.0'
+    compile 'platypus-js:core:5.11.0'
     compile 'platypus-js:datamodel:5.11.0'
+    compile 'platypus-js:scalable-widget:5.11.0'
+    compile 'org.netbeans.api:org-openide-awt:RELEASE81'
     compile 'org.netbeans.api:org-openide-util:RELEASE81'
-    compile project(':platypus-datamodel')
+    compile 'org.netbeans.api:org-openide-nodes:RELEASE81'
+    compile 'org.netbeans.api:org-openide-util-ui:RELEASE81'
+    compile 'org.netbeans.api:org-openide-loaders:RELEASE81'
+    compile 'org.netbeans.api:org-openide-actions:RELEASE81'
+    compile 'org.netbeans.api:org-openide-dialogs:RELEASE81'
+    compile 'org.netbeans.api:org-openide-windows:RELEASE81'
+    compile 'org.netbeans.api:org-openide-explorer:RELEASE81'
+    compile 'org.netbeans.api:org-openide-util-lookup:RELEASE81'
+    compile 'org.netbeans.api:org-openide-filesystems:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-api-templates:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-db:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-projectapi:RELEASE81'
+    compile 'org.netbeans.api:org-netbeans-modules-projectuiapi:RELEASE81'
     compile project(':platypus-queries')
+    compile project(':platypus-explorer')
+    compile project(':platypus-datamodel')
+    compile project(':platypus-application')
 }

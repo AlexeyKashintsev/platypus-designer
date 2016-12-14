@@ -14,6 +14,12 @@ subprojects{
     apply plugin: 'java'
     apply plugin: 'cz.kubacki.nbm'
 
+    configurations {
+        compile.transitive = false
+        compileClasspath.transitive = false
+        compileOnly.transitive = false
+    }    
+    
     nbm {
         keyStore {
             keyStoreFile = project.file('sign')
