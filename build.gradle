@@ -1,3 +1,6 @@
+import java.util.jar.Manifest
+import java.util.jar.Attributes
+
 version = '5.11.0'
 
 buildscript {
@@ -18,6 +21,7 @@ subprojects{
         compile.transitive = false
         compileClasspath.transitive = false
         compileOnly.transitive = false
+        providedCompile.transitive = false
     }    
     
     nbm {
@@ -29,10 +33,16 @@ subprojects{
     }
     
     repositories {
+        maven {
+            url 'http://download.osgeo.org/webdav/geotools/'
+        }
         mavenCentral()
         mavenLocal()
         maven {
             url 'http://bits.netbeans.org/maven2/'
+        }
+        maven {
+            url 'http://www.datanucleus.org/downloads/maven2/'
         }
     }
     
@@ -41,25 +51,58 @@ subprojects{
         into "build/classes/main"
     }
 
-    compileJava.dependsOn crazyNetBeansAnnotationsProcessorsResources
+    compileJava.dependsOn crazyNetBeansAnnotationsProcessorsResources    
+
+    task filterManifest {
+        doLast {
+            def manifestFile = generateModuleManifest.getGeneratedManifestFile()
+            def Manifest manifest = new Manifest()
+            def manifestInput = new FileInputStream(manifestFile)
+            try{
+                manifest.read(manifestInput);
+            }finally{
+                manifestInput.close()
+            }
+            def mClassPath = manifest.getMainAttributes().remove(new Attributes.Name("Class-Path"))
+            def manifestOutput = new FileOutputStream(manifestFile)
+            try{
+                manifest.write(manifestOutput);
+            }finally{
+                manifestOutput.close();
+            }
+        }
+    }
+    filterManifest.dependsOn(generateModuleManifest)
+    jar.dependsOn(filterManifest)
+    
+    task suite(type: Copy){
+        from "build/module"
+        into "${parent.buildDir}/platypus"
+    }
+    suite.dependsOn netbeans
 }
 
-// set netbeansInstallDir project property
+task cleanSuite(type: Delete){
+    delete "build/testuserdir"
+}
 
 task netBeansRun(type: Exec) {
+    def win = System.getProperty('os.name').toLowerCase().contains('windows')
+    def executable = win ? 'netbeans.exe' : 'netbeans'
+    def separator = win ? ';' : ':'
     doFirst {
-        def confFile = project.file("$project.buildDir/testuserdir/etc/netbeans.conf")
+        def confFile = project.file("${project.buildDir}${File.separator}testuserdir${File.separator}etc${File.separator}netbeans.conf")
         confFile.parentFile.mkdirs()
-        confFile.write "netbeans_extraclusters=\"$project.buildDir/module\""
+        confFile.write "netbeans_extraclusters=\"${project.buildDir}${File.separator}platypus\""
     }
-
     workingDir "${project.buildDir}"
-
-    def executable = System.getProperty('os.name').toLowerCase().contains('windows') ? 'netbeans.exe' : 'netbeans'
     if (project.hasProperty('netBeansInstallDir')) {
-        executable = netBeansInstallDir + '/bin/' + executable
+        executable = "${netBeansInstallDir}${File.separator}bin${File.separator}${executable}"
     } else {
         logger.warn('netBeansInstallDir property is not specified. Assuming \'netbeans\' executable is on PATH.')
     }
-    commandLine executable, '--userdir', "$project.buildDir/testuserdir"
+    def userDir = "\"${project.buildDir}${File.separator}testuserdir\""
+    commandLine executable, '--userdir', userDir
 }
+
+netBeansRun.dependsOn cleanSuite
