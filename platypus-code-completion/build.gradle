@@ -10,22 +10,22 @@ dependencies {
     providedCompile 'platypus-js:common-utils:5.11.0'
     providedCompile 'platypus-js:core:5.11.0'
     providedCompile 'platypus-js:datamodel:5.11.0'
-    compile 'org.netbeans.api:org-openide-awt:RELEASE81'
-    compile 'org.netbeans.api:org-openide-util:RELEASE81'
-    compile 'org.netbeans.api:org-openide-text:RELEASE81'
-    compile 'org.netbeans.api:org-openide-nodes:RELEASE81'
-    compile 'org.netbeans.api:org-openide-util-ui:RELEASE81'
-    compile 'org.netbeans.api:org-openide-windows:RELEASE81'
-    compile 'org.netbeans.api:org-openide-loaders:RELEASE81'
-    compile 'org.netbeans.api:org-openide-modules:RELEASE81'
-    compile 'org.netbeans.api:org-openide-filesystems:RELEASE81'
-    compile 'org.netbeans.api:org-openide-util-lookup:RELEASE81'
-    compile 'org.netbeans.api:org-netbeans-modules-lexer:RELEASE81'
-    compile 'org.netbeans.api:org-netbeans-modules-csl-api:RELEASE81'
-    compile 'org.netbeans.api:org-netbeans-modules-projectapi:RELEASE81'
-    compile 'org.netbeans.api:org-netbeans-modules-parsing-api:RELEASE81'
-    compile 'org.netbeans.api:org-netbeans-modules-parsing-indexing:RELEASE81'
-    compile 'org.netbeans.modules:org-netbeans-modules-javascript2-editor:RELEASE81'
+    compile "org.netbeans.api:org-openide-awt:${nbVersion}"
+    compile "org.netbeans.api:org-openide-util:${nbVersion}"
+    compile "org.netbeans.api:org-openide-text:${nbVersion}"
+    compile "org.netbeans.api:org-openide-nodes:${nbVersion}"
+    compile "org.netbeans.api:org-openide-util-ui:${nbVersion}"
+    compile "org.netbeans.api:org-openide-windows:${nbVersion}"
+    compile "org.netbeans.api:org-openide-loaders:${nbVersion}"
+    compile "org.netbeans.api:org-openide-modules:${nbVersion}"
+    compile "org.netbeans.api:org-openide-filesystems:${nbVersion}"
+    compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-lexer:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-csl-api:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-parsing-api:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-parsing-indexing:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-javascript2-editor:${nbVersion}"
     compile project(':platypus-forms')
     compile project(':platypus-modules')
     compile project(':platypus-datamodel')

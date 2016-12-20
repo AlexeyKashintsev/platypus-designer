@@ -45,30 +45,31 @@ subprojects{
             url 'http://www.datanucleus.org/downloads/maven2/'
         }
     }
-    
-    task crazyNetBeansAnnotationsProcessorsResources(type: Copy){
-        from "src/main/resources"
-        into "build/classes/main"
+
+    compileJava{
+        options.compilerArgs = ['-sourcepath', "${project.projectDir}/src/main/resources"]
     }
 
-    compileJava.dependsOn crazyNetBeansAnnotationsProcessorsResources    
-
-    task filterManifest {
-        doLast {
-            def manifestFile = generateModuleManifest.getGeneratedManifestFile()
-            def Manifest manifest = new Manifest()
-            def manifestInput = new FileInputStream(manifestFile)
-            try{
-                manifest.read(manifestInput);
-            }finally{
-                manifestInput.close()
-            }
-            def mClassPath = manifest.getMainAttributes().remove(new Attributes.Name("Class-Path"))
-            def manifestOutput = new FileOutputStream(manifestFile)
-            try{
-                manifest.write(manifestOutput);
-            }finally{
-                manifestOutput.close();
+    task filterManifest() {
+        doFirst {
+            println "-project-: ${project}"
+            println "-project(':platypus-application')-: ${project(':platypus-application')}"
+            if(project != project(':platypus-application')){
+                def manifestFile = generateModuleManifest.getGeneratedManifestFile()
+                def Manifest manifest = new Manifest()
+                def manifestInput = new FileInputStream(manifestFile)
+                try{
+                    manifest.read(manifestInput);
+                }finally{
+                    manifestInput.close()
+                }
+                def mClassPath = manifest.getMainAttributes().remove(new Attributes.Name("Class-Path"))
+                def manifestOutput = new FileOutputStream(manifestFile)
+                try{
+                    manifest.write(manifestOutput);
+                }finally{
+                    manifestOutput.close();
+                }
             }
         }
     }
@@ -80,10 +81,6 @@ subprojects{
         into "${parent.buildDir}/platypus"
     }
     suite.dependsOn netbeans
-}
-
-task cleanSuite(type: Delete){
-    delete "build/testuserdir"
 }
 
 task netBeansRun(type: Exec) {
@@ -102,7 +99,5 @@ task netBeansRun(type: Exec) {
         logger.warn('netBeansInstallDir property is not specified. Assuming \'netbeans\' executable is on PATH.')
     }
     def userDir = "\"${project.buildDir}${File.separator}testuserdir\""
-    commandLine executable, '--userdir', userDir
+    commandLine executable, '--userdir', userDir, "-J-agentlib:jdwp=transport=dt_socket,suspend=n,server=y,address=${debugPort}"
 }
-
-netBeansRun.dependsOn cleanSuite

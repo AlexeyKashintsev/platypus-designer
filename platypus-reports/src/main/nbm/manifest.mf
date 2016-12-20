@@ -1,1 +1,1 @@
-OpenIDE-Module-Layer: layer.xml
+OpenIDE-Module-Layer: com/eas/designer/application/report/layer.xml
