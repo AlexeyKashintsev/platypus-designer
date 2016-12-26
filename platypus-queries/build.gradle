@@ -13,7 +13,7 @@ dependencies {
     providedCompile 'platypus-js:datamodel:5.11.0'
     providedCompile 'platypus-js:forms:5.11.0'
     providedCompile 'platypus-js:scripting:5.11.0'
-    providedCompile 'platypus-js:grid-widget:5.11.0'
+    providedCompile 'platypus-js:grid:5.11.0'
     providedCompile 'platypus-js:scalable-widget:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-text:${nbVersion}"

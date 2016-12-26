@@ -7,7 +7,7 @@ nbm {
 
 dependencies {
     providedCompile 'platypus-js:common-utils:5.11.0'
-    providedCompile 'platypus-js:grid-widget:5.11.0'
+    providedCompile 'platypus-js:grid:5.11.0'
     providedCompile 'platypus-js:core:5.11.0'
     providedCompile 'platypus-js:datamodel:5.11.0'
     providedCompile 'platypus-js:forms:5.11.0'

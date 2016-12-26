@@ -13,6 +13,10 @@ buildscript {
     }
 }
 
+task clean(type: Delete){
+    delete 'build'
+}
+
 subprojects{
     apply plugin: 'java'
     apply plugin: 'cz.kubacki.nbm'

@@ -33,7 +33,7 @@ dependencies {
     runtime 'platypus-js:servlet:5.11.0'
     runtime 'platypus-js:server:5.11.0'
     runtime 'platypus-js:launcher:5.11.0'
-    runtime 'platypus-js:grid-widget:5.11.0'
+    runtime 'platypus-js:grid:5.11.0'
     runtime 'platypus-js:forms:5.11.0'
     runtime 'platypus-js:sql-parser:5.11.0'
     runtime 'platypus-js:forms:5.11.0'
