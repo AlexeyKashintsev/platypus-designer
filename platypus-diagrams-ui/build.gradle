@@ -7,11 +7,11 @@ nbm {
 
 dependencies {
     providedCompile 'com.vividsolutions:jts:1.13'
-    providedCompile 'platypus-js:common-utils:5.11.0'
-    providedCompile 'platypus-js:core:5.11.0'
-    providedCompile 'platypus-js:datamodel:5.11.0'
-    providedCompile 'platypus-js:scalable-widget:5.11.0'
-    providedCompile 'platypus-js:routing:5.11.0'
+    providedCompile 'platypus-js:platypus-js-common-utils:5.11.0'
+    providedCompile 'platypus-js:platypus-js-core:5.11.0'
+    providedCompile 'platypus-js:platypus-js-datamodel:5.11.0'
+    providedCompile 'platypus-js:platypus-js-scalable-widget:5.11.0'
+    providedCompile 'platypus-js:platypus-js-routing:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-actions:${nbVersion}"
     compile "org.netbeans.api:org-openide-nodes:${nbVersion}"
@@ -24,5 +24,5 @@ dependencies {
     compile "org.netbeans.api:org-openide-filesystems:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-db:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
-    compile project(':platypus-application')
+    compile project(':platypus-js-nb')
 }

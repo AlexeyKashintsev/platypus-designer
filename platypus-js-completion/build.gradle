@@ -7,9 +7,9 @@ nbm {
 }
 
 dependencies {
-    providedCompile 'platypus-js:common-utils:5.11.0'
-    providedCompile 'platypus-js:core:5.11.0'
-    providedCompile 'platypus-js:datamodel:5.11.0'
+    providedCompile 'platypus-js:platypus-js-common-utils:5.11.0'
+    providedCompile 'platypus-js:platypus-js-core:5.11.0'
+    providedCompile 'platypus-js:platypus-js-datamodel:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-util:${nbVersion}"
     compile "org.netbeans.api:org-openide-text:${nbVersion}"
@@ -26,9 +26,9 @@ dependencies {
     compile "org.netbeans.api:org-netbeans-modules-parsing-api:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-indexing:${nbVersion}"
     compile "org.netbeans.modules:org-netbeans-modules-javascript2-editor:${nbVersion}"
-    compile project(':platypus-forms')
-    compile project(':platypus-modules')
-    compile project(':platypus-datamodel')
-    compile project(':platypus-explorer')
-    compile project(':platypus-application')
+    compile project(':platypus-forms-designer')
+    compile project(':platypus-js-modules')
+    compile project(':platypus-diagrams-ui')
+    compile project(':platypus-js-explorer')
+    compile project(':platypus-js-nb')
 }

@@ -8,13 +8,13 @@ nbm {
 
 dependencies {
     providedCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
-    providedCompile 'platypus-js:common-utils:5.11.0'
-    providedCompile 'platypus-js:core:5.11.0'
-    providedCompile 'platypus-js:datamodel:5.11.0'
-    providedCompile 'platypus-js:scripting:5.11.0'
-    providedCompile 'platypus-js:servlet:5.11.0'
-    providedCompile 'platypus-js:server:5.11.0'
-    providedCompile 'platypus-js:launcher:5.11.0'
+    providedCompile 'platypus-js:platypus-js-common-utils:5.11.0'
+    providedCompile 'platypus-js:platypus-js-core:5.11.0'
+    providedCompile 'platypus-js:platypus-js-datamodel:5.11.0'
+    providedCompile 'platypus-js:platypus-js-scripting:5.11.0'
+    providedCompile 'platypus-js:platypus-js-servlet:5.11.0'
+    providedCompile 'platypus-js:platypus-js-server:5.11.0'
+    providedCompile 'platypus-js:platypus-js-launcher:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-util:${nbVersion}"
     compile "org.netbeans.api:org-openide-nodes:${nbVersion}"
@@ -47,6 +47,6 @@ dependencies {
     compile "org.netbeans.api:org-netbeans-modules-extexecution:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-j2ee-metadata:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-indexing:${nbVersion}"
-    compile project(':platypus-application')
-    compile project(':platypus-datamodel')
+    compile project(':platypus-js-nb')
+    compile project(':platypus-diagrams-ui')
 }

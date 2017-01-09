@@ -56,9 +56,7 @@ subprojects{
 
     task filterManifest() {
         doFirst {
-            println "-project-: ${project}"
-            println "-project(':platypus-application')-: ${project(':platypus-application')}"
-            if(project != project(':platypus-application')){
+            if(project != project(':platypus-js-nb')){
                 def manifestFile = generateModuleManifest.getGeneratedManifestFile()
                 def Manifest manifest = new Manifest()
                 def manifestInput = new FileInputStream(manifestFile)
@@ -90,7 +88,6 @@ subprojects{
 task netBeansRun(type: Exec) {
     def win = System.getProperty('os.name').toLowerCase().contains('windows')
     def executable = win ? 'netbeans.exe' : 'netbeans'
-    def separator = win ? ';' : ':'
     doFirst {
         def confFile = project.file("${project.buildDir}${File.separator}testuserdir${File.separator}etc${File.separator}netbeans.conf")
         confFile.parentFile.mkdirs()
