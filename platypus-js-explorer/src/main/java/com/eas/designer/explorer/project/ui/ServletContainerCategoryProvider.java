@@ -11,19 +11,19 @@ import org.openide.util.NbBundle;
  *
  * @author mg
  */
-@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "running", categoryLabel = "#running", projectType = "org-netbeans-modules-platypus", position=10)
-public class RunningCategoryProvider implements ProjectCustomizer.CompositeCategoryProvider {
+@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "servletContainer", categoryLabel = "#servletContainer", projectType = "org-netbeans-modules-platypus", position=13)
+public class ServletContainerCategoryProvider implements ProjectCustomizer.CompositeCategoryProvider {
 
     @Override
     public ProjectCustomizer.Category createCategory(Lookup lkp) {
-        return ProjectCustomizer.Category.create("running", NbBundle.getMessage(PlatypusProjectCustomizerProvider.class, "running"), null, new ProjectCustomizer.Category[]{});
+        return ProjectCustomizer.Category.create("servletContainer", NbBundle.getMessage(PlatypusProjectCustomizerProvider.class, "servletContainer"), null, new ProjectCustomizer.Category[]{});
     }
 
     @Override
     public JComponent createComponent(ProjectCustomizer.Category ctgr, Lookup lkp) {
         try {
             PlatypusProjectImpl project = lkp.lookup(PlatypusProjectImpl.class);
-            return new ProjectRunningCustomizer(project);
+            return new ServletContainerCustomizer(project);
         } catch (Exception ex) {
             ErrorManager.getDefault().notify(ex);
             return null;

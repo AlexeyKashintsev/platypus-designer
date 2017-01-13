@@ -114,10 +114,8 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
 
     protected void processProjectProperties(EditableProperties aGeneralProperties, EditableProperties aPrivateProperties) {
         String projectName = (String) wiz.getProperty(PlatypusSamples.NAME);
-        PlatypusSamplesPanelVisual.J2eePlatformAdapter j2eeServer = (PlatypusSamplesPanelVisual.J2eePlatformAdapter) wiz.getProperty(PlatypusSamples.SERVER_ID);
         aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.PROJECT_DISPLAY_NAME_KEY, projectName);
         aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.SERVER_CONTEXT_KEY, projectName);
-        aPrivateProperties.setProperty(PlatypusProjectSettingsImpl.J2EE_SERVER_ID_KEY, j2eeServer.getServerInstanceId());
     }
 
     @Override

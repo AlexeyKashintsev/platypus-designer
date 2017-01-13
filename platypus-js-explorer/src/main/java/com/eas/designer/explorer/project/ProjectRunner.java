@@ -2,16 +2,10 @@ package com.eas.designer.explorer.project;
 
 import com.eas.client.application.PlatypusClientApplication;
 import com.eas.client.cache.PlatypusFiles;
-import com.eas.client.resourcepool.DatasourcesArgsConsumer;
 import com.eas.designer.application.PlatypusUtils;
-import com.eas.designer.application.platform.PlatformHomePathException;
-import com.eas.designer.application.platform.PlatypusPlatform;
 import com.eas.designer.application.project.AppServerType;
 import com.eas.designer.application.project.ClientType;
-import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectSettings;
-import com.eas.designer.explorer.j2ee.PlatypusWebModuleManager;
-import com.eas.designer.explorer.server.PlatypusServerRunner;
 import com.eas.server.PlatypusServer;
 import com.eas.util.FileUtils;
 import com.eas.util.StringUtils;
@@ -19,12 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import org.netbeans.api.db.explorer.ConnectionManager;
 import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.netbeans.api.debugger.Breakpoint;
 import org.netbeans.api.debugger.DebuggerEngine;
@@ -34,9 +23,6 @@ import org.netbeans.api.debugger.DebuggerManagerListener;
 import org.netbeans.api.debugger.Session;
 import org.netbeans.api.debugger.Watch;
 import org.netbeans.api.debugger.jpda.AttachingDICookie;
-import org.netbeans.api.extexecution.ExecutionDescriptor;
-import org.netbeans.api.extexecution.ExecutionService;
-import org.netbeans.api.extexecution.ExternalProcessBuilder;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.actions.SaveAllAction;
@@ -202,21 +188,23 @@ public class ProjectRunner {
             switch (pps.getRunAppServerType()) {
                 case J2EE_SERVER:
                     io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Deploying_J2EE_Container"));//NOI18N
+                    /*
                     PlatypusWebModuleManager webManager = aProject.getLookup().lookup(PlatypusWebModuleManager.class);
                     if (webManager != null) {
                         appUrl = webManager.start(aDebug);
                     } else {
                         throw new IllegalStateException("An instance of PlatypusWebModuleManager is not found in project's lookup.");
                     }
+                    */
                     break;
                 case PLATYPUS_SERVER:
                     // Because of undeploy() before update Platypus.js runtime in case of web application
                     aProject.getSettings().load();
-                    aProject.forceUpdatePlatypusRuntime();
                     boolean startServer = !pps.isNotStartServer();
                     if (startServer) {
                         io.getOut().println("");
                         io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Starting_Platypus_Server"));//NOI18N
+                        /*
                         Future<Integer> serverStarting = PlatypusServerRunner.start(aProject, aDebug);
                         if (aDebug) {
                             DebuggerEngine[] startedEngines = DebuggerManager.getDebuggerManager().startDebugging(DebuggerInfo.create(AttachingDICookie.ID, new Object[]{AttachingDICookie.create(LOCAL_HOSTNAME, aProject.getSettings().getDebugServerPort())}));
@@ -237,18 +225,19 @@ public class ProjectRunner {
                         io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Waiting_Platypus_Server"));//NOI18N
                         PlatypusServerRunner.waitForServer(LOCAL_HOSTNAME, pps.getServerPort());
                         io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Platypus_Server_Started"));//NOI18N
+                        */
                     }
                     break;
                 default:
                     // Because of undeploy() before update Platypus.js runtime in case of web application
                     aProject.getSettings().load();
-                    aProject.forceUpdatePlatypusRuntime();
                     break;
             }
             // Clients...
             if (ClientType.PLATYPUS_CLIENT.equals(aProject.getSettings().getRunClientType())) {
                 io.getOut().println("");//NOI18N
                 io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Starting_Platypus_Client"));//NOI18N
+                /*
                 ExecutionDescriptor descriptor = new ExecutionDescriptor()
                         .frontWindow(true)
                         .controllable(true);
@@ -268,8 +257,9 @@ public class ProjectRunner {
                     addArguments(arguments, pps.getRunClientOptions());
                     io.getOut().println(String.format(NbBundle.getMessage(ProjectRunner.class, "MSG_Run_Options"), pps.getRunClientOptions()));//NOI18N
                 }
-
+                */
                 if (AppServerType.NONE.equals(pps.getRunAppServerType())) {
+                    /*
                     String classPath = StringUtils.join(File.pathSeparator, aProject.getApiRoot().getPath(), getDirectoryClasspath(aProject.getLibRoot()));
                     arguments.add(OPTION_PREFIX + CLASSPATH_OPTION_NAME);
                     arguments.add(classPath);
@@ -306,7 +296,9 @@ public class ProjectRunner {
                             io.getErr().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Invalid_Database", connection.getDisplayName()));
                         }
                     }
+                    */
                     io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Database_Direct"));//NOI18N
+                    /*
                     if (defaultDatabaseConnection != null) {
                         arguments.add(ProjectRunner.OPTION_PREFIX + PlatypusClientApplication.DEF_DATASOURCE_CONF_PARAM);
                         arguments.add(pps.getDefaultDataSourceName());
@@ -316,19 +308,17 @@ public class ProjectRunner {
                     arguments.add(ProjectRunner.OPTION_PREFIX + PlatypusClientApplication.URL_CMD_SWITCH);
                     arguments.add(aProject.getProjectDirectory().toURI().toASCIIString());
                     io.getOut().println(String.format(NbBundle.getMessage(ProjectRunner.class, "MSG_App_Sources"), aProject.getProjectDirectory().toURI().toASCIIString()));//NOI18N
+                    */
                 } else {
-                    try {
-                        String classPath = StringUtils.join(File.pathSeparator, PlatypusPlatform.getPlatformBinDirectory().getAbsolutePath() + File.separator + "Application.jar", PlatypusPlatform.getPlatformApiDirectory().getAbsolutePath(), getDirectoryClasspath(FileUtil.toFileObject(PlatypusPlatform.getPlatformExtDirectory())));
-                        arguments.add(OPTION_PREFIX + CLASSPATH_OPTION_NAME);
-                        arguments.add(classPath);
-                    } catch (PlatformHomePathException ex) {
-                        io.getOut().println(ex.getMessage());//NOI18N
-                        throw new IllegalStateException(ex);
-                    }
+                    /*
+                    String classPath = StringUtils.join(File.pathSeparator, PlatypusPlatform.getPlatformBinDirectory().getAbsolutePath() + File.separator + "Application.jar", PlatypusPlatform.getPlatformApiDirectory().getAbsolutePath(), getDirectoryClasspath(FileUtil.toFileObject(PlatypusPlatform.getPlatformExtDirectory())));
+                    arguments.add(OPTION_PREFIX + CLASSPATH_OPTION_NAME);
+                    arguments.add(classPath);
 
                     arguments.add(PlatypusClientApplication.class.getName());
-
+                    */
                     if (AppServerType.J2EE_SERVER.equals(pps.getRunAppServerType())) {
+                        /*
                         io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Deploying_J2EE_Container"));//NOI18N
                         PlatypusWebModuleManager webManager = aProject.getLookup().lookup(PlatypusWebModuleManager.class);
                         if (webManager != null) {
@@ -336,17 +326,21 @@ public class ProjectRunner {
                         } else {
                             throw new IllegalStateException("An instance of PlatypusWebModuleManager is not found in project's lookup.");
                         }
+                        */
                     } else/* if (AppServerType.PLATYPUS_SERVER.equals(pps.getRunAppServerType())) */ {
                         appUrl = getDevPlatypusServerUrl(pps);
                     }
                     if (appUrl != null && !appUrl.isEmpty()) {
+                        /*
                         arguments.add(OPTION_PREFIX + PlatypusClientApplication.URL_CMD_SWITCH);
                         arguments.add(appUrl);
+                        */
                         io.getOut().println(String.format(NbBundle.getMessage(ProjectRunner.class, "MSG_App_Server_URL"), appUrl));//NOI18N
                     } else {
                         throw new IllegalStateException(NbBundle.getMessage(ProjectRunner.class, "MSG_Cnt_Start_Platypus_Client"));
                     }
                 }
+                /*
                 if (aProject.getSettings().getSourcePath() != null && !aProject.getSettings().getSourcePath().isEmpty()) {
                     arguments.add(OPTION_PREFIX + PlatypusClientApplication.SOURCE_PATH_CONF_PARAM);
                     arguments.add(aProject.getSettings().getSourcePath());
@@ -367,6 +361,8 @@ public class ProjectRunner {
                 Future<Integer> clientTask = service.run();
                 io.getOut().println(NbBundle.getMessage(ProjectRunner.class, "MSG_Platypus_Client_Started"));//NOI18N
                 io.getOut().println();
+                */
+                Future<Integer> clientTask = null;
                 if (aDebug) {
                     DebuggerEngine[] startedEngines = DebuggerManager.getDebuggerManager().startDebugging(DebuggerInfo.create(AttachingDICookie.ID, new Object[]{AttachingDICookie.create(LOCAL_HOSTNAME, aProject.getSettings().getDebugClientPort())}));
                     if (startedEngines.length > 0) {
@@ -413,7 +409,7 @@ public class ProjectRunner {
         }
         return StringUtils.replaceUnsupportedSymbols(requireCallabckArg);
     }
-
+    /*
     public static void addArguments(List<String> arguments, String argsStr) {
         String[] options = argsStr.split(" ");//NOI18N
         if (options.length > 0) {
@@ -444,12 +440,6 @@ public class ProjectRunner {
                 + CONSOLE_LOG_HANDLER_LEVEL_OPION_NAME
                 + EQUALS_SIGN
                 + logLevel.getName());
-        /*
-         arguments.add(OPTION_PREFIX
-         + JS_APPLICATION_LOG_LEVEL_OPTION_NAME
-         + EQUALS_SIGN
-         + logLevel.getName());
-         */
         arguments.add(OPTION_PREFIX
                 + CONSOLE_LOG_FORMATTER_OPTION_NAME
                 + EQUALS_SIGN
@@ -479,23 +469,23 @@ public class ProjectRunner {
     public static boolean isSetByOption(String command, String options) {
         return options != null && options.contains(OPTION_PREFIX + command);
     }
-
+    */
     public static boolean isConnectionValid(DatabaseConnection connection) {
         return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && !connection.getDisplayName().contains(" ") //NOI18N
                 && connection.getDatabaseURL() != null && !connection.getDatabaseURL().isEmpty()
                 && connection.getUser() != null && !connection.getUser().isEmpty();
     }
-
+    /*
     private static String getClientDisplayName(PlatypusProject project, boolean debug) {
         return String.format("%s (%s)", project.getDisplayName(), //NOI18N
                 debug ? NbBundle.getMessage(ProjectRunner.class, "LBL_Client_DebugTab_Name") //NOI18N
                         : NbBundle.getMessage(ProjectRunner.class, "LBL_Client_RunTab_Name")); //NOI18N
     }
-
+    */
     private static String getDevPlatypusServerUrl(PlatypusProjectSettings pps) {
         return String.format("%s://%s:%s", PlatypusServer.DEFAULT_PROTOCOL, LOCAL_HOSTNAME, pps.getServerPort()); //NOI18N
     }
-
+    /*
     private static String escapeString(String s) {
         if (s.length() == 0) {
             return "\"\""; // NOI18N
@@ -525,5 +515,5 @@ public class ProjectRunner {
         }
         return sb.toString();
     }
-
+    */
 }

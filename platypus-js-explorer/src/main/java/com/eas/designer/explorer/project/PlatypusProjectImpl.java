@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.project;
 
 import com.eas.client.MetadataCache;
@@ -11,12 +7,9 @@ import com.eas.client.cache.PlatypusFiles;
 import com.eas.client.cache.PlatypusIndexer;
 import com.eas.client.queries.LocalQueriesProxy;
 import com.eas.client.resourcepool.BearResourcePool;
-import com.eas.client.resourcepool.GeneralResourceProvider;
 import com.eas.designer.application.PlatypusUtils;
 import com.eas.designer.application.indexer.IndexerQuery;
 import com.eas.designer.application.indexer.PlatypusPathRecognizer;
-import com.eas.designer.application.platform.PlatformHomePathException;
-import com.eas.designer.application.platform.PlatypusPlatform;
 import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectInformation;
 import com.eas.designer.application.utils.DatabaseConnections;
@@ -27,9 +20,7 @@ import com.eas.designer.explorer.model.windows.ModelInspector;
 import com.eas.designer.explorer.project.ui.PlatypusProjectCustomizerProvider;
 import com.eas.script.Scripts;
 import com.eas.util.BinaryUtils;
-import com.eas.util.FileUtils;
 import com.eas.util.ListenerRegistration;
-import com.eas.xml.dom.Source2XmlDom;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
@@ -54,7 +45,6 @@ import javax.script.SimpleScriptContext;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.xml.parsers.ParserConfigurationException;
 import jdk.nashorn.api.scripting.JSObject;
 import org.netbeans.api.db.explorer.ConnectionManager;
 import org.netbeans.api.db.explorer.DatabaseConnection;
@@ -83,10 +73,6 @@ import org.openide.util.RequestProcessor;
 import org.openide.util.lookup.Lookups;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -106,7 +92,6 @@ public class PlatypusProjectImpl implements PlatypusProject {
 
     static {
         Scripts.setOnlySpace(initScriptSpace());
-        PlatypusPlatform.checkPlatypusJsUpdates();
     }
 
     static Scripts.Space initScriptSpace() {
@@ -607,181 +592,6 @@ public class PlatypusProjectImpl implements PlatypusProject {
     }
 
     /**
-     * Synchronous platypus.js integrating.
-     * 
-     * @throws IOException 
-     */
-    public void forceUpdatePlatypusRuntime() throws IOException {
-        if (needUpdatePlatypusRuntime()) {
-            getOutputWindowIO().getOut().println(NbBundle.getMessage(PlatypusProjectImpl.class, "LBL_Platform_Integrating_Progress_Started", getDisplayName()));
-            try {
-                clearPlatypusRuntime();
-                copyPlatypusRuntime();
-                getOutputWindowIO().getOut().println(NbBundle.getMessage(PlatypusProjectImpl.class, "LBL_Platform_Integrating_Progress_Finished", getDisplayName()));
-            } catch (IOException ex) {
-                getOutputWindowIO().getErr().println(NbBundle.getMessage(PlatypusProjectImpl.class, "LBL_Platform_Integrating_Progress_Failed", getDisplayName(), ex.toString()));
-                throw ex;
-            }
-        }
-    }
-
-    protected boolean needUpdatePlatypusRuntime() throws IOException {
-        if (settings.isAutoUpdatePlatypusJs()) {
-            try {
-                String projectVersionValue = settings.getPlatypusJsVersion();
-                String platformVersionValue = readPlatypusJsVersion();
-                return (projectVersionValue == null ? platformVersionValue != null : !projectVersionValue.equals(platformVersionValue));
-            } catch (PlatformHomePathException | SAXException | ParserConfigurationException ex) {
-                getOutputWindowIO().getErr().println(ex.getMessage());
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    protected String readPlatypusJsVersion() throws IOException, PlatformHomePathException, SAXException, ParserConfigurationException {
-        FileObject platformVersion = FileUtil.toFileObject(PlatypusPlatform.getPlatformVersion());
-        if (platformVersion != null) {
-            Document platformVersionDoc = Source2XmlDom.transform(platformVersion.asText());
-            NodeList platformVersionElements = platformVersionDoc.getDocumentElement().getElementsByTagName(PlatypusPlatform.VERSION_TAG_NAME);
-            if (platformVersionElements.getLength() == 1) {
-                Element platformVersionElement = (Element) platformVersionElements.item(0);
-                if (platformVersionElement != null) {
-                    return platformVersionElement.getAttribute(PlatypusPlatform.VERSION_ATTRIBUTE_NAME);
-                }
-            }
-        }
-        return null;
-    }
-
-    protected void copyPlatypusRuntime() throws IOException {
-        try {
-            prepareJarsJSes(true);
-            preparePlatypusWebClient(true);
-            String platformVersion = readPlatypusJsVersion();
-            settings.setPlatypusJsVersion(platformVersion);
-            settings.save();
-        } catch (PlatformHomePathException | SAXException | ParserConfigurationException ex) {
-            throw new IOException(ex);
-        }
-    }
-
-    private void prepareJarsJSes(boolean forceOverwrite) throws IOException {
-        FileObject libsDir = getLibRoot();
-        if (libsDir.getChildren().length == 0 || forceOverwrite) {
-            copyBinJars(libsDir);
-            copyLibJars(libsDir);
-            copyExtJars(libsDir);
-        }
-        FileObject classesDir = getApiRoot();
-        if (classesDir.getChildren().length == 0 || forceOverwrite) {
-            copyApiJs(classesDir);
-        }
-    }
-
-    private void copyJars(FileObject libsDir, FileObject sourceDir) throws IOException {
-        for (FileObject fo : sourceDir.getChildren()) {
-            if (fo.isData() && PlatypusPlatform.JAR_FILE_EXTENSION.equalsIgnoreCase(fo.getExt())) {
-                FileObject alreadyFO = libsDir.getFileObject(fo.getName(), fo.getExt());
-                if (alreadyFO != null) {// overwrite file
-                    try (OutputStream out = alreadyFO.getOutputStream()) {
-                        Files.copy(FileUtil.toFile(fo).toPath(), out);
-                    }
-                } else {// copy file
-                    FileUtil.copyFile(fo, libsDir, fo.getName());
-                }
-            }
-        }
-    }
-
-    private void copyBinJars(FileObject libsDir) throws IOException {
-        try {
-            FileObject platformBinDir = FileUtil.toFileObject(PlatypusPlatform.getPlatformBinDirectory());
-            copyJars(libsDir, platformBinDir);
-        } catch (PlatformHomePathException ex) {
-            throw new IOException(ex);//Should not happen
-        }
-    }
-
-    private void copyExtJars(FileObject libsDir) throws IOException {
-        try {
-            FileObject platformBinDir = FileUtil.toFileObject(PlatypusPlatform.getPlatformExtDirectory());
-            copyJars(libsDir, platformBinDir);
-        } catch (PlatformHomePathException ex) {
-            throw new IOException(ex);//Should not happen
-        }
-    }
-
-    private void copyLibJars(FileObject libsDir) throws IOException {
-        try {
-            Set<File> jdbcDriverFiles = new HashSet<>();
-            for (String clazz : GeneralResourceProvider.driversClasses) {
-                File jdbcDriver = PlatypusPlatform.findThirdpartyJar(clazz);
-                if (jdbcDriver != null) {
-                    FileObject jdbcDriverFo = FileUtil.toFileObject(jdbcDriver);
-                    Enumeration<? extends FileObject> jdbcDriversEnumeration = jdbcDriverFo.getParent().getChildren(false);
-                    while (jdbcDriversEnumeration.hasMoreElements()) {
-                        FileObject fo = jdbcDriversEnumeration.nextElement();
-                        jdbcDriverFiles.add(FileUtil.toFile(fo));
-                    }
-                }
-            }
-            FileObject platformLibDir = FileUtil.toFileObject(PlatypusPlatform.getPlatformLibDirectory());
-            Enumeration<? extends FileObject> filesEnumeration = platformLibDir.getChildren(true);
-            while (filesEnumeration.hasMoreElements()) {
-                FileObject fo = filesEnumeration.nextElement();
-                if (!fo.isFolder() && PlatypusPlatform.JAR_FILE_EXTENSION.equalsIgnoreCase(fo.getExt())
-                        && !jdbcDriverFiles.contains(FileUtil.toFile(fo))) {
-                    Logger.getLogger(PlatypusProjectImpl.class.getName()).log(Level.INFO, "Copying lib: {0}", fo.getPath());
-                    FileObject alreadyFO = libsDir.getFileObject(fo.getName(), fo.getExt());
-                    if (alreadyFO != null) {// overwrite file
-                        try (OutputStream out = alreadyFO.getOutputStream()) {
-                            Files.copy(FileUtil.toFile(fo).toPath(), out);
-                        }
-                    } else {// copy file
-                        FileUtil.copyFile(fo, libsDir, fo.getName());
-                    }
-                } else {
-                    Logger.getLogger(PlatypusProjectImpl.class.getName()).log(Level.INFO, "Skipped while copying libs: {0}", fo.getPath());
-                }
-            }
-        } catch (PlatformHomePathException ex) {
-            throw new IOException(ex);
-        }
-    }
-
-    private void copyApiJs(FileObject clasessDir) throws IOException {
-        try {
-            copyContent(FileUtil.toFileObject(PlatypusPlatform.getPlatformApiDirectory()), clasessDir);
-        } catch (PlatformHomePathException ex) {
-            throw new IOException(ex);
-        }
-    }
-
-    private void preparePlatypusWebClient(boolean forceOverwrite) throws IOException {
-        try {
-            FileObject webContentDir = getDirectory(WEB_DIRECTORY);
-            FileObject pwcDir = webContentDir.getFileObject(PLATYPUS_WEB_CLIENT_DIR_NAME);
-            if (pwcDir == null) {
-                pwcDir = webContentDir.createFolder(PLATYPUS_WEB_CLIENT_DIR_NAME);
-            }
-            FileObject pwcSourceDir = FileUtil.toFileObject(PlatypusPlatform.getPlatformBinDirectory()).getFileObject(PLATYPUS_WEB_CLIENT_DIR_NAME);
-            if (pwcSourceDir == null) {
-                throw new IllegalStateException(String.format(NbBundle.getMessage(PlatypusProjectImpl.class, "MSG_Platypus_Web_Client_Not_Found"), PlatypusPlatform.getPlatformBinDirectory().getAbsolutePath()));//NOI18N
-            }
-            if (!pwcSourceDir.isFolder()) {
-                throw new IllegalStateException(NbBundle.getMessage(PlatypusProjectImpl.class, "MSG_Platypus_Web_Client_Dir"));//NOI18N
-            }
-            if (pwcDir.getChildren().length == 0 || forceOverwrite) {
-                copyContent(pwcSourceDir, pwcDir);
-            }
-        } catch (PlatformHomePathException ex) {
-            throw new IOException(ex);
-        }
-    }
-
-    /**
      * Recursively copies directory's content.
      *
      * @param sourceDir
@@ -806,20 +616,6 @@ public class PlatypusProjectImpl implements PlatypusProject {
                 } else {// copy file
                     FileUtil.copyFile(sourceFo, destDir, sourceFo.getName());
                 }
-            }
-        }
-    }
-
-    public void clearPlatypusRuntime() throws IOException {
-        FileObject libsDir = getLibRoot();
-        FileUtils.clearDirectory(FileUtil.toFile(libsDir), true);// servlet files
-        FileObject classesDir = getApiRoot();
-        FileUtils.clearDirectory(FileUtil.toFile(classesDir), true);// js api files
-        FileObject webContentDir = projectDir.getFileObject(WEB_DIRECTORY);
-        if (webContentDir != null && webContentDir.isFolder()) {
-            FileObject pwcDir = webContentDir.getFileObject(PLATYPUS_WEB_CLIENT_DIR_NAME);
-            if (pwcDir != null && pwcDir.isFolder()) {
-                FileUtils.clearDirectory(FileUtil.toFile(pwcDir), true);// browser client
             }
         }
     }

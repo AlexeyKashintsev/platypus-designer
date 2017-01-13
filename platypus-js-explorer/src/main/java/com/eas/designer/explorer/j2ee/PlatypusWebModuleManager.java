@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.j2ee;
 
 import com.eas.designer.application.PlatypusUtils;
@@ -39,15 +35,14 @@ import org.netbeans.api.db.explorer.ConnectionManager;
 import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.netbeans.modules.j2ee.deployment.devmodules.api.Deployment;
 import org.netbeans.modules.j2ee.deployment.devmodules.spi.J2eeModuleProvider;
-import org.openide.ErrorManager;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 
 /**
- * A tool to prepare and deploy the Platypus web module.
+ * A tool to prepare the Platypus.js web application.
  *
- * @author vv
+ * @author vv, mg
  */
 public class PlatypusWebModuleManager {
 
@@ -165,7 +160,6 @@ public class PlatypusWebModuleManager {
      */
     public void prepareWebApplication() throws Exception {
         undeploy();
-        project.forceUpdatePlatypusRuntime();
         project.getOutputWindowIO().getOut().println(NbBundle.getMessage(PlatypusWebModuleManager.class, "MSG_Preparing_Web_App"));//NOI18N
         prepareResources();
     }
@@ -199,19 +193,11 @@ public class PlatypusWebModuleManager {
      * Sets up an web application.
      *
      * @param aModuleProvider Web Module
-     * @param aContextXml
      * @throws java.lang.Exception
      */
     protected void setupWebApplication(J2eeModuleProvider aModuleProvider) throws Exception {
-        if (TomcatWebAppManager.TOMCAT_SERVER_ID.equals(aModuleProvider.getServerID())) {
-            TomcatWebAppManager webAppConfigurator = new TomcatWebAppManager(project, aModuleProvider.getServerInstanceID());
-            //webAppConfigurator.deployJdbcDrivers(); // since jdbc drivers are in bundled version of tomcat there is no need to deploy them right now
-            webAppConfigurator.configure();
-        } else {
-            String errorMessage = String.format(NbBundle.getMessage(PlatypusWebModuleManager.class, "MSG_Web_App_Config_Not_Supported"), aModuleProvider.getServerID());//NOI18N
-            Logger.getLogger(PlatypusWebModuleManager.class.getName()).log(Level.WARNING, errorMessage);
-            project.getOutputWindowIO().getErr().println(errorMessage);
-        }
+        TomcatWebAppManager webAppConfigurator = new TomcatWebAppManager(project);
+        webAppConfigurator.configure();
         configureDeploymentDescriptor();
     }
 
