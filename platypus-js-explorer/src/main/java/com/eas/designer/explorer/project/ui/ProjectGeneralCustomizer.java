@@ -66,7 +66,6 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 if (projectSettings.getBuildCommand()!= null) {
                     txtBuildCommand.setText(projectSettings.getBuildCommand());
                 }
-                chCacheBust.setSelected(projectSettings.getBrowserCacheBusting());
                 chGlobalApi.setSelected(projectSettings.getGlobalAPI());
                 cbClientType.setSelectedItem(projectSettings.getClientType());
                 cbAppServerType.setSelectedItem(projectSettings.getApplicationServerType());
@@ -120,7 +119,6 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         cbConnections = new javax.swing.JComboBox();
         lblDefDatasource = new javax.swing.JLabel();
         btnAddDatasource = new javax.swing.JButton();
-        chCacheBust = new javax.swing.JCheckBox();
         chGlobalApi = new javax.swing.JCheckBox();
         txtSourcePath = new javax.swing.JTextField();
         lblSourcePath = new javax.swing.JLabel();
@@ -192,13 +190,6 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         btnAddDatasource.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddDatasourceActionPerformed(evt);
-            }
-        });
-
-        chCacheBust.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.chCacheBust.text")); // NOI18N
-        chCacheBust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chCacheBustActionPerformed(evt);
             }
         });
 
@@ -282,9 +273,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                     .addComponent(txtCleanCommand)
                     .addComponent(lblBuildCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(chGlobalApi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chCacheBust, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                        .addComponent(chGlobalApi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(txtBuildCommand))
                 .addContainerGap())
@@ -317,10 +306,8 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblClientServerMessage)
                 .addGap(18, 18, 18)
-                .addComponent(chCacheBust)
-                .addGap(18, 18, 18)
                 .addComponent(chGlobalApi)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(lblCleanCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCleanCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,10 +376,6 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         setupConnectionsModel();
     }//GEN-LAST:event_btnAddDatasourceActionPerformed
 
-    private void chCacheBustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chCacheBustActionPerformed
-        projectSettings.setBrowserCacheBusting(chCacheBust.isSelected());
-    }//GEN-LAST:event_chCacheBustActionPerformed
-
     private void chGlobalApiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chGlobalApiActionPerformed
         projectSettings.setGlobalAPI(chGlobalApi.isSelected());
     }//GEN-LAST:event_chGlobalApiActionPerformed
@@ -431,7 +414,6 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     private javax.swing.JComboBox cbAppServerType;
     private javax.swing.JComboBox cbClientType;
     private javax.swing.JComboBox cbConnections;
-    private javax.swing.JCheckBox chCacheBust;
     private javax.swing.JCheckBox chGlobalApi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBuildCommand;

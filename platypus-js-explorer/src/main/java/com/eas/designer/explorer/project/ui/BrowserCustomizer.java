@@ -32,6 +32,7 @@ public class BrowserCustomizer extends javax.swing.JPanel {
             if (projectSettings.getBrowserRunCommand() != null) {
                 txtBrowserRunCommand.setText(projectSettings.getBrowserRunCommand());
             }
+            chCacheBust.setSelected(projectSettings.getBrowserCacheBusting());
         });
     }
 
@@ -48,6 +49,7 @@ public class BrowserCustomizer extends javax.swing.JPanel {
         txtBrowserRunCommand = new javax.swing.JTextField();
         lblBrowserUrl = new javax.swing.JLabel();
         txtBrowserUrl = new javax.swing.JTextField();
+        chCacheBust = new javax.swing.JCheckBox();
 
         lblBroswerRunCommand.setText(org.openide.util.NbBundle.getMessage(BrowserCustomizer.class, "BrowserCustomizer.lblBroswerRunCommand.text")); // NOI18N
 
@@ -75,6 +77,13 @@ public class BrowserCustomizer extends javax.swing.JPanel {
             }
         });
 
+        chCacheBust.setText(org.openide.util.NbBundle.getMessage(BrowserCustomizer.class, "BrowserCustomizer.chCacheBust.text")); // NOI18N
+        chCacheBust.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chCacheBustActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,27 +91,30 @@ public class BrowserCustomizer extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chCacheBust, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                     .addComponent(txtBrowserRunCommand)
+                    .addComponent(txtBrowserUrl)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblBroswerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblBrowserUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 230, Short.MAX_VALUE))
-                    .addComponent(txtBrowserUrl))
+                            .addComponent(lblBrowserUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBroswerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(chCacheBust)
+                .addGap(11, 11, 11)
                 .addComponent(lblBrowserUrl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBrowserUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(lblBroswerRunCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtBrowserRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,7 +134,12 @@ public class BrowserCustomizer extends javax.swing.JPanel {
         projectSettings.setBrowserRunCommand(txtBrowserRunCommand.getText());
     }//GEN-LAST:event_txtBrowserRunCommandFocusLost
 
+    private void chCacheBustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chCacheBustActionPerformed
+        projectSettings.setBrowserCacheBusting(chCacheBust.isSelected());
+    }//GEN-LAST:event_chCacheBustActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox chCacheBust;
     private javax.swing.JLabel lblBroswerRunCommand;
     private javax.swing.JLabel lblBrowserUrl;
     private javax.swing.JTextField txtBrowserRunCommand;

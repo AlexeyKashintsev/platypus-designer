@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.module.actions;
 
 import com.eas.designer.application.indexer.IndexerQuery;
+import com.eas.designer.explorer.project.PlatypusProjectActions;
 import com.eas.designer.explorer.project.PlatypusProjectImpl;
-import com.eas.designer.explorer.project.ProjectRunner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.netbeans.api.project.FileOwnerQuery;
@@ -44,7 +40,8 @@ public final class DebugAction implements ActionListener {
                 if (appElementName == null) {
                     appElementName = FileUtil.getRelativePath(pProject.getSrcRoot(), dataObject.getPrimaryFile());
                 }
-                ProjectRunner.debug(pProject, appElementName);
+                PlatypusProjectActions actions = pProject.getLookup().lookup(PlatypusProjectActions.class);
+                actions.start(appElementName, true);
             } catch (Exception ex) {
                 ErrorManager.getDefault().notify(ex);
             }

@@ -194,12 +194,12 @@ public class PlatypusProjectActions implements ActionProvider {
                 return;
             }
         }
-        saveAll();
         start(runAppElement, aDebug);
     }
 
-    private void start(String aModuleName, boolean aDebug) throws Exception {
+    public void start(String aModuleName, boolean aDebug) throws Exception {
         if (aModuleName != null && !aModuleName.isEmpty()) {
+            saveAll();
             preapreStartJs(aModuleName);
             PlatypusProjectSettings pps = project.getSettings();
             if (pps.getAcceptDesginerDatasources()) {

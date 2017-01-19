@@ -5,8 +5,8 @@
 package com.eas.designer.application.module.actions;
 
 import com.eas.designer.application.indexer.IndexerQuery;
+import com.eas.designer.explorer.project.PlatypusProjectActions;
 import com.eas.designer.explorer.project.PlatypusProjectImpl;
-import com.eas.designer.explorer.project.ProjectRunner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.netbeans.api.project.FileOwnerQuery;
@@ -44,7 +44,8 @@ public class RunAction implements ActionListener {
                 if (appElementName == null) {
                     appElementName = FileUtil.getRelativePath(pProject.getSrcRoot(), dataObject.getPrimaryFile());
                 }
-                ProjectRunner.run(pProject, appElementName);
+                PlatypusProjectActions actions = pProject.getLookup().lookup(PlatypusProjectActions.class);
+                actions.start(appElementName, false);
             } catch (Exception ex) {
                 ErrorManager.getDefault().notify(ex);
             }
