@@ -227,6 +227,13 @@ public class PlatypusProjectView implements LogicalViewProvider {
         }
 
         private void fillActions() {
+            actions.add(ProjectSensitiveActions.projectCommandAction(ActionProvider.COMMAND_CLEAN,
+                    NbBundle.getMessage(PlatypusProjectView.class, "LBL_CleanAction_Name"), null)); // NOI18N
+            actions.add(ProjectSensitiveActions.projectCommandAction(ActionProvider.COMMAND_BUILD,
+                    NbBundle.getMessage(PlatypusProjectView.class, "LBL_BuildAction_Name"), null)); // NOI18N
+            actions.add(ProjectSensitiveActions.projectCommandAction(ActionProvider.COMMAND_REBUILD,
+                    NbBundle.getMessage(PlatypusProjectView.class, "LBL_RebuildAction_Name"), null)); // NOI18N
+            actions.add(null);
             actions.add(ProjectSensitiveActions.projectCommandAction(ActionProvider.COMMAND_RUN,
                     NbBundle.getMessage(PlatypusProjectView.class, "LBL_RunAction_Name"), null)); // NOI18N
             actions.add(ProjectSensitiveActions.projectCommandAction(ActionProvider.COMMAND_DEBUG,

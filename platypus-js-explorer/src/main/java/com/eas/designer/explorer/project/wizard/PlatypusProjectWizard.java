@@ -68,9 +68,9 @@ public abstract class PlatypusProjectWizard implements WizardDescriptor./*Progre
                     srcDir.mkdirs();
                 }
             }
-            File markerFile = new File(projSpecDir, PlatypusProjectSettingsImpl.PROJECT_MARKER_FILE);
-            if (!markerFile.exists()) {
-                markerFile.createNewFile();
+            File commandsFile = new File(projSpecDir, PlatypusProjectSettingsImpl.PROJECT_COMMANDS_FILE);
+            if (!commandsFile.exists()) {
+                commandsFile.createNewFile();
             }
         } catch (Exception ex) {
             ErrorManager.getDefault().notify(ex);

@@ -1,18 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.project;
 
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.util.logging.Level;
+import org.openide.util.EditableProperties;
 
 /**
  *
  * @author vv
  */
 public interface PlatypusProjectSettings {
-    
+
     public static final String START_JS_FILE_NAME = "start.js"; //NOI18N
 
     PropertyChangeSupport getChangeSupport();
@@ -61,32 +59,32 @@ public interface PlatypusProjectSettings {
     void setDefaultDatasourceName(String aValue);
 
     /**
-     * Gets the application server's host.
+     * Gets the url used with platypus client.
      *
      * @return Url string
      */
-    String getClientUrl();
+    String getPlatypusClientUrl();
 
     /**
      * Gets the log level for Platypus Client.
      *
      * @return Log level value
      */
-    Level getClientLogLevel();
+    Level getPlatypusClientLogLevel();
 
     /**
      * Sets a log level for Platypus Client.
      *
      * @param aValue Log level value
      */
-    void setClientLogLevel(Level aValue);
+    void setPlatypusClientLogLevel(Level aValue);
 
     /**
      * Checks if security realm is enabled.
      *
      * @return true to enable configure security realm
      */
-    boolean isSecurityRealmEnabled();
+    boolean getSecurityRealmEnabled();
 
     /**
      * Sets if security realm is enabled.
@@ -95,39 +93,57 @@ public interface PlatypusProjectSettings {
      */
     void setSecurityRealmEnabled(boolean aValue);
 
+    boolean getAutoApplyWebSettings();
+
+    void setAutoApplyWebSettings(boolean aValue);
+
     /**
      * Gets the log level for Platypus Server.
      *
      * @return Log level value
      */
-    Level getServerLogLevel();
+    Level getPlatypusServerLogLevel();
 
     /**
      * Sets a log level for Platypus Server.
      *
      * @param aValue Log level value
      */
-    void setServerLogLevel(Level aValue);
+    void setPlatypusServerLogLevel(Level aValue);
 
     /**
-     * Gets JMX debugging port for Platypus Client on local computer on
+     * Gets the log level for servlet container.
+     *
+     * @return Log level value
+     */
+    Level getServletContainerLogLevel();
+
+    /**
+     * Sets a log level for servlet container.
+     *
+     * @param aValue Log level value
+     */
+    void setServletContainerLogLevel(Level aValue);
+
+    /**
+     * Gets JPDA debugging port for Platypus Client on local computer on
      * development if null or empty, use default value.
      *
-     * @return JMX debugging port
+     * @return JPDA debugging port
      */
-    int getDebugClientPort();
+    int getPlatypusClientDebugPort();
 
     boolean getBrowserCacheBusting();
-    
+
     boolean getGlobalAPI();
-    
+
     /**
      * Gets JMX debugging port for Platypus Application Server on local computer
      * on development if null or empty, use default value.
      *
      * @return JMX debugging port
      */
-    int getDebugServerPort();
+    int getPlatypusServerDebugPort();
 
     /**
      * Gets the project's display name.
@@ -137,39 +153,32 @@ public interface PlatypusProjectSettings {
     String getDisplayName();
 
     /**
-     * Gets J2EE server instance ID.
-     *
-     * @return J2EE server ID
-     */
-    String getJ2eeServerId();
-
-    /**
      * Gets application server type to be run.
      *
      * @return AppServerType instance
      */
-    AppServerType getRunAppServerType();
+    AppServerType getApplicationServerType();
 
     /**
      * Gets optional parameters provided to Platypus Client.
      *
      * @return parameters string
      */
-    String getRunClientOptions();
+    String getPlatypusClientOptions();
 
     /**
      * Gets client type to be run.
      *
      * @return ClientType instance
      */
-    ClientType getRunClientType();
+    ClientType getClientType();
 
     /**
      * Gets JVM options provided to Platypus Client.
      *
      * @return parameters string
      */
-    String getRunClientVmOptions();
+    String getPlatypusClientVmOptions();
 
     /**
      * Gets password for the Platypus user to login on application run.
@@ -183,14 +192,14 @@ public interface PlatypusProjectSettings {
      *
      * @return parameters string
      */
-    String getRunServerOptions();
+    String getPlatypusServerOptions();
 
     /**
      * Gets JVM options provided to Platypus Application Server.
      *
      * @return parameters string
      */
-    String getRunServerVmOptions();
+    String getPlatypusServerVmOptions();
 
     /**
      * Gets username for the Platypus user to login on application run.
@@ -204,22 +213,42 @@ public interface PlatypusProjectSettings {
      *
      * @return The name of the context string
      */
-    String getServerContext();
+    String getWebApplicationContext();
 
     /**
-     * Gets application's server port.
+     * Gets http port.
      *
      * @return server port
      */
-    int getServerPort();
+    int getServletContainerPort();
 
     /**
-     * Checks if NOT to start local development application server on
-     * application run.
+     * Gets servlet container JPDA port.
+     *
+     * @return JPDA port of servlet container.
+     */
+    int getServletContainerDebugPort();
+
+    /**
+     * Gets platypus port.
+     *
+     * @return server port
+     */
+    int getPlatypusServerPort();
+
+    /**
+     * Checks if start local development platypus server on application run.
      *
      * @return true not to start server
      */
-    boolean isNotStartServer();
+    boolean getStartLocalPlatypusServer();
+
+    /**
+     * Checks if start local development servlet container on application run.
+     *
+     * @return true not to start server
+     */
+    boolean getStartLocalServletContainer();
 
     /**
      * Saves the project settings.
@@ -233,21 +262,21 @@ public interface PlatypusProjectSettings {
      *
      * @param aValue
      */
-    void setClientOptions(String aValue);
+    void setPlatypusClientOptions(String aValue);
 
     /**
-     * Sets application's server host.
+     * Sets url used with platyous client.
      *
      * @param aValue Url string
      */
-    void setClientUrl(String aValue);
+    void setPlatypusClientUrl(String aValue);
 
     /**
      * Sets JVM options provided to Platypus Client.
      *
      * @param aValue
      */
-    void setClientVmOptions(String aValue);
+    void setPlatypusClientVmOptions(String aValue);
 
     /**
      * Sets JPDA debugging port for Platypus Client on local computer on
@@ -255,19 +284,19 @@ public interface PlatypusProjectSettings {
      *
      * @param aValue JPDA debugging port
      */
-    void setDebugClientPort(int aValue);
+    void setPlatypusClientDebugPort(int aValue);
 
     void setBrowserCacheBusting(boolean aValue);
-    
+
     void setGlobalAPI(boolean aValue);
-    
+
     /**
-     * Sets JMX debugging port for Platypus Application Server on local computer
-     * on development.
+     * Sets JPDA debugging port for platypus server on local computer on
+     * development.
      *
-     * @param aValue JMX debugging port
+     * @param aValue JPDA debugging port
      */
-    void setDebugServerPort(int aValue);
+    void setPlatypusServerDebugPort(int aValue);
 
     /**
      * Sets the project's display name.
@@ -277,33 +306,50 @@ public interface PlatypusProjectSettings {
     void setDisplayName(String aValue);
 
     /**
-     * Sets J2EE server instance ID.
-     *
-     * @param aValue J2EE server ID
-     */
-    void setJ2eeServerId(String aValue);
-
-    /**
-     * Sets flag NOT to start local development application server on
-     * application run.
+     * Sets flag to start local development platypus server on application run.
      *
      * @param aValue true not to start server
      */
-    void setNotStartServer(boolean aValue);
+    void setStartLocalPlatypusServer(boolean aValue);
+
+    /**
+     * Sets flag to start local development servlet container on application
+     * run.
+     *
+     * @param aValue true not to start server
+     */
+    void setStartLocalServletContainer(boolean aValue);
+
+    /**
+     * Checks if datasources from designer should be placed into
+     * project.properties
+     *
+     * @return true if datasources from designer should be placed into
+     * project.properties
+     */
+    boolean getAcceptDesginerDatasources();
+
+    /**
+     * Sets flag to place datasources from designer into project.properties.
+     *
+     * @param aValue true if datasources from designer should be placed into
+     * project.properties
+     */
+    public void setAcceptDesignerDatasources(boolean aValue);
 
     /**
      * Sets application server type to be run.
      *
      * @param aValue AppServerType instance
      */
-    void setRunAppServerType(AppServerType aValue);
+    void setApplicationServerType(AppServerType aValue);
 
     /**
      * Sets client type to be run.
      *
      * @param aValue ClientType instance
      */
-    void setRunClientType(ClientType aValue);
+    void setClientType(ClientType aValue);
 
     /**
      * Sets password for the Platypus user to login on application run.
@@ -324,27 +370,75 @@ public interface PlatypusProjectSettings {
      *
      * @param aValue The name of the context string
      */
-    void setServerContext(String aValue);
+    void setWebApplicationContext(String aValue);
 
     /**
      * Sets optional parameters provided to Platypus Application Server.
      *
      * @param aValue
      */
-    void setServerOptions(String aValue);
+    void setPlatypusServerOptions(String aValue);
 
     /**
-     * Sets application's server port.
+     * Sets platypus port.
      *
      * @param aValue server port
      */
-    void setServerPort(int aValue);
+    void setPlatypusServerPort(int aValue);
+
+    /**
+     * Sets http port.
+     *
+     * @param aValue http port.
+     */
+    void setServletContainerPort(int aValue);
+
+    /**
+     * Sets servel container JPDA port.
+     *
+     * @param aValue JPDA port.
+     */
+    void setServletContainerDebugPort(int aValue);
 
     /**
      * Sets JVM options provided to Platypus Application Server.
      *
      * @param aValue
      */
-    void setServerVmOptions(String aValue);
+    void setPlatypusServerVmOptions(String aValue);
+
+    String getCleanCommand();
+
+    String getBuildCommand();
+
+    String getPlatypusServerRunCommand();
+
+    String getServletContainerRunCommand();
+
+    String getPlatypusClientRunCommand();
+
+    void setCleanCommand(String aValue);
+
+    void setBuildCommand(String aValue);
+
+    void setPlatypusServerRunCommand(String aValue);
+
+    void setServletContainerRunCommand(String aValue);
+
+    void setPlatypusClientRunCommand(String aValue);
+
+    String getBrowserCustomUrl();
+
+    String getBrowserRunCommand();
+
+    void setBrowserCustomUrl(String aValue);
+
+    void setBrowserRunCommand(String aValue);
+
+    void load() throws IOException;
+
+    public EditableProperties getProjectProperties();
+
+    public EditableProperties getProjectPrivateProperties();
 
 }

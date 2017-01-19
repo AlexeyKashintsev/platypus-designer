@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.project;
 
 import com.eas.designer.application.project.ClientType;
@@ -24,11 +20,13 @@ import org.openide.util.EditableProperties;
  */
 public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
 
-    public static final int DEFAULT_PLATYPUS_SERVER_PORT = 8500;
-    public static final int CLIENT_APP_DEFAULT_DEBUG_PORT = 8900;
-    public static final int SERVER_APP_DEFAULT_DEBUG_PORT = 8901;
+    public static final int DEFAULT_PLATYPUS_SERVER_PORT = 7500;
+    public static final int DEFAULT_SERVLET_CONTAINER_PORT = 8085;
+    public static final int DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT = 5001;
+    public static final int DEFAULT_PLATYPUS_SERVER_DEBUG_PORT = 5004;
+    public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5006;
     public static final Level DEFAULT_LOG_LEVEL = Level.INFO;
-    public static final String PROJECT_MARKER_FILE = ".platypus"; //NOI18N
+    public static final String PROJECT_COMMANDS_FILE = ".platypus"; //NOI18N
     public static final String PROJECT_SETTINGS_FILE = "project.properties"; //NOI18N
     public static final String PROJECT_PRIVATE_SETTINGS_FILE = "private.properties"; //NOI18N
     public static final String DEFAULT_APP_FOLDER = "app"; //NOI18N
@@ -38,24 +36,27 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public static final String DEFAULT_DATA_SOURCE_ELEMENT_KEY = "defaultDataSource"; //NOI18N
     public static final String RUN_USER_KEY = "runUser"; //NOI18N
     public static final String RUN_PASSWORD_KEY = "runPassword"; //NOI18N
-    public static final String RUN_CLIENT_OPTIONS_KEY = "runClientOptions"; //NOI18N
-    public static final String RUN_CLIENT_VM_OPTIONS_KEY = "runClientVmOptions"; //NOI18N
-    public static final String RUN_SERVER_OPTIONS_KEY = "runServerOptions"; //NOI18N
-    public static final String RUN_SERVER_VM_OPTIONS_KEY = "runServerVmOptions"; //NOI18N
-    public static final String SERVER_PORT_KEY = "serverPort";//NOI18N
-    public static final String CLIENT_URL_KEY = "clientUrl";//NOI18N
+    public static final String PLATYPUS_CLIENT_OPTIONS_KEY = "platypusClientOptions"; //NOI18N
+    public static final String PLATYPUS_CLIENT_VM_OPTIONS_KEY = "PlatypusClientVmOptions"; //NOI18N
+    public static final String PLATYPUS_SERVER_OPTIONS_KEY = "platypusServerOptions"; //NOI18N
+    public static final String PLATYPUS_SERVER_VM_OPTIONS_KEY = "platypusServerVmOptions"; //NOI18N
+    public static final String PLATYPUS_SERVER_PORT_KEY = "platypusPort";//NOI18N
+    public static final String SERVLET_CONTAINER_PORT_KEY = "httpPort";//NOI18N
+    public static final String PLATYPUS_CLIENT_URL_KEY = "platypusClientUrl";//NOI18N
+    public static final String BROWSER_CUSTOM_URL_KEY = "browserCustomUrl";//NOI18N
     public static final String BROWSER_CACHE_BUSTING_KEY = "browserCacheBusting";//NOI18N
     public static final String GLOBAL_API_KEY = "globalAPI";//NOI18N
-    public static final String NOT_START_SERVER_KEY = "notStartServer"; //NOI18N
-    public static final String DEBUG_CLIENT_PORT_KEY = "debugClientPort"; //NOI18N
-    public static final String DEBUG_SERVER_PORT_KEY = "debugServerPort"; //NOI18N
-    public static final String CLIENT_LOG_LEVEL_KEY = "clientLogLevel"; //NOI18N
-    public static final String SERVER_LOG_LEVEL_KEY = "serverLogLevel"; //NOI18N
-    public static final String PLATYPUS_JS_VERSION_KEY = "platypus-js-version"; //NOI18N
+    public static final String START_LOCAL_PLATYPUS_SERVER_KEY = "startLocalPlatypusServer"; //NOI18N
+    public static final String START_LOCAL_SERVLET_CONTAINER_KEY = "startLocalServletContainer"; //NOI18N
+    public static final String ACCEPT_DESIGNER_DATASOURCES_KEY = "acceptDesignerDatasources"; //NOI18N
+    public static final String PLATYPUS_CLIENT_DEBUG_PORT_KEY = "platypusClientDebugPort"; //NOI18N
+    public static final String SERVLET_CONTAINER_DEBUG_PORT_KEY = "servletContainerDebugPort"; //NOI18N
+    public static final String PLATYPUS_SERVER_DEBUG_PORT_KEY = "platypusServerDebugPort"; //NOI18N
+    public static final String PLATYPUS_CLIENT_LOG_LEVEL_KEY = "platypusClientLogLevel"; //NOI18N
+    public static final String SERVLET_CONTAINER_LOG_LEVEL_KEY = "servletContainerLogLevel"; //NOI18N
+    public static final String PLATYPUS_SERVER_LOG_LEVEL_KEY = "platypusServerLogLevel"; //NOI18N
     public static final String AUTO_APPLY_WEB_SETTINGS_KEY = "auto-apply-web-settings"; //NOI18N
-    public static final String AUTO_UPDATE_PLATYPUS_API_KEY = "auto-update-platypus-api"; //NOI18N
-    public static final String J2EE_SERVER_ID_KEY = "j2eeServerId"; //NOI18N
-    public static final String SERVER_CONTEXT_KEY = "context";//NOI18N
+    public static final String WEB_APPLICATION_CONTEXT_KEY = "webApplicationContext";//NOI18N
     public static final String ENABLE_SECURITY_REALM_KEY = "enableSecurityRealm";//NOI18N
     public static final String CLIENT_TYPE_KEY = "clientType"; //NOI18N
     public static final String SERVER_TYPE_KEY = "serverType"; //NOI18N
@@ -83,25 +84,48 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
             + "        }\n" //NOI18N
             + "    });\n"//NOI18N
             + "});";
+    // projects commands
+    public static final String CLEAN_COMMAND_KEY = "cleanCommand"; //NOI18N
+    public static final String BUILD_COMMAND_KEY = "buildCommand"; //NOI18N
+    public static final String PLATYPUS_SERVER_RUN_COMMAND_KEY = "runPlatypusServerCommand"; //NOI18N
+    public static final String SERVLET_CONTAINER_RUN_COMMAND_KEY = "runServletContainerCommand"; //NOI18N
+    public static final String PLATYPUS_CLIENT_RUN_COMMAND_KEY = "runPlatypusClientCommand"; //NOI18N
+    public static final String BROWSER_RUN_COMMAND_KEY = "runBrowserCommand"; //NOI18N
 
     protected final FileObject projectDir;
     protected final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     protected EditableProperties projectProperties;
+    protected EditableProperties projectCommands;
     protected EditableProperties projectPrivateProperties;
-    private boolean projectPropertiesIsDirty;
-    private boolean projectPrivatePropertiesIsDirty;
+    private boolean projectCommandsDirty;
+    private boolean projectPropertiesDirty;
+    private boolean projectPrivatePropertiesDirty;
 
     public PlatypusProjectSettingsImpl(FileObject aProjectDir) throws Exception {
         if (aProjectDir == null) {
             throw new IllegalArgumentException("Project directory file object is null."); //NOI18N
         }
         projectDir = aProjectDir;
+        projectCommands = new EditableProperties(false);
         projectProperties = new EditableProperties(false);
         projectPrivateProperties = new EditableProperties(false);
         load();
     }
-    
-    public final void load() throws IOException{
+
+    public EditableProperties getProjectProperties() {
+        return projectProperties;
+    }
+
+    public EditableProperties getProjectPrivateProperties() {
+        return projectProperties;
+    }
+
+    @Override
+    public final void load() throws IOException {
+        projectCommands.clear();
+        try (InputStream is = getProjectCommandsFileObject().getInputStream()) {
+            projectCommands.load(is);
+        }
         projectProperties.clear();
         try (InputStream is = getProjectSettingsFileObject().getInputStream()) {
             projectProperties.load(is);
@@ -134,7 +158,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         }
         String oldValue = getDisplayName();
         projectProperties.setProperty(PROJECT_DISPLAY_NAME_KEY, aValue);
-        projectPropertiesIsDirty = true;
+        projectPropertiesDirty = true;
         changeSupport.firePropertyChange(PROJECT_DISPLAY_NAME_KEY, oldValue, aValue);
     }
 
@@ -163,7 +187,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
             } else {
                 projectProperties.remove(RUN_ELEMENT_KEY);
             }
-            projectPropertiesIsDirty = true;
+            projectPropertiesDirty = true;
             changeSupport.firePropertyChange(RUN_ELEMENT_KEY, oldValue, aValue);
         }
     }
@@ -182,7 +206,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
             } else {
                 projectProperties.remove(SOURCE_PATH_KEY);
             }
-            projectPropertiesIsDirty = true;
+            projectPropertiesDirty = true;
             changeSupport.firePropertyChange(SOURCE_PATH_KEY, oldValue, aValue);
         }
     }
@@ -210,7 +234,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         } else {
             projectPrivateProperties.remove(DEFAULT_DATA_SOURCE_ELEMENT_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(DEFAULT_DATA_SOURCE_ELEMENT_KEY, oldValue, aValue);
     }
 
@@ -237,7 +261,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         } else {
             projectPrivateProperties.remove(RUN_USER_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(RUN_USER_KEY, oldValue, aValue);
     }
 
@@ -264,7 +288,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         } else {
             projectPrivateProperties.remove(RUN_PASSWORD_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(RUN_PASSWORD_KEY, oldValue, aValue);
     }
 
@@ -274,8 +298,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return parameters string
      */
     @Override
-    public String getRunClientOptions() {
-        return projectPrivateProperties.get(RUN_CLIENT_OPTIONS_KEY);
+    public String getPlatypusClientOptions() {
+        return projectPrivateProperties.get(PLATYPUS_CLIENT_OPTIONS_KEY);
     }
 
     /**
@@ -284,15 +308,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue
      */
     @Override
-    public void setClientOptions(String aValue) {
-        String oldValue = getRunClientOptions();
+    public void setPlatypusClientOptions(String aValue) {
+        String oldValue = getPlatypusClientOptions();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_CLIENT_OPTIONS_KEY, aValue);
+            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_OPTIONS_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_CLIENT_OPTIONS_KEY);
+            projectPrivateProperties.remove(PLATYPUS_CLIENT_OPTIONS_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(RUN_CLIENT_OPTIONS_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_OPTIONS_KEY, oldValue, aValue);
     }
 
     /**
@@ -301,8 +325,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return parameters string
      */
     @Override
-    public String getRunClientVmOptions() {
-        return projectPrivateProperties.get(RUN_CLIENT_VM_OPTIONS_KEY);
+    public String getPlatypusClientVmOptions() {
+        return projectPrivateProperties.get(PLATYPUS_CLIENT_VM_OPTIONS_KEY);
     }
 
     /**
@@ -311,15 +335,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue
      */
     @Override
-    public void setClientVmOptions(String aValue) {
-        String oldValue = getRunClientVmOptions();
+    public void setPlatypusClientVmOptions(String aValue) {
+        String oldValue = getPlatypusClientVmOptions();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_CLIENT_VM_OPTIONS_KEY, aValue);
+            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_VM_OPTIONS_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_CLIENT_VM_OPTIONS_KEY);
+            projectPrivateProperties.remove(PLATYPUS_CLIENT_VM_OPTIONS_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(RUN_CLIENT_VM_OPTIONS_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_VM_OPTIONS_KEY, oldValue, aValue);
     }
 
     /**
@@ -328,8 +352,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return parameters string
      */
     @Override
-    public String getRunServerOptions() {
-        return projectPrivateProperties.get(RUN_SERVER_OPTIONS_KEY);
+    public String getPlatypusServerOptions() {
+        return projectPrivateProperties.get(PLATYPUS_SERVER_OPTIONS_KEY);
     }
 
     /**
@@ -338,15 +362,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue
      */
     @Override
-    public void setServerOptions(String aValue) {
-        String oldValue = getRunServerOptions();
+    public void setPlatypusServerOptions(String aValue) {
+        String oldValue = getPlatypusServerOptions();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_SERVER_OPTIONS_KEY, aValue);
+            projectPrivateProperties.setProperty(PLATYPUS_SERVER_OPTIONS_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_SERVER_OPTIONS_KEY);
+            projectPrivateProperties.remove(PLATYPUS_SERVER_OPTIONS_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(RUN_SERVER_OPTIONS_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_OPTIONS_KEY, oldValue, aValue);
     }
 
     /**
@@ -355,8 +379,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return parameters string
      */
     @Override
-    public String getRunServerVmOptions() {
-        return projectPrivateProperties.get(RUN_SERVER_VM_OPTIONS_KEY);
+    public String getPlatypusServerVmOptions() {
+        return projectPrivateProperties.get(PLATYPUS_SERVER_VM_OPTIONS_KEY);
     }
 
     /**
@@ -365,15 +389,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue
      */
     @Override
-    public void setServerVmOptions(String aValue) {
-        String oldValue = getRunServerVmOptions();
+    public void setPlatypusServerVmOptions(String aValue) {
+        String oldValue = getPlatypusServerVmOptions();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_SERVER_VM_OPTIONS_KEY, aValue);
+            projectPrivateProperties.setProperty(PLATYPUS_SERVER_VM_OPTIONS_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_SERVER_VM_OPTIONS_KEY);
+            projectPrivateProperties.remove(PLATYPUS_SERVER_VM_OPTIONS_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(RUN_SERVER_VM_OPTIONS_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_VM_OPTIONS_KEY, oldValue, aValue);
     }
 
     /**
@@ -382,8 +406,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return Url string
      */
     @Override
-    public String getClientUrl() {
-        return projectPrivateProperties.get(CLIENT_URL_KEY);
+    public String getPlatypusClientUrl() {
+        return projectPrivateProperties.get(PLATYPUS_CLIENT_URL_KEY);
     }
 
     /**
@@ -392,25 +416,20 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue Url string
      */
     @Override
-    public void setClientUrl(String aValue) {
-        String oldValue = getClientUrl();
+    public void setPlatypusClientUrl(String aValue) {
+        String oldValue = getPlatypusClientUrl();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(CLIENT_URL_KEY, aValue);
+            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_URL_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(CLIENT_URL_KEY);
+            projectPrivateProperties.remove(PLATYPUS_CLIENT_URL_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(CLIENT_URL_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_URL_KEY, oldValue, aValue);
     }
 
-    /**
-     * Gets application's server port.
-     *
-     * @return server port
-     */
     @Override
-    public int getServerPort() {
-        return StringUtils.parseInt(projectPrivateProperties.get(SERVER_PORT_KEY), DEFAULT_PLATYPUS_SERVER_PORT);
+    public int getPlatypusServerPort() {
+        return StringUtils.parseInt(projectPrivateProperties.get(PLATYPUS_SERVER_PORT_KEY), DEFAULT_PLATYPUS_SERVER_PORT);
     }
 
     /**
@@ -419,47 +438,106 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue server port
      */
     @Override
-    public void setServerPort(int aValue) {
-        int oldValue = getServerPort();
-        projectPrivateProperties.setProperty(SERVER_PORT_KEY, String.valueOf(aValue));
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(SERVER_PORT_KEY, oldValue, aValue);
+    public void setPlatypusServerPort(int aValue) {
+        int oldValue = getPlatypusServerPort();
+        projectPrivateProperties.setProperty(PLATYPUS_SERVER_PORT_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_PORT_KEY, oldValue, aValue);
     }
 
     /**
-     * Checks if NOT to start local development application server on
-     * application run.
+     * Gets servlet container port.
+     *
+     * @return server port
+     */
+    @Override
+    public int getServletContainerPort() {
+        return StringUtils.parseInt(projectPrivateProperties.get(SERVLET_CONTAINER_PORT_KEY), DEFAULT_SERVLET_CONTAINER_PORT);
+    }
+
+    @Override
+    public void setServletContainerPort(int aValue) {
+        int oldValue = getServletContainerPort();
+        projectPrivateProperties.setProperty(SERVLET_CONTAINER_PORT_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(SERVLET_CONTAINER_PORT_KEY, oldValue, aValue);
+    }
+
+    /**
+     * Checks if start local development application server on application run.
      *
      * @return true not to start server
      */
     @Override
-    public boolean isNotStartServer() {
-        return Boolean.valueOf(projectPrivateProperties.get(NOT_START_SERVER_KEY));
+    public boolean getStartLocalPlatypusServer() {
+        String value = projectPrivateProperties.get(START_LOCAL_PLATYPUS_SERVER_KEY);
+        return value != null ? Boolean.valueOf(value) : true;
     }
 
     /**
-     * Sets flag NOT to start local development application server on
+     * Sets flag to start local development application server on application
+     * run.
+     *
+     * @param aValue true not to start server
+     */
+    @Override
+    public void setStartLocalPlatypusServer(boolean aValue) {
+        boolean oldValue = getStartLocalPlatypusServer();
+        projectPrivateProperties.setProperty(START_LOCAL_PLATYPUS_SERVER_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(START_LOCAL_PLATYPUS_SERVER_KEY, oldValue, aValue);
+    }
+
+    /**
+     * Checks if start local development servlet container on application run.
+     *
+     * @return true not to start server
+     */
+    @Override
+    public boolean getStartLocalServletContainer() {
+        String value = projectPrivateProperties.get(START_LOCAL_SERVLET_CONTAINER_KEY);
+        return value != null ? Boolean.valueOf(value) : true;
+    }
+
+    /**
+     * Sets flag to start local development servlet container server on
      * application run.
      *
      * @param aValue true not to start server
      */
     @Override
-    public void setNotStartServer(boolean aValue) {
-        boolean oldValue = isNotStartServer();
-        projectPrivateProperties.setProperty(NOT_START_SERVER_KEY, String.valueOf(aValue));
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(NOT_START_SERVER_KEY, oldValue, aValue);
+    public void setStartLocalServletContainer(boolean aValue) {
+        boolean oldValue = getStartLocalServletContainer();
+        projectPrivateProperties.setProperty(START_LOCAL_SERVLET_CONTAINER_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(START_LOCAL_SERVLET_CONTAINER_KEY, oldValue, aValue);
     }
 
     /**
-     * Gets JPDA debugging port for Platypus Client on local computer on
-     * development if null or empty, use default value.
+     * Checks if datasources from designer should be placed into
+     * project.properties
      *
-     * @return JPDA debugging port
+     * @return true if datasources from designer should be placed into
+     * project.properties
      */
     @Override
-    public int getDebugClientPort() {
-        return StringUtils.parseInt(projectPrivateProperties.get(DEBUG_CLIENT_PORT_KEY), CLIENT_APP_DEFAULT_DEBUG_PORT);
+    public boolean getAcceptDesginerDatasources() {
+        String value = projectPrivateProperties.get(ACCEPT_DESIGNER_DATASOURCES_KEY);
+        return value != null ? Boolean.valueOf(value) : true;
+    }
+
+    /**
+     * Sets flag to place datasources from designer into project.properties.
+     *
+     * @param aValue true if datasources from designer should be placed into
+     * project.properties
+     */
+    @Override
+    public void setAcceptDesignerDatasources(boolean aValue) {
+        boolean oldValue = getStartLocalPlatypusServer();
+        projectPrivateProperties.setProperty(ACCEPT_DESIGNER_DATASOURCES_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(ACCEPT_DESIGNER_DATASOURCES_KEY, oldValue, aValue);
     }
 
     @Override
@@ -474,25 +552,11 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         return value != null ? Boolean.valueOf(value) : false;
     }
 
-    /**
-     * Sets JPDA debugging port for Platypus Client on local computer on
-     * development.
-     *
-     * @param aValue JPDA debugging port
-     */
-    @Override
-    public void setDebugClientPort(int aValue) {
-        int oldValue = getDebugClientPort();
-        projectPrivateProperties.setProperty(DEBUG_CLIENT_PORT_KEY, String.valueOf(aValue));
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(DEBUG_CLIENT_PORT_KEY, oldValue, aValue);
-    }
-
     @Override
     public void setBrowserCacheBusting(boolean aValue) {
         boolean oldValue = getBrowserCacheBusting();
         projectPrivateProperties.put(BROWSER_CACHE_BUSTING_KEY, "" + aValue);
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(BROWSER_CACHE_BUSTING_KEY, oldValue, aValue);
     }
 
@@ -500,60 +564,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public void setGlobalAPI(boolean aValue) {
         boolean oldValue = getGlobalAPI();
         projectProperties.put(GLOBAL_API_KEY, "" + aValue);
-        projectPropertiesIsDirty = true;
+        projectPropertiesDirty = true;
         changeSupport.firePropertyChange(GLOBAL_API_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets JPDA debugging port for Platypus Application Server on local
-     * computer on development if null or empty, use default value.
-     *
-     * @return JPDA debugging port
-     */
-    @Override
-    public int getDebugServerPort() {
-        return StringUtils.parseInt(projectPrivateProperties.get(DEBUG_SERVER_PORT_KEY), SERVER_APP_DEFAULT_DEBUG_PORT);
-    }
-
-    /**
-     * Sets JMX debugging port for Platypus Application Server on local computer
-     * on development.
-     *
-     * @param aValue JMX debugging port
-     */
-    @Override
-    public void setDebugServerPort(int aValue) {
-        int oldValue = getDebugServerPort();
-        projectPrivateProperties.setProperty(DEBUG_SERVER_PORT_KEY, String.valueOf(aValue));
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(DEBUG_SERVER_PORT_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets J2EE server instance ID.
-     *
-     * @return J2EE server ID
-     */
-    @Override
-    public String getJ2eeServerId() {
-        return projectPrivateProperties.get(J2EE_SERVER_ID_KEY);
-    }
-
-    /**
-     * Sets J2EE server instance ID.
-     *
-     * @param aValue J2EE server ID
-     */
-    @Override
-    public void setJ2eeServerId(String aValue) {
-        String oldValue = getJ2eeServerId();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(J2EE_SERVER_ID_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(J2EE_SERVER_ID_KEY);
-        }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(J2EE_SERVER_ID_KEY, oldValue, aValue);
     }
 
     /**
@@ -562,8 +574,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return The name of the context string
      */
     @Override
-    public String getServerContext() {
-        return projectProperties.get(SERVER_CONTEXT_KEY);
+    public String getWebApplicationContext() {
+        return projectProperties.get(WEB_APPLICATION_CONTEXT_KEY);
     }
 
     /**
@@ -572,15 +584,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue The name of the context string
      */
     @Override
-    public void setServerContext(String aValue) {
-        String oldValue = getServerContext();
+    public void setWebApplicationContext(String aValue) {
+        String oldValue = getWebApplicationContext();
         if (aValue != null) {
-            projectProperties.setProperty(SERVER_CONTEXT_KEY, aValue);
+            projectProperties.setProperty(WEB_APPLICATION_CONTEXT_KEY, aValue);
         } else {
-            projectProperties.remove(SERVER_CONTEXT_KEY);
+            projectProperties.remove(WEB_APPLICATION_CONTEXT_KEY);
         }
-        projectPropertiesIsDirty = true;
-        changeSupport.firePropertyChange(SERVER_CONTEXT_KEY, oldValue, aValue);
+        projectPropertiesDirty = true;
+        changeSupport.firePropertyChange(WEB_APPLICATION_CONTEXT_KEY, oldValue, aValue);
     }
 
     /**
@@ -589,7 +601,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return true to enable configure security realm
      */
     @Override
-    public boolean isSecurityRealmEnabled() {
+    public boolean getSecurityRealmEnabled() {
         return Boolean.valueOf(projectPrivateProperties.get(ENABLE_SECURITY_REALM_KEY));
     }
 
@@ -600,9 +612,9 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      */
     @Override
     public void setSecurityRealmEnabled(boolean aValue) {
-        boolean oldValue = isSecurityRealmEnabled();
+        boolean oldValue = getSecurityRealmEnabled();
         projectPrivateProperties.setProperty(ENABLE_SECURITY_REALM_KEY, String.valueOf(aValue));
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(ENABLE_SECURITY_REALM_KEY, oldValue, aValue);
     }
 
@@ -612,7 +624,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return ClientType instance
      */
     @Override
-    public ClientType getRunClientType() {
+    public ClientType getClientType() {
         ClientType val = ClientType.getById(projectPrivateProperties.get(CLIENT_TYPE_KEY));
         return val != null ? val : ClientType.WEB_BROWSER;
     }
@@ -623,14 +635,14 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue ClientType instance
      */
     @Override
-    public void setRunClientType(ClientType aValue) {
-        ClientType oldValue = getRunClientType();
+    public void setClientType(ClientType aValue) {
+        ClientType oldValue = getClientType();
         if (aValue != null) {
             projectPrivateProperties.setProperty(CLIENT_TYPE_KEY, aValue.getId());
         } else {
             projectPrivateProperties.remove(CLIENT_TYPE_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(CLIENT_TYPE_KEY, oldValue, aValue);
     }
 
@@ -640,9 +652,9 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return AppServerType instance
      */
     @Override
-    public AppServerType getRunAppServerType() {
+    public AppServerType getApplicationServerType() {
         AppServerType val = AppServerType.getById(projectPrivateProperties.get(SERVER_TYPE_KEY));
-        return val != null ? val : AppServerType.J2EE_SERVER;
+        return val != null ? val : AppServerType.SERVLET_CONTAINER;
     }
 
     /**
@@ -651,36 +663,54 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue AppServerType instance
      */
     @Override
-    public void setRunAppServerType(AppServerType aValue) {
-        AppServerType oldValue = getRunAppServerType();
+    public void setApplicationServerType(AppServerType aValue) {
+        AppServerType oldValue = getApplicationServerType();
         if (aValue != null) {
             projectPrivateProperties.setProperty(SERVER_TYPE_KEY, aValue.getId());
         } else {
             projectPrivateProperties.remove(SERVER_TYPE_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
+        projectPrivatePropertiesDirty = true;
         changeSupport.firePropertyChange(SERVER_TYPE_KEY, oldValue, aValue);
     }
 
     @Override
     public void save() throws IOException {
-        if (projectPropertiesIsDirty) {
+        if (projectCommandsDirty) {
+            try (OutputStream os = getProjectCommandsFileObject().getOutputStream()) {
+                projectCommands.store(os);
+            }
+            projectCommandsDirty = false;
+        }
+        if (projectPropertiesDirty) {
             try (OutputStream os = getProjectSettingsFileObject().getOutputStream()) {
                 projectProperties.store(os);
             }
-            projectPropertiesIsDirty = false;
+            projectPropertiesDirty = false;
         }
-        if (projectPrivatePropertiesIsDirty) {
+        if (projectPrivatePropertiesDirty) {
             try (OutputStream os = getProjectPrivateSettingsFileObject().getOutputStream()) {
                 projectPrivateProperties.store(os);
             }
-            projectPrivatePropertiesIsDirty = false;
+            projectPrivatePropertiesDirty = false;
         }
     }
 
     @Override
     public PropertyChangeSupport getChangeSupport() {
         return changeSupport;
+    }
+
+    protected final FileObject getProjectCommandsFileObject() {
+        FileObject fo = projectDir.getFileObject(PROJECT_COMMANDS_FILE);
+        if (fo == null) {
+            try {
+                fo = projectDir.createData(PROJECT_COMMANDS_FILE);
+            } catch (IOException ex) {
+                ErrorManager.getDefault().notify(ex);
+            }
+        }
+        return fo;
     }
 
     protected final FileObject getProjectSettingsFileObject() {
@@ -713,8 +743,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return Log level value
      */
     @Override
-    public Level getClientLogLevel() {
-        String logLevel = projectPrivateProperties.get(CLIENT_LOG_LEVEL_KEY);
+    public Level getPlatypusClientLogLevel() {
+        String logLevel = projectPrivateProperties.get(PLATYPUS_CLIENT_LOG_LEVEL_KEY);
         if (logLevel == null || logLevel.isEmpty()) {
             return DEFAULT_LOG_LEVEL;
         }
@@ -731,15 +761,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue Log level value
      */
     @Override
-    public void setClientLogLevel(Level aValue) {
-        Level oldValue = getClientLogLevel();
+    public void setPlatypusClientLogLevel(Level aValue) {
+        Level oldValue = getPlatypusClientLogLevel();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(CLIENT_LOG_LEVEL_KEY, aValue.getName());
+            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_LOG_LEVEL_KEY, aValue.getName());
         } else {
-            projectPrivateProperties.remove(CLIENT_LOG_LEVEL_KEY);
+            projectPrivateProperties.remove(PLATYPUS_CLIENT_LOG_LEVEL_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(CLIENT_LOG_LEVEL_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_LOG_LEVEL_KEY, oldValue, aValue);
     }
 
     /**
@@ -748,8 +778,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @return Log level value
      */
     @Override
-    public Level getServerLogLevel() {
-        String logLevel = projectPrivateProperties.get(SERVER_LOG_LEVEL_KEY);
+    public Level getPlatypusServerLogLevel() {
+        String logLevel = projectPrivateProperties.get(PLATYPUS_SERVER_LOG_LEVEL_KEY);
         if (logLevel == null || logLevel.isEmpty()) {
             return DEFAULT_LOG_LEVEL;
         }
@@ -766,53 +796,236 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      * @param aValue Log level value
      */
     @Override
-    public void setServerLogLevel(Level aValue) {
-        Level oldValue = getServerLogLevel();
+    public void setPlatypusServerLogLevel(Level aValue) {
+        Level oldValue = getPlatypusServerLogLevel();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(SERVER_LOG_LEVEL_KEY, aValue.getName());
+            projectPrivateProperties.setProperty(PLATYPUS_SERVER_LOG_LEVEL_KEY, aValue.getName());
         } else {
-            projectPrivateProperties.remove(SERVER_LOG_LEVEL_KEY);
+            projectPrivateProperties.remove(PLATYPUS_SERVER_LOG_LEVEL_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(SERVER_LOG_LEVEL_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_LOG_LEVEL_KEY, oldValue, aValue);
     }
 
-    public String getPlatypusJsVersion() {
-        return projectPrivateProperties.getProperty(PLATYPUS_JS_VERSION_KEY);
+    @Override
+    public Level getServletContainerLogLevel() {
+        String logLevel = projectPrivateProperties.get(SERVLET_CONTAINER_LOG_LEVEL_KEY);
+        if (logLevel == null || logLevel.isEmpty()) {
+            return DEFAULT_LOG_LEVEL;
+        }
+        try {
+            return Level.parse(logLevel);
+        } catch (IllegalArgumentException ex) {
+            return DEFAULT_LOG_LEVEL;
+        }
     }
 
-    public void setPlatypusJsVersion(String aValue) {
-        String oldValue = getPlatypusJsVersion();
+    @Override
+    public void setServletContainerLogLevel(Level aValue) {
+        Level oldValue = getServletContainerLogLevel();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(PLATYPUS_JS_VERSION_KEY, aValue);
+            projectPrivateProperties.setProperty(SERVLET_CONTAINER_LOG_LEVEL_KEY, aValue.getName());
         } else {
-            projectPrivateProperties.remove(PLATYPUS_JS_VERSION_KEY);
+            projectPrivateProperties.remove(SERVLET_CONTAINER_LOG_LEVEL_KEY);
         }
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_JS_VERSION_KEY, oldValue, aValue);
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(SERVLET_CONTAINER_LOG_LEVEL_KEY, oldValue, aValue);
     }
 
+    /**
+     * Gets JPDA debugging port for Platypus Client on local computer on
+     * development if null or empty, use default value.
+     *
+     * @return JPDA debugging port
+     */
+    @Override
+    public int getPlatypusClientDebugPort() {
+        return StringUtils.parseInt(projectPrivateProperties.get(PLATYPUS_CLIENT_DEBUG_PORT_KEY), DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT);
+    }
+
+    /**
+     * Sets JPDA debugging port for Platypus Client on local computer on
+     * development.
+     *
+     * @param aValue JPDA debugging port
+     */
+    @Override
+    public void setPlatypusClientDebugPort(int aValue) {
+        int oldValue = getPlatypusClientDebugPort();
+        projectPrivateProperties.setProperty(PLATYPUS_CLIENT_DEBUG_PORT_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_DEBUG_PORT_KEY, oldValue, aValue);
+    }
+
+    /**
+     * Gets JPDA debugging port for Platypus Application Server on local
+     * computer on development if null or empty, use default value.
+     *
+     * @return JPDA debugging port
+     */
+    @Override
+    public int getPlatypusServerDebugPort() {
+        return StringUtils.parseInt(projectPrivateProperties.get(PLATYPUS_SERVER_DEBUG_PORT_KEY), DEFAULT_PLATYPUS_SERVER_DEBUG_PORT);
+    }
+
+    /**
+     * Sets JPDA debugging port for Platypus Application Server on local
+     * computer on development.
+     *
+     * @param aValue JPDA debugging port
+     */
+    @Override
+    public void setPlatypusServerDebugPort(int aValue) {
+        int oldValue = getPlatypusServerDebugPort();
+        projectPrivateProperties.setProperty(PLATYPUS_SERVER_DEBUG_PORT_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_DEBUG_PORT_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public int getServletContainerDebugPort() {
+        return StringUtils.parseInt(projectPrivateProperties.get(SERVLET_CONTAINER_DEBUG_PORT_KEY), DEFAULT_SERVLET_CONTAINER_DEBUG_PORT);
+    }
+
+    @Override
+    public void setServletContainerDebugPort(int aValue) {
+        int oldValue = getServletContainerDebugPort();
+        projectPrivateProperties.setProperty(SERVLET_CONTAINER_DEBUG_PORT_KEY, String.valueOf(aValue));
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(SERVLET_CONTAINER_DEBUG_PORT_KEY, oldValue, aValue);
+    }
+
+    @Override
     public void setAutoApplyWebSettings(boolean aValue) {
-        boolean oldValue = isAutoApplyWebSettings();
+        boolean oldValue = getAutoApplyWebSettings();
         projectProperties.setProperty(AUTO_APPLY_WEB_SETTINGS_KEY, aValue + "");
-        projectPropertiesIsDirty = true;
+        projectPropertiesDirty = true;
         changeSupport.firePropertyChange(AUTO_APPLY_WEB_SETTINGS_KEY, oldValue, aValue);
     }
 
-    public boolean isAutoApplyWebSettings() {
+    @Override
+    public boolean getAutoApplyWebSettings() {
         String sValue = projectProperties.getProperty(AUTO_APPLY_WEB_SETTINGS_KEY);
         return sValue != null && !sValue.isEmpty() ? Boolean.valueOf(sValue) : true;
     }
 
-    public void setAutoUpdatePlatypusJs(boolean aValue) {        
-        boolean oldValue = isAutoUpdatePlatypusJs();
-        projectPrivateProperties.setProperty(AUTO_UPDATE_PLATYPUS_API_KEY, aValue + "");
-        projectPrivatePropertiesIsDirty = true;
-        changeSupport.firePropertyChange(AUTO_UPDATE_PLATYPUS_API_KEY, oldValue, aValue);
+    @Override
+    public String getCleanCommand() {
+        return projectCommands.getProperty(CLEAN_COMMAND_KEY);
     }
 
-    public boolean isAutoUpdatePlatypusJs() {
-        String sValue = projectPrivateProperties.getProperty(AUTO_UPDATE_PLATYPUS_API_KEY);
-        return sValue != null && !sValue.isEmpty() ? Boolean.valueOf(sValue) : true;
+    @Override
+    public String getBuildCommand() {
+        return projectCommands.getProperty(BUILD_COMMAND_KEY);
     }
+
+    @Override
+    public String getPlatypusServerRunCommand() {
+        return projectCommands.getProperty(PLATYPUS_SERVER_RUN_COMMAND_KEY);
+    }
+
+    @Override
+    public String getServletContainerRunCommand() {
+        return projectCommands.getProperty(SERVLET_CONTAINER_RUN_COMMAND_KEY);
+    }
+
+    @Override
+    public String getPlatypusClientRunCommand() {
+        return projectCommands.getProperty(PLATYPUS_CLIENT_RUN_COMMAND_KEY);
+    }
+
+    @Override
+    public void setCleanCommand(String aValue) {
+        String oldValue = getCleanCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(CLEAN_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(CLEAN_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(CLEAN_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public void setBuildCommand(String aValue) {
+        String oldValue = getBuildCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(BUILD_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(BUILD_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(BUILD_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public void setPlatypusServerRunCommand(String aValue) {
+        String oldValue = getPlatypusServerRunCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(PLATYPUS_SERVER_RUN_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(PLATYPUS_SERVER_RUN_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_SERVER_RUN_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public void setServletContainerRunCommand(String aValue) {
+        String oldValue = getServletContainerRunCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(SERVLET_CONTAINER_RUN_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(SERVLET_CONTAINER_RUN_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(SERVLET_CONTAINER_RUN_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public void setPlatypusClientRunCommand(String aValue) {
+        String oldValue = getPlatypusClientRunCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(PLATYPUS_CLIENT_RUN_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(PLATYPUS_CLIENT_RUN_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(PLATYPUS_CLIENT_RUN_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public String getBrowserCustomUrl() {
+        return projectPrivateProperties.get(BROWSER_CUSTOM_URL_KEY);
+    }
+
+    @Override
+    public void setBrowserCustomUrl(String aValue) {
+        String oldValue = getBrowserCustomUrl();
+        if (aValue != null) {
+            projectPrivateProperties.setProperty(BROWSER_CUSTOM_URL_KEY, aValue);
+        } else {
+            projectPrivateProperties.remove(BROWSER_CUSTOM_URL_KEY);
+        }
+        projectPrivatePropertiesDirty = true;
+        changeSupport.firePropertyChange(BROWSER_CUSTOM_URL_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public String getBrowserRunCommand() {
+        return projectCommands.getProperty(BROWSER_RUN_COMMAND_KEY);
+    }
+
+    @Override
+    public void setBrowserRunCommand(String aValue) {
+        String oldValue = getBrowserRunCommand();
+        if (aValue != null && !aValue.isEmpty()) {
+            projectCommands.setProperty(BROWSER_RUN_COMMAND_KEY, aValue);
+        } else {
+            projectCommands.remove(BROWSER_RUN_COMMAND_KEY);
+        }
+        projectCommandsDirty = true;
+        changeSupport.firePropertyChange(BROWSER_RUN_COMMAND_KEY, oldValue, aValue);
+    }
+
 }

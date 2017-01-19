@@ -1,7 +1,7 @@
 package com.eas.designer.explorer.project.ui;
 
-import com.eas.designer.explorer.project.PlatypusProjectImpl;
-import com.eas.designer.explorer.project.PlatypusProjectSettingsImpl;
+import com.eas.designer.application.project.PlatypusProject;
+import com.eas.designer.application.project.PlatypusProjectSettings;
 import java.awt.EventQueue;
 import org.openide.filesystems.FileObject;
 
@@ -11,24 +11,30 @@ import org.openide.filesystems.FileObject;
  */
 public class ServletContainerCustomizer extends javax.swing.JPanel {
 
-    protected final PlatypusProjectImpl project;
+    protected final PlatypusProject project;
     protected final FileObject appRoot;
-    protected final PlatypusProjectSettingsImpl projectSettings;
+    protected final PlatypusProjectSettings projectSettings;
 
     /**
      * Creates new form ProjectRunningCustomizer
+     *
+     * @param aProject
      */
-    public ServletContainerCustomizer(PlatypusProjectImpl aProject) throws Exception {
+    public ServletContainerCustomizer(PlatypusProject aProject) {
         project = aProject;
         appRoot = aProject.getSrcRoot();
         projectSettings = aProject.getSettings();
         initComponents();
         EventQueue.invokeLater(() -> {
-            cbEnableWebSecurity.setSelected(projectSettings.isSecurityRealmEnabled());
-            cbAutoApply.setSelected(projectSettings.isAutoApplyWebSettings());
-            if (projectSettings.getServerContext() != null) {
-                txtContext.setText(projectSettings.getServerContext());
+            cbEnableWebSecurity.setSelected(projectSettings.getSecurityRealmEnabled());
+            cbAutoApply.setSelected(projectSettings.getAutoApplyWebSettings());
+            if (projectSettings.getWebApplicationContext() != null) {
+                txtContext.setText(projectSettings.getWebApplicationContext());
             }
+            if (projectSettings.getServletContainerRunCommand() != null) {
+                txtServletContainerRunCommand.setText(projectSettings.getServletContainerRunCommand());
+            }
+            cbRunServletContainer.setSelected(projectSettings.getStartLocalServletContainer());
         });
     }
 
@@ -41,22 +47,13 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         lblContext = new javax.swing.JLabel();
         txtContext = new javax.swing.JTextField();
         cbEnableWebSecurity = new javax.swing.JCheckBox();
         cbAutoApply = new javax.swing.JCheckBox();
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        lblServletContainerRunCommand = new javax.swing.JLabel();
+        txtServletContainerRunCommand = new javax.swing.JTextField();
+        cbRunServletContainer = new javax.swing.JCheckBox();
 
         lblContext.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblContext.text")); // NOI18N
 
@@ -85,26 +82,55 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
             }
         });
 
+        lblServletContainerRunCommand.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblServletContainerRunCommand.text")); // NOI18N
+
+        txtServletContainerRunCommand.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtServletContainerRunCommandFocusLost(evt);
+            }
+        });
+        txtServletContainerRunCommand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtServletContainerRunCommandActionPerformed(evt);
+            }
+        });
+
+        cbRunServletContainer.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.cbRunServletContainer.text")); // NOI18N
+        cbRunServletContainer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRunServletContainerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbEnableWebSecurity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbAutoApply, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbEnableWebSecurity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbRunServletContainer)
+                            .addComponent(cbAutoApply, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
+                        .addGap(154, 154, 154))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblContext, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtContext)))
-                .addContainerGap())
+                        .addComponent(txtContext))
+                    .addComponent(txtServletContainerRunCommand)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblServletContainerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(cbRunServletContainer)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContext)
                     .addComponent(txtContext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -112,16 +138,20 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
                 .addComponent(cbEnableWebSecurity)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbAutoApply)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(lblServletContainerRunCommand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtServletContainerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtContextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContextActionPerformed
-        projectSettings.setServerContext(txtContext.getText());
+        projectSettings.setWebApplicationContext(txtContext.getText());
     }//GEN-LAST:event_txtContextActionPerformed
 
     private void txtContextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContextFocusLost
-        projectSettings.setServerContext(txtContext.getText());
+        projectSettings.setWebApplicationContext(txtContext.getText());
     }//GEN-LAST:event_txtContextFocusLost
 
     private void cbEnableWebSecurityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnableWebSecurityActionPerformed
@@ -132,11 +162,25 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
         projectSettings.setAutoApplyWebSettings(cbAutoApply.isSelected());
     }//GEN-LAST:event_cbAutoApplyActionPerformed
 
+    private void txtServletContainerRunCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServletContainerRunCommandActionPerformed
+        projectSettings.setServletContainerRunCommand(txtServletContainerRunCommand.getText());
+    }//GEN-LAST:event_txtServletContainerRunCommandActionPerformed
+
+    private void txtServletContainerRunCommandFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServletContainerRunCommandFocusLost
+        projectSettings.setServletContainerRunCommand(txtServletContainerRunCommand.getText());
+    }//GEN-LAST:event_txtServletContainerRunCommandFocusLost
+
+    private void cbRunServletContainerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRunServletContainerActionPerformed
+        projectSettings.setStartLocalServletContainer(cbRunServletContainer.isSelected());
+    }//GEN-LAST:event_cbRunServletContainerActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbAutoApply;
     private javax.swing.JCheckBox cbEnableWebSecurity;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JCheckBox cbRunServletContainer;
     private javax.swing.JLabel lblContext;
+    private javax.swing.JLabel lblServletContainerRunCommand;
     private javax.swing.JTextField txtContext;
+    private javax.swing.JTextField txtServletContainerRunCommand;
     // End of variables declaration//GEN-END:variables
 }

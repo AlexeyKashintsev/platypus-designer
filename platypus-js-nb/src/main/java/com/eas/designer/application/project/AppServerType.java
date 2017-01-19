@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.project;
 
 import org.openide.util.NbBundle;
@@ -14,7 +10,7 @@ public enum AppServerType {
 
     NONE("none", "appServerType_none"), //NOI18N
     PLATYPUS_SERVER("platypus", "appServerType_platypusServer"), //NOI18N
-    J2EE_SERVER("j2ee", "appServerType_j2eeServer"); //NOI18N
+    SERVLET_CONTAINER("servlet", "appServerType_servletContainer"); //NOI18N
 
     private final String id;
     private final String resName;
@@ -41,7 +37,7 @@ public enum AppServerType {
 
     @Override
     public String toString() {
-        return NbBundle.getMessage(ClientType.class, resName);
+        return NbBundle.getMessage(AppServerType.class, resName);
     }
 
     /**

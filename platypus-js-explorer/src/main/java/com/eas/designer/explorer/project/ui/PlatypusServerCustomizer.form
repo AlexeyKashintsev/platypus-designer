@@ -36,8 +36,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="cbNotStartServer" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="cbRunPlatypusServer" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -62,6 +62,8 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Component id="lblPlatypusServerRunCommand" max="32767" attributes="0"/>
+                  <Component id="txtPlatypusServerRunCommand" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -71,6 +73,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="cbRunPlatypusServer" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="lblServerPort" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="spServerPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
@@ -95,8 +99,10 @@
                   <Component id="lblServerDebugPort" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="spServerDebugPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="cbNotStartServer" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblPlatypusServerRunCommand" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="txtPlatypusServerRunCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -184,15 +190,27 @@
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spServerDebugPortFocusLost"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbNotStartServer">
+    <Component class="javax.swing.JLabel" name="lblPlatypusServerRunCommand">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusServerCustomizer.cbNotStartServer.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusServerCustomizer.lblPlatypusServerRunCommand.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
-        <Property name="actionCommand" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPlatypusServerRunCommand">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPlatypusServerRunCommandFocusLost"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPlatypusServerRunCommandActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbRunPlatypusServer">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusServerCustomizer.cbRunPlatypusServer.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNotStartServerActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbRunPlatypusServerActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

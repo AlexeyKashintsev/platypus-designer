@@ -115,7 +115,7 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
     protected void processProjectProperties(EditableProperties aGeneralProperties, EditableProperties aPrivateProperties) {
         String projectName = (String) wiz.getProperty(PlatypusSamples.NAME);
         aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.PROJECT_DISPLAY_NAME_KEY, projectName);
-        aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.SERVER_CONTEXT_KEY, projectName);
+        aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.WEB_APPLICATION_CONTEXT_KEY, projectName);
     }
 
     @Override

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.j2ee.dd;
 
 import org.w3c.dom.Document;
@@ -15,7 +11,7 @@ public interface ElementConvertable {
 
     /**
      * Converts to XML element.
-     * @param XML document
+     * @param aDoc
      * @return XML element
      */
     Element getElement(Document aDoc);

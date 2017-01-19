@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.project;
 
 import java.io.IOException;
@@ -21,10 +17,10 @@ public final class PlatypusProjectFactory implements ProjectFactory {
     public boolean isProject(FileObject fo) {
         if (fo.isFolder()) {
             FileObject appDirectory = fo.getFileObject(PlatypusProjectSettingsImpl.DEFAULT_APP_FOLDER);
-            FileObject markerFile = fo.getFileObject(PlatypusProjectSettingsImpl.PROJECT_MARKER_FILE);
+            FileObject commandsFile = fo.getFileObject(PlatypusProjectSettingsImpl.PROJECT_COMMANDS_FILE);
             FileObject settingsFile = fo.getFileObject(PlatypusProjectSettingsImpl.PROJECT_SETTINGS_FILE);
             return (appDirectory != null
-                    && appDirectory.isFolder() || markerFile != null)
+                    && appDirectory.isFolder() || commandsFile != null)
                     && settingsFile != null;
         } else {
             return false;

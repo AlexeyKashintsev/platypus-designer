@@ -19,7 +19,7 @@ import org.openide.filesystems.FileObject;
 
 /**
  *
- * @author Gala
+ * @author mg
  */
 public class PlatypusProjectDiskOperations implements DataFilesProviderImplementation,
         DeleteOperationImplementation,
@@ -39,7 +39,7 @@ public class PlatypusProjectDiskOperations implements DataFilesProviderImplement
      */
     @Override
     public List<FileObject> getMetadataFiles() {
-        return Collections.unmodifiableList(Arrays.asList(project.getSettings().getProjectSettingsFileObject()));
+        return Collections.unmodifiableList(Arrays.asList(project.getSettings().getProjectSettingsFileObject(), project.getSettings().getProjectCommandsFileObject()));
     }
 
     @Override

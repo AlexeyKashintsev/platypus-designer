@@ -28,6 +28,10 @@ subprojects{
         providedCompile.transitive = false
     }    
     
+    dependencies {
+        testCompile 'junit:junit:4.11'
+    }
+    
     nbm {
         keyStore {
             keyStoreFile = project.file('sign')

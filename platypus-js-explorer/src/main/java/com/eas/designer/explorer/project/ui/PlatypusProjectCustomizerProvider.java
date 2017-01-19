@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.project.ui;
 
 import com.eas.designer.application.project.PlatypusProject;
-import com.eas.designer.explorer.project.PlatypusProjectImpl;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +37,7 @@ public class PlatypusProjectCustomizerProvider implements CustomizerProvider {
             dialog.setVisible(true);
         } else {
             OptionListener listener = new OptionListener(project);
-            dialog = ProjectCustomizer.createCustomizerDialog(CUSTOMIZER_FOLDER_PATH, Lookups.singleton(project), null, listener, null);
+            dialog = ProjectCustomizer.createCustomizerDialog(CUSTOMIZER_FOLDER_PATH, Lookups.singleton(project), "", listener, null);
             dialog.addWindowListener(listener);
             dialog.setTitle(NbBundle.getMessage(PlatypusProjectCustomizerProvider.class, "LBL_Customizer_Title", ProjectUtils.getInformation(project).getDisplayName()));
 
@@ -54,10 +49,10 @@ public class PlatypusProjectCustomizerProvider implements CustomizerProvider {
     /** Listens to the actions on the Customizer's option buttons */
     private class OptionListener extends WindowAdapter implements ActionListener {
 
-        private Project project;
+        private final Project project;
 
-        OptionListener(Project project) {
-            this.project = project;
+        OptionListener(Project aProject) {
+            project = aProject;
         }
 
         // Listening to OK button ----------------------------------------------

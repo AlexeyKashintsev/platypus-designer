@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.j2ee.tomcat;
 
 import com.eas.designer.explorer.j2ee.dd.ElementConvertable;

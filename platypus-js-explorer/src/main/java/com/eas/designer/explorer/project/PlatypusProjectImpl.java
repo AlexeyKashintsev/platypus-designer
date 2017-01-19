@@ -14,8 +14,6 @@ import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectInformation;
 import com.eas.designer.application.utils.DatabaseConnections;
 import com.eas.designer.application.utils.DatabaseConnectionsListener;
-import com.eas.designer.explorer.j2ee.PlatypusWebModule;
-import com.eas.designer.explorer.j2ee.PlatypusWebModuleManager;
 import com.eas.designer.explorer.model.windows.ModelInspector;
 import com.eas.designer.explorer.project.ui.PlatypusProjectCustomizerProvider;
 import com.eas.script.Scripts;
@@ -170,8 +168,6 @@ public class PlatypusProjectImpl implements PlatypusProject {
                 new PlatypusPrivilegedTemplates(),
                 new PlatypusProjectCustomizerProvider(this),
                 new PlatypusFilesEncodingQuery(),
-                new PlatypusWebModule(this),
-                new PlatypusWebModuleManager(this),
                 getSearchInfoDescription());
         indexer = new PlatypusIndexer() {
             @Override

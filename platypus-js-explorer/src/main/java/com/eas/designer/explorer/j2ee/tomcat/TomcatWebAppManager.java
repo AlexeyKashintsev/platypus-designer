@@ -1,11 +1,7 @@
 package com.eas.designer.explorer.j2ee.tomcat;
 
 import com.eas.client.ClientConstants;
-import com.eas.designer.application.PlatypusUtils;
-import com.eas.designer.explorer.j2ee.PlatypusWebModule;
 import com.eas.designer.explorer.project.PlatypusProjectImpl;
-import com.eas.util.FileUtils;
-import com.eas.xml.dom.XmlDom2String;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,15 +10,10 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.netbeans.api.db.explorer.ConnectionManager;
 import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.netbeans.modules.j2ee.deployment.devmodules.api.InstanceRemovedException;
-import org.netbeans.modules.j2ee.deployment.devmodules.spi.J2eeModuleImplementation2;
 import org.openide.ErrorManager;
-import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
 import org.openide.util.Parameters;
 
 /**
@@ -42,19 +33,6 @@ public class TomcatWebAppManager {
     }
 
     public void configure() {
-        try {
-            FileObject contextXml = getWebMobdule().getMetaInfDir().getFileObject(CONTEXT_FILE_NAME);
-            if (contextXml == null || project.getSettings().isAutoApplyWebSettings()) {
-                if (contextXml == null) {
-                    contextXml = getWebMobdule().getMetaInfDir().createData(CONTEXT_FILE_NAME);
-                }
-                Context ctx = getContext();
-                FileUtils.writeString(FileUtil.toFile(contextXml), XmlDom2String.transform(ctx.toDocument()), PlatypusUtils.COMMON_ENCODING_NAME);
-                Logger.getLogger(getClass().getName()).log(Level.INFO, "Starting configuring an application for Tomcat.");
-            }
-        } catch (IOException ex) {
-            ErrorManager.getDefault().notify(ex);
-        }
     }
 
     /**
@@ -93,19 +71,11 @@ public class TomcatWebAppManager {
         return false;
     }
 
-    protected PlatypusWebModule getWebMobdule() {
-        return project.getLookup().lookup(PlatypusWebModule.class);
-    }
-
-    protected J2eeModuleImplementation2 getWebMobduleImpl() {
-        return project.getLookup().lookup(J2eeModuleImplementation2.class);
-    }
-
     private Context getContext() {
         Context ctx = null;
         try {
             ctx = new Context();
-            String path = getWebMobdule().getUrl();
+            String path = ""; //getWebMobdule().getUrl();
             if (!path.startsWith("/")) {
                 path = "/" + path;
             }

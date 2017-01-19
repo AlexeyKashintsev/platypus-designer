@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.j2ee.dd;
 
 import java.util.ArrayList;
@@ -17,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Simplified representation of deployment descriptor(web.xml) file.
+ * Simplified representation of deployment descriptor (web.xml) file.
  *
  * @author vv
  */

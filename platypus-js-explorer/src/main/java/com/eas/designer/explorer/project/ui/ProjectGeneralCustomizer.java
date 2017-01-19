@@ -4,8 +4,8 @@ import com.eas.designer.application.indexer.IndexerQuery;
 import com.eas.designer.explorer.FileChooser;
 import com.eas.designer.application.project.AppServerType;
 import com.eas.designer.application.project.ClientType;
-import com.eas.designer.explorer.project.PlatypusProjectImpl;
-import com.eas.designer.explorer.project.PlatypusProjectSettingsImpl;
+import com.eas.designer.application.project.PlatypusProject;
+import com.eas.designer.application.project.PlatypusProjectSettings;
 import com.eas.designer.application.utils.DatabaseConnectionRenderer;
 import com.eas.designer.application.utils.DatabaseConnections;
 import java.awt.EventQueue;
@@ -25,9 +25,9 @@ import org.openide.util.Exceptions;
  */
 public class ProjectGeneralCustomizer extends javax.swing.JPanel {
 
-    protected final PlatypusProjectImpl project;
+    protected final PlatypusProject project;
     protected final FileObject appRoot;
-    protected final PlatypusProjectSettingsImpl projectSettings;
+    protected final PlatypusProjectSettings projectSettings;
     private boolean isInit;
 
     /**
@@ -35,7 +35,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
      *
      * @param aProject
      */
-    public ProjectGeneralCustomizer(PlatypusProjectImpl aProject) {
+    public ProjectGeneralCustomizer(PlatypusProject aProject) {
         project = aProject;
         appRoot = aProject.getSrcRoot();
         projectSettings = aProject.getSettings();
@@ -60,11 +60,16 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 if (projectSettings.getSourcePath() != null) {
                     txtSourcePath.setText(projectSettings.getSourcePath());
                 }
+                if (projectSettings.getCleanCommand() != null) {
+                    txtCleanCommand.setText(projectSettings.getCleanCommand());
+                }
+                if (projectSettings.getBuildCommand()!= null) {
+                    txtBuildCommand.setText(projectSettings.getBuildCommand());
+                }
                 chCacheBust.setSelected(projectSettings.getBrowserCacheBusting());
                 chGlobalApi.setSelected(projectSettings.getGlobalAPI());
-                cbClientType.setSelectedItem(projectSettings.getRunClientType());
-                cbAppServerType.setSelectedItem(projectSettings.getRunAppServerType());
-
+                cbClientType.setSelectedItem(projectSettings.getClientType());
+                cbAppServerType.setSelectedItem(projectSettings.getApplicationServerType());
                 checkRunClientServerConfiguration();
             } finally {
                 isInit = false;
@@ -91,7 +96,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     }
 
     private boolean isInvalidRunClientServerConfiguration() {
-        return ClientType.WEB_BROWSER.equals(cbClientType.getSelectedItem()) && !AppServerType.J2EE_SERVER.equals(cbAppServerType.getSelectedItem());
+        return ClientType.WEB_BROWSER.equals(cbClientType.getSelectedItem()) && !AppServerType.SERVLET_CONTAINER.equals(cbAppServerType.getSelectedItem());
     }
 
     /**
@@ -119,6 +124,10 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         chGlobalApi = new javax.swing.JCheckBox();
         txtSourcePath = new javax.swing.JTextField();
         lblSourcePath = new javax.swing.JLabel();
+        lblCleanCommand = new javax.swing.JLabel();
+        txtCleanCommand = new javax.swing.JTextField();
+        lblBuildCommand = new javax.swing.JLabel();
+        txtBuildCommand = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -213,6 +222,32 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
 
         lblSourcePath.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.lblSourcePath.text")); // NOI18N
 
+        lblCleanCommand.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.lblCleanCommand.text")); // NOI18N
+
+        txtCleanCommand.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCleanCommandFocusLost(evt);
+            }
+        });
+        txtCleanCommand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCleanCommandActionPerformed(evt);
+            }
+        });
+
+        lblBuildCommand.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.lblBuildCommand.text")); // NOI18N
+
+        txtBuildCommand.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBuildCommandFocusLost(evt);
+            }
+        });
+        txtBuildCommand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuildCommandActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,11 +278,15 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblClientServerMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 246, Short.MAX_VALUE))))
+                    .addComponent(lblCleanCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCleanCommand)
+                    .addComponent(lblBuildCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(chGlobalApi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(chCacheBust, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtBuildCommand))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -281,7 +320,15 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 .addComponent(chCacheBust)
                 .addGap(18, 18, 18)
                 .addComponent(chGlobalApi)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblCleanCommand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCleanCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblBuildCommand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuildCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -319,9 +366,9 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
 
     private void cbClientTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbClientTypeItemStateChanged
         if (!isInit && evt.getStateChange() == ItemEvent.SELECTED) {
-            projectSettings.setRunClientType((ClientType) cbClientType.getSelectedItem());
-            if (!AppServerType.J2EE_SERVER.equals((AppServerType) cbAppServerType.getSelectedItem()) && ClientType.WEB_BROWSER.equals((ClientType) cbClientType.getSelectedItem())) {
-                cbAppServerType.setSelectedItem(AppServerType.J2EE_SERVER);
+            projectSettings.setClientType((ClientType) cbClientType.getSelectedItem());
+            if (!AppServerType.SERVLET_CONTAINER.equals((AppServerType) cbAppServerType.getSelectedItem()) && ClientType.WEB_BROWSER.equals((ClientType) cbClientType.getSelectedItem())) {
+                cbAppServerType.setSelectedItem(AppServerType.SERVLET_CONTAINER);
             }
             checkRunClientServerConfiguration();
         }
@@ -329,8 +376,8 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
 
     private void cbAppServerTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbAppServerTypeItemStateChanged
         if (!isInit && evt.getStateChange() == ItemEvent.SELECTED) {
-            projectSettings.setRunAppServerType((AppServerType) cbAppServerType.getSelectedItem());
-            if (!AppServerType.J2EE_SERVER.equals((AppServerType) cbAppServerType.getSelectedItem()) && ClientType.WEB_BROWSER.equals((ClientType) cbClientType.getSelectedItem())) {
+            projectSettings.setApplicationServerType((AppServerType) cbAppServerType.getSelectedItem());
+            if (!AppServerType.SERVLET_CONTAINER.equals((AppServerType) cbAppServerType.getSelectedItem()) && ClientType.WEB_BROWSER.equals((ClientType) cbClientType.getSelectedItem())) {
                 cbClientType.setSelectedItem(ClientType.PLATYPUS_CLIENT);
             }
             checkRunClientServerConfiguration();
@@ -362,6 +409,22 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         projectSettings.setSourcePath(txtSourcePath.getText());
     }//GEN-LAST:event_txtSourcePathFocusLost
 
+    private void txtCleanCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCleanCommandActionPerformed
+        projectSettings.setCleanCommand(txtCleanCommand.getText());
+    }//GEN-LAST:event_txtCleanCommandActionPerformed
+
+    private void txtCleanCommandFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCleanCommandFocusLost
+        projectSettings.setCleanCommand(txtCleanCommand.getText());
+    }//GEN-LAST:event_txtCleanCommandFocusLost
+
+    private void txtBuildCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuildCommandActionPerformed
+        projectSettings.setBuildCommand(txtBuildCommand.getText());
+    }//GEN-LAST:event_txtBuildCommandActionPerformed
+
+    private void txtBuildCommandFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuildCommandFocusLost
+        projectSettings.setBuildCommand(txtBuildCommand.getText());
+    }//GEN-LAST:event_txtBuildCommandFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDatasource;
     private javax.swing.JButton btnBrowse;
@@ -371,12 +434,16 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     private javax.swing.JCheckBox chCacheBust;
     private javax.swing.JCheckBox chGlobalApi;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblBuildCommand;
+    private javax.swing.JLabel lblCleanCommand;
     private javax.swing.JLabel lblClientServerMessage;
     private javax.swing.JLabel lblClientType;
     private javax.swing.JLabel lblDefDatasource;
     private javax.swing.JLabel lblRunPath;
     private javax.swing.JLabel lblServeType;
     private javax.swing.JLabel lblSourcePath;
+    private javax.swing.JTextField txtBuildCommand;
+    private javax.swing.JTextField txtCleanCommand;
     private javax.swing.JTextField txtRunPath;
     private javax.swing.JTextField txtSourcePath;
     // End of variables declaration//GEN-END:variables
