@@ -20,46 +20,52 @@ import org.openide.util.EditableProperties;
  */
 public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
 
-    public static final int DEFAULT_PLATYPUS_SERVER_PORT = 7500;
-    public static final int DEFAULT_SERVLET_CONTAINER_PORT = 8085;
-    public static final int DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT = 5001;
-    public static final int DEFAULT_PLATYPUS_SERVER_DEBUG_PORT = 5004;
+    public static final int DEFAULT_PLATYPUS_SERVER_PORT         = 7500;
+    public static final int DEFAULT_SERVLET_CONTAINER_PORT       = 8085;
+    public static final int DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT   = 5001;
+    public static final int DEFAULT_PLATYPUS_SERVER_DEBUG_PORT   = 5004;
     public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5006;
-    public static final Level DEFAULT_LOG_LEVEL = Level.INFO;
-    public static final String PROJECT_COMMANDS_FILE = ".platypus"; //NOI18N
-    public static final String PROJECT_SETTINGS_FILE = "project.properties"; //NOI18N
-    public static final String PROJECT_PRIVATE_SETTINGS_FILE = "private.properties"; //NOI18N
-    public static final String DEFAULT_APP_FOLDER = "app"; //NOI18N
-    public static final String PROJECT_DISPLAY_NAME_KEY = "projectDisplayName"; //NOI18N
-    public static final String SOURCE_PATH_KEY = "sourcePath"; //NOI18N
-    public static final String RUN_ELEMENT_KEY = "runElement"; //NOI18N
-    public static final String DEFAULT_DATA_SOURCE_ELEMENT_KEY = "defaultDataSource"; //NOI18N
-    public static final String RUN_USER_KEY = "runUser"; //NOI18N
-    public static final String RUN_PASSWORD_KEY = "runPassword"; //NOI18N
-    public static final String PLATYPUS_CLIENT_OPTIONS_KEY = "platypusClientOptions"; //NOI18N
-    public static final String PLATYPUS_CLIENT_VM_OPTIONS_KEY = "PlatypusClientVmOptions"; //NOI18N
-    public static final String PLATYPUS_SERVER_OPTIONS_KEY = "platypusServerOptions"; //NOI18N
-    public static final String PLATYPUS_SERVER_VM_OPTIONS_KEY = "platypusServerVmOptions"; //NOI18N
-    public static final String PLATYPUS_SERVER_PORT_KEY = "platypusPort";//NOI18N
-    public static final String SERVLET_CONTAINER_PORT_KEY = "httpPort";//NOI18N
-    public static final String PLATYPUS_CLIENT_URL_KEY = "platypusClientUrl";//NOI18N
-    public static final String BROWSER_CUSTOM_URL_KEY = "browserCustomUrl";//NOI18N
-    public static final String BROWSER_CACHE_BUSTING_KEY = "browserCacheBusting";//NOI18N
-    public static final String GLOBAL_API_KEY = "globalAPI";//NOI18N
-    public static final String START_LOCAL_PLATYPUS_SERVER_KEY = "startLocalPlatypusServer"; //NOI18N
-    public static final String START_LOCAL_SERVLET_CONTAINER_KEY = "startLocalServletContainer"; //NOI18N
-    public static final String ACCEPT_DESIGNER_DATASOURCES_KEY = "acceptDesignerDatasources"; //NOI18N
-    public static final String PLATYPUS_CLIENT_DEBUG_PORT_KEY = "platypusClientDebugPort"; //NOI18N
-    public static final String SERVLET_CONTAINER_DEBUG_PORT_KEY = "servletContainerDebugPort"; //NOI18N
-    public static final String PLATYPUS_SERVER_DEBUG_PORT_KEY = "platypusServerDebugPort"; //NOI18N
-    public static final String PLATYPUS_CLIENT_LOG_LEVEL_KEY = "platypusClientLogLevel"; //NOI18N
-    public static final String SERVLET_CONTAINER_LOG_LEVEL_KEY = "servletContainerLogLevel"; //NOI18N
-    public static final String PLATYPUS_SERVER_LOG_LEVEL_KEY = "platypusServerLogLevel"; //NOI18N
-    public static final String AUTO_APPLY_WEB_SETTINGS_KEY = "auto-apply-web-settings"; //NOI18N
-    public static final String WEB_APPLICATION_CONTEXT_KEY = "webApplicationContext";//NOI18N
-    public static final String ENABLE_SECURITY_REALM_KEY = "enableSecurityRealm";//NOI18N
-    public static final String CLIENT_TYPE_KEY = "clientType"; //NOI18N
-    public static final String SERVER_TYPE_KEY = "serverType"; //NOI18N
+    public static final Level DEFAULT_LOG_LEVEL                  = Level.INFO;
+    public static final String DEFAULT_APP_FOLDER                = "app"; //NOI18N
+    public static final String PROJECT_COMMANDS_FILE             = ".platypus"; //NOI18N
+    public static final String PROJECT_PRIVATE_SETTINGS_FILE     = "private.properties"; //NOI18N
+    public static final String PROJECT_SETTINGS_FILE             = "project.properties"; //NOI18N
+    public static final String PROJECT_DISPLAY_NAME_KEY          = "project.displayName"; //NOI18N
+    public static final String CLEAN_COMMAND_KEY                 = "project.cleanCommand"; //NOI18N
+    public static final String BUILD_COMMAND_KEY                 = "project.buildCommand"; //NOI18N
+    public static final String ACCEPT_DESIGNER_DATASOURCES_KEY   = "project.acceptNetBeansDatasources"; //NOI18N
+    public static final String DEFAULT_DATA_SOURCE_ELEMENT_KEY   = "project.generalDataSource"; //NOI18N
+    public static final String RUN_ELEMENT_KEY                   = "run.module"; //NOI18N
+    public static final String GLOBAL_API_KEY                    = "run.globalAPI";//NOI18N
+    public static final String CLIENT_TYPE_KEY                   = "run.clientType"; //NOI18N
+    public static final String SERVER_TYPE_KEY                   = "run.serverType"; //NOI18N
+    public static final String SOURCE_PATH_KEY                   = "run.sourcePath"; //NOI18N
+    public static final String RUN_USER_NAME_KEY                 = "user.name"; //NOI18N
+    public static final String RUN_USER_PASSWORD_KEY             = "user.password"; //NOI18N
+    public static final String SERVLET_CONTAINER_PORT_KEY        = "http.port";//NOI18N
+    public static final String PLATYPUS_SERVER_PORT_KEY          = "platypus.port";//NOI18N
+    public static final String WEB_APPLICATION_CONTEXT_KEY       = "webApplication.context";//NOI18N
+    public static final String AUTO_APPLY_WEB_XML_KEY            = "webApplication.autoApplyWebXml"; //NOI18N
+    public static final String ENABLE_SECURITY_REALM_KEY         = "webApplication.enableSecurityRealm";//NOI18N
+    public static final String BROWSER_CUSTOM_URL_KEY            = "browser.customUrl";//NOI18N
+    public static final String BROWSER_CACHE_BUSTING_KEY         = "browser.cacheBusting";//NOI18N
+    public static final String BROWSER_RUN_COMMAND_KEY           = "browser.runCommand"; //NOI18N
+    public static final String PLATYPUS_CLIENT_URL_KEY           = "platypusClient.customUrl";//NOI18N
+    public static final String PLATYPUS_CLIENT_OPTIONS_KEY       = "platypusClient.options"; //NOI18N
+    public static final String PLATYPUS_CLIENT_LOG_LEVEL_KEY     = "platypusClient.logLevel"; //NOI18N
+    public static final String PLATYPUS_CLIENT_VM_OPTIONS_KEY    = "PlatypusClient.vmOptions"; //NOI18N
+    public static final String PLATYPUS_CLIENT_DEBUG_PORT_KEY    = "platypusClient.debugPort"; //NOI18N
+    public static final String PLATYPUS_CLIENT_RUN_COMMAND_KEY   = "platypusClient.runCommand"; //NOI18N
+    public static final String PLATYPUS_SERVER_OPTIONS_KEY       = "platypusServer.options"; //NOI18N
+    public static final String PLATYPUS_SERVER_LOG_LEVEL_KEY     = "platypusServer.logLevel"; //NOI18N
+    public static final String PLATYPUS_SERVER_VM_OPTIONS_KEY    = "platypusServer.vmOptions"; //NOI18N
+    public static final String PLATYPUS_SERVER_DEBUG_PORT_KEY    = "platypusServer.debugPort"; //NOI18N
+    public static final String START_LOCAL_PLATYPUS_SERVER_KEY   = "platypusServer.startLocal"; //NOI18N
+    public static final String PLATYPUS_SERVER_RUN_COMMAND_KEY   = "platypusServer.runCommand"; //NOI18N
+    public static final String SERVLET_CONTAINER_LOG_LEVEL_KEY   = "servletContainer.logLevel"; //NOI18N
+    public static final String SERVLET_CONTAINER_DEBUG_PORT_KEY  = "servletContainer.debugPort"; //NOI18N
+    public static final String START_LOCAL_SERVLET_CONTAINER_KEY = "servletContainer.startLocal"; //NOI18N
+    public static final String SERVLET_CONTAINER_RUN_COMMAND_KEY = "servletContainer.runCommand"; //NOI18N
     protected static final String START_JS_FILE_TEMPLATE = "" //NOI18N
             + "/**\n" //NOI18N
             + " * Do not edit this file manually, it will be overwritten by\n" //NOI18N
@@ -84,26 +90,19 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
             + "        }\n" //NOI18N
             + "    });\n"//NOI18N
             + "});";
-    // projects commands
-    public static final String CLEAN_COMMAND_KEY = "cleanCommand"; //NOI18N
-    public static final String BUILD_COMMAND_KEY = "buildCommand"; //NOI18N
-    public static final String PLATYPUS_SERVER_RUN_COMMAND_KEY = "runPlatypusServerCommand"; //NOI18N
-    public static final String SERVLET_CONTAINER_RUN_COMMAND_KEY = "runServletContainerCommand"; //NOI18N
-    public static final String PLATYPUS_CLIENT_RUN_COMMAND_KEY = "runPlatypusClientCommand"; //NOI18N
-    public static final String BROWSER_RUN_COMMAND_KEY = "runBrowserCommand"; //NOI18N
 
     protected final FileObject projectDir;
     protected final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-    protected EditableProperties projectProperties;
-    protected EditableProperties projectCommands;
-    protected EditableProperties projectPrivateProperties;
+    protected final EditableProperties projectProperties;
+    protected final EditableProperties projectCommands;
+    protected final EditableProperties projectPrivateProperties;
     private boolean projectCommandsDirty;
     private boolean projectPropertiesDirty;
     private boolean projectPrivatePropertiesDirty;
 
     public PlatypusProjectSettingsImpl(FileObject aProjectDir) throws Exception {
         if (aProjectDir == null) {
-            throw new IllegalArgumentException("Project directory file object is null."); //NOI18N
+            throw new IllegalArgumentException("Project directory file object can't be null."); //NOI18N
         }
         projectDir = aProjectDir;
         projectCommands = new EditableProperties(false);
@@ -112,10 +111,12 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         load();
     }
 
+    @Override
     public EditableProperties getProjectProperties() {
         return projectProperties;
     }
 
+    @Override
     public EditableProperties getProjectPrivateProperties() {
         return projectProperties;
     }
@@ -143,7 +144,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      */
     @Override
     public String getDisplayName() {
-        return projectProperties.get(PROJECT_DISPLAY_NAME_KEY);
+        String displayName = projectProperties.get(PROJECT_DISPLAY_NAME_KEY);
+        return displayName != null && !displayName.isEmpty() ? displayName : projectDir.getName();
     }
 
     /**
@@ -245,7 +247,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      */
     @Override
     public String getRunUser() {
-        return projectPrivateProperties.get(RUN_USER_KEY);
+        return projectPrivateProperties.get(RUN_USER_NAME_KEY);
     }
 
     /**
@@ -257,12 +259,12 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public void setRunUser(String aValue) {
         String oldValue = getRunUser();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_USER_KEY, aValue);
+            projectPrivateProperties.setProperty(RUN_USER_NAME_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_USER_KEY);
+            projectPrivateProperties.remove(RUN_USER_NAME_KEY);
         }
         projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(RUN_USER_KEY, oldValue, aValue);
+        changeSupport.firePropertyChange(RUN_USER_NAME_KEY, oldValue, aValue);
     }
 
     /**
@@ -272,7 +274,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      */
     @Override
     public String getRunPassword() {
-        return projectPrivateProperties.get(RUN_PASSWORD_KEY);
+        return projectPrivateProperties.get(RUN_USER_PASSWORD_KEY);
     }
 
     /**
@@ -284,12 +286,12 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public void setRunPassword(String aValue) {
         String oldValue = getRunPassword();
         if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_PASSWORD_KEY, aValue);
+            projectPrivateProperties.setProperty(RUN_USER_PASSWORD_KEY, aValue);
         } else {
-            projectPrivateProperties.remove(RUN_PASSWORD_KEY);
+            projectPrivateProperties.remove(RUN_USER_PASSWORD_KEY);
         }
         projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(RUN_PASSWORD_KEY, oldValue, aValue);
+        changeSupport.firePropertyChange(RUN_USER_PASSWORD_KEY, oldValue, aValue);
     }
 
     /**
@@ -896,42 +898,22 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     }
 
     @Override
-    public void setAutoApplyWebSettings(boolean aValue) {
-        boolean oldValue = getAutoApplyWebSettings();
-        projectProperties.setProperty(AUTO_APPLY_WEB_SETTINGS_KEY, aValue + "");
-        projectPropertiesDirty = true;
-        changeSupport.firePropertyChange(AUTO_APPLY_WEB_SETTINGS_KEY, oldValue, aValue);
+    public boolean getAutoApplyWebSettings() {
+        String sValue = projectProperties.getProperty(AUTO_APPLY_WEB_XML_KEY);
+        return sValue != null && !sValue.isEmpty() ? Boolean.valueOf(sValue) : true;
     }
 
     @Override
-    public boolean getAutoApplyWebSettings() {
-        String sValue = projectProperties.getProperty(AUTO_APPLY_WEB_SETTINGS_KEY);
-        return sValue != null && !sValue.isEmpty() ? Boolean.valueOf(sValue) : true;
+    public void setAutoApplyWebSettings(boolean aValue) {
+        boolean oldValue = getAutoApplyWebSettings();
+        projectProperties.setProperty(AUTO_APPLY_WEB_XML_KEY, aValue + "");
+        projectPropertiesDirty = true;
+        changeSupport.firePropertyChange(AUTO_APPLY_WEB_XML_KEY, oldValue, aValue);
     }
 
     @Override
     public String getCleanCommand() {
         return projectCommands.getProperty(CLEAN_COMMAND_KEY);
-    }
-
-    @Override
-    public String getBuildCommand() {
-        return projectCommands.getProperty(BUILD_COMMAND_KEY);
-    }
-
-    @Override
-    public String getPlatypusServerRunCommand() {
-        return projectCommands.getProperty(PLATYPUS_SERVER_RUN_COMMAND_KEY);
-    }
-
-    @Override
-    public String getServletContainerRunCommand() {
-        return projectCommands.getProperty(SERVLET_CONTAINER_RUN_COMMAND_KEY);
-    }
-
-    @Override
-    public String getPlatypusClientRunCommand() {
-        return projectCommands.getProperty(PLATYPUS_CLIENT_RUN_COMMAND_KEY);
     }
 
     @Override
@@ -947,6 +929,11 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     }
 
     @Override
+    public String getBuildCommand() {
+        return projectCommands.getProperty(BUILD_COMMAND_KEY);
+    }
+
+    @Override
     public void setBuildCommand(String aValue) {
         String oldValue = getBuildCommand();
         if (aValue != null && !aValue.isEmpty()) {
@@ -956,6 +943,11 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         }
         projectCommandsDirty = true;
         changeSupport.firePropertyChange(BUILD_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public String getPlatypusServerRunCommand() {
+        return projectCommands.getProperty(PLATYPUS_SERVER_RUN_COMMAND_KEY);
     }
 
     @Override
@@ -971,6 +963,11 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     }
 
     @Override
+    public String getServletContainerRunCommand() {
+        return projectCommands.getProperty(SERVLET_CONTAINER_RUN_COMMAND_KEY);
+    }
+
+    @Override
     public void setServletContainerRunCommand(String aValue) {
         String oldValue = getServletContainerRunCommand();
         if (aValue != null && !aValue.isEmpty()) {
@@ -980,6 +977,11 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         }
         projectCommandsDirty = true;
         changeSupport.firePropertyChange(SERVLET_CONTAINER_RUN_COMMAND_KEY, oldValue, aValue);
+    }
+
+    @Override
+    public String getPlatypusClientRunCommand() {
+        return projectCommands.getProperty(PLATYPUS_CLIENT_RUN_COMMAND_KEY);
     }
 
     @Override
@@ -1027,5 +1029,4 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         projectCommandsDirty = true;
         changeSupport.firePropertyChange(BROWSER_RUN_COMMAND_KEY, oldValue, aValue);
     }
-
 }
