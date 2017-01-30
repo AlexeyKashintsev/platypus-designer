@@ -36,31 +36,22 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblClientDebugPort" max="32767" attributes="0"/>
-                          <Component id="lblClientOptions" alignment="0" pref="88" max="32767" attributes="0"/>
-                          <Component id="lblClientVmOptions" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblUserName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblClientUrl" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblPassword" max="32767" attributes="0"/>
-                          <Component id="lblClientLogLevel" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbClientLogLevel" min="-2" pref="109" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtClientVmOptions" pref="447" max="32767" attributes="0"/>
-                              <Component id="txtClientOptions" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtPassword" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtUserName" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtClientUrl" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="spClientDebugPort" min="-2" pref="109" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="txtClientRunCommand" alignment="0" max="32767" attributes="0"/>
                   <Component id="lblClientRunCommand" alignment="1" max="32767" attributes="0"/>
+                  <Component id="txtClientRunCommand" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblClientDebugPort" pref="76" max="32767" attributes="0"/>
+                          <Component id="lblClientUrl" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Component id="lblClientLogLevel" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="cbClientLogLevel" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="spClientDebugPort" min="-2" pref="93" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="362" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="txtClientUrl" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -68,47 +59,26 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblClientUrl" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <Component id="txtClientUrl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblClientUrl" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtClientUrl" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblUserName" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtUserName" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblPassword" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtPassword" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblClientLogLevel" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbClientLogLevel" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblClientOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtClientOptions" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblClientDebugPort" alignment="2" min="-2" pref="18" max="-2" attributes="0"/>
+                  <Component id="spClientDebugPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblClientVmOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtClientVmOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblClientLogLevel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbClientLogLevel" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblClientDebugPort" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="spClientDebugPort" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="202" max="32767" attributes="0"/>
               <Component id="lblClientRunCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtClientRunCommand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -125,58 +95,6 @@
       <Events>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtClientUrlFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClientUrlActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblUserName">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusClientCustomizer.lblUserName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtUserName">
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUserNameFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUserNameActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblPassword">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusClientCustomizer.lblPassword.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JPasswordField" name="txtPassword">
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtPasswordFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPasswordActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblClientOptions">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusClientCustomizer.lblClientOptions.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtClientOptions">
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtClientOptionsFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClientOptionsActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblClientVmOptions">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusClientCustomizer.lblClientVmOptions.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtClientVmOptions">
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtClientVmOptionsFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClientVmOptionsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblClientLogLevel">

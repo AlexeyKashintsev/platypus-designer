@@ -26,6 +26,7 @@ import com.eas.server.httpservlet.PlatypusSessionsSynchronizer;
 import com.eas.util.FileUtils;
 import com.eas.util.StringUtils;
 import com.eas.xml.dom.XmlDom2String;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,6 +42,7 @@ import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 import org.openide.actions.SaveAllAction;
 import org.openide.filesystems.FileUtil;
+import org.openide.util.Utilities;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.SystemAction;
@@ -49,8 +51,11 @@ import org.openide.filesystems.FileObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.MissingResourceException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import javax.sql.DataSource;
 import org.netbeans.api.db.explorer.ConnectionManager;
 import org.netbeans.api.db.explorer.DatabaseConnection;
@@ -60,6 +65,7 @@ import org.netbeans.api.debugger.DebuggerManager;
 import org.netbeans.api.debugger.DebuggerManagerAdapter;
 import org.netbeans.api.debugger.jpda.AttachingDICookie;
 import org.openide.util.EditableProperties;
+import org.openide.util.RequestProcessor;
 
 /**
  *
@@ -86,6 +92,8 @@ public class PlatypusProjectActions implements ActionProvider {
             COMMAND_RENAME,
             COMMAND_CONNECT,
             COMMAND_DISCONNECT));
+
+    private static final RequestProcessor RP = new RequestProcessor(PlatypusProjectActions.class.getClass().getSimpleName(), 10, false); // NOI18N
 
     protected final PlatypusProject project;
     protected final FileObject projectDir;
@@ -167,16 +175,17 @@ public class PlatypusProjectActions implements ActionProvider {
     }
 
     private void clean() {
-        command(project.getSettings().getCleanCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_CleanAction_Name"));
+        command(project.getSettings().getCleanCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_CleanAction_Name"), false, null);
     }
 
     private void build() {
-        command(project.getSettings().getBuildCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_BuildAction_Name"));
+        command(project.getSettings().getBuildCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_BuildAction_Name"), false, null);
     }
 
     private void rebuild() {
-        clean();
-        build();
+        command(project.getSettings().getCleanCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_CleanAction_Name"), false, () -> {
+            command(project.getSettings().getBuildCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "LBL_BuildAction_Name"), false, null);
+        });
     }
 
     private void run(boolean aDebug) throws Exception {
@@ -212,7 +221,7 @@ public class PlatypusProjectActions implements ActionProvider {
                     boolean startServletContainer = pps.getStartLocalPlatypusServer();
                     if (startServletContainer) {
                         prepareWebApplication();
-                        command(pps.getServletContainerRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Servlet_Container"));
+                        command(pps.getServletContainerRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Servlet_Container"), true, null);
                         if (aDebug) {
                             attachDebuggerTo(pps.getServletContainerDebugPort());
                             projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Servlet_Container_Debug_Activated"));//NOI18N
@@ -222,7 +231,7 @@ public class PlatypusProjectActions implements ActionProvider {
                 case PLATYPUS_SERVER:
                     boolean startPlatypusServer = pps.getStartLocalPlatypusServer();
                     if (startPlatypusServer) {
-                        command(project.getSettings().getPlatypusServerRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Platypus_Server"));
+                        command(project.getSettings().getPlatypusServerRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Platypus_Server"), true, null);
                         if (aDebug) {
                             attachDebuggerTo(pps.getPlatypusServerDebugPort());
                             projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Server_Debug_Activated"));//NOI18N
@@ -233,7 +242,7 @@ public class PlatypusProjectActions implements ActionProvider {
                     break;
             }
             if (ClientType.PLATYPUS_CLIENT.equals(project.getSettings().getClientType())) {
-                command(project.getSettings().getPlatypusClientRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Platypus_Client"));
+                command(project.getSettings().getPlatypusClientRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Platypus_Client"), true, null);
                 if (aDebug) {
                     attachDebuggerTo(pps.getPlatypusClientDebugPort());
                     projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Client_Debug_Activated"));//NOI18N
@@ -352,7 +361,7 @@ public class PlatypusProjectActions implements ActionProvider {
                     io.getOut().println();
                  */
             } else if (ClientType.WEB_BROWSER.equals(pps.getClientType())) {
-                command(project.getSettings().getBrowserRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Web_Browser"));
+                command(project.getSettings().getBrowserRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Web_Browser"), true, null);
                 /*
                     String webApUrl = pps.getBrowserCustomUrl();
                     if (webApUrl != null && !webApUrl.isEmpty()) {
@@ -411,7 +420,7 @@ public class PlatypusProjectActions implements ActionProvider {
     }
 
     private static boolean isConnectionValid(DatabaseConnection connection) {
-        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && !connection.getDisplayName().contains(" ") //NOI18N
+        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && connection.getDisplayName().matches("[a-zA-Z_]+") //NOI18N
                 && connection.getDatabaseURL() != null && !connection.getDatabaseURL().isEmpty()
                 && connection.getUser() != null && !connection.getUser().isEmpty();
     }
@@ -438,6 +447,7 @@ public class PlatypusProjectActions implements ActionProvider {
                 if (connection.getSchema() != null && !connection.getSchema().isEmpty()) {
                     projectProperties.setProperty(String.join(".", new String[]{DatasourcesArgsConsumer.DB_RESOURCE_CONF_PARAM, connection.getDisplayName(), DatasourcesArgsConsumer.DB_SCHEMA_CONF_PARAM}), connection.getSchema());
                 }
+                projectProperties.setProperty(String.join(".", new String[]{DatasourcesArgsConsumer.DB_RESOURCE_CONF_PARAM, connection.getDisplayName(), "jdbcDriverClass"}), connection.getDriverClass());
             } else {
                 project.getOutputWindowIO().getErr().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Invalid_Database", connection.getDisplayName()));
             }
@@ -451,8 +461,8 @@ public class PlatypusProjectActions implements ActionProvider {
         FileObject webXml = webInfDir.getFileObject(WEB_XML_FILE_NAME);
         if (webXml == null || project.getSettings().getAutoApplyWebSettings()) {
             WebApplication wa = new WebApplication();
-            configureParams(wa);
             wa.addAppListener(new AppListener(PlatypusSessionsSynchronizer.class.getName()));
+            configureParams(wa);
             configureServlet(wa);
             configureDatasources(wa);
             if (project.getSettings().getSecurityRealmEnabled()) {
@@ -611,23 +621,87 @@ public class PlatypusProjectActions implements ActionProvider {
         return args;
     }
 
-    private void command(String aCommand, String aDescription) {
+    static List<String> backslashArgs(List<String> args, FileObject aWorkingDirectoryFo) {
+        List<String> backslashedArgs = new ArrayList<>();
+        if (Utilities.isWindows()) {
+            for (int i = 0; i < args.size(); i++) {
+                String arg = args.get(i);
+                if (arg.contains("/")) {
+                    String backslashed = arg.replaceAll("/", "\\\\");
+                    String aWorkingDirectory = FileUtil.toFile(aWorkingDirectoryFo).getAbsolutePath();
+                    if (new File(aWorkingDirectory + File.separator + backslashed).exists()
+                            || new File(aWorkingDirectory + File.separator + backslashed + ".exe").exists()
+                            || new File(aWorkingDirectory + File.separator + backslashed + ".bat").exists()) {
+                        backslashedArgs.add(backslashed);
+                    } else {
+                        backslashedArgs.add(arg);
+                    }
+                } else {
+                    backslashedArgs.add(arg);
+                }
+            }
+        } else {
+            backslashedArgs.addAll(args);
+        }
+        return backslashedArgs;
+    }
+
+    private void command(String aCommand, String aDescription, boolean separate, Runnable onComplete) {
         if (aCommand != null && !aCommand.isEmpty()) {
             InputOutput projectIo = project.getOutputWindowIO();
             projectIo.getOut().println(aCommand);//NOI18N
             ExecutionService commandExecution = ExecutionService.newService(() -> {
-                return new ProcessBuilder(parseArgs(aCommand))
-                        .redirectErrorStream(true)
-                        .directory(FileUtil.toFile(project.getProjectDirectory()))
-                        .start();
-            }, new ExecutionDescriptor()
+                try {
+                    String commandsProcessorPrefix = lookupCommandsProcessor();
+                    return new ProcessBuilder(backslashArgs(parseArgs(commandsProcessorPrefix + " " + aCommand), project.getProjectDirectory()))
+                            .directory(FileUtil.toFile(project.getProjectDirectory()))
+                            .start();
+                } catch (Exception ex) {
+                    projectIo.getErr().println(ex.getMessage());
+                    throw ex;
+                }
+            }, separate
+                    ? new ExecutionDescriptor()
+                    .frontWindow(true)
+                    .controllable(true)
+                    .showProgress(true)
+                    : new ExecutionDescriptor()
                     .frontWindow(true)
                     .inputOutput(projectIo)
                     .noReset(true)
                     .showProgress(true), aDescription);
-            commandExecution.run();
+            Future<Integer> when = commandExecution.run();
+            if (onComplete != null) {
+                RP.submit(() -> {
+                    try {
+                        Integer result = when.get();
+                        if (result != null && result == 0) {
+                            if (!separate) {
+                                projectIo.getOut().println();
+                            }
+                            onComplete.run();
+                        }
+                    } catch (InterruptedException | ExecutionException ex) {
+                        projectIo.getErr().println(ex.getMessage());
+                    }
+                });
+            }
         } else {
             throw new IllegalStateException("Project command should not be called with empty command body");
         }
+    }
+
+    private String lookupCommandsProcessor() throws IOException {
+        String commandsProcessorPrefix;
+        if (Utilities.isWindows()) {
+            commandsProcessorPrefix = "cmd.exe /C";
+        } else {
+            Process env = new ProcessBuilder().command("/usr/bin/env", "sh").start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(env.getInputStream()))) {
+                commandsProcessorPrefix = reader.readLine();
+                commandsProcessorPrefix = commandsProcessorPrefix.replaceAll("[\r\n]", "");
+            }
+        }
+        return commandsProcessorPrefix;
     }
 }

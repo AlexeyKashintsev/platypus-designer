@@ -3,6 +3,7 @@ package com.eas.designer.explorer.project.ui;
 import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectSettings;
 import java.awt.EventQueue;
+import java.util.logging.Level;
 import org.openide.filesystems.FileObject;
 
 /**
@@ -14,6 +15,7 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
     protected final PlatypusProject project;
     protected final FileObject appRoot;
     protected final PlatypusProjectSettings projectSettings;
+    private boolean isInit;
 
     /**
      * Creates new form ProjectRunningCustomizer
@@ -26,16 +28,28 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
         projectSettings = aProject.getSettings();
         initComponents();
         EventQueue.invokeLater(() -> {
-            cbEnableWebSecurity.setSelected(projectSettings.getSecurityRealmEnabled());
-            cbAutoApply.setSelected(projectSettings.getAutoApplyWebSettings());
-            if (projectSettings.getWebApplicationContext() != null) {
-                txtContext.setText(projectSettings.getWebApplicationContext());
+            isInit = true;
+            try {
+                spHttpPort.setValue(projectSettings.getServletContainerPort());
+                cbServletContainerLogLevel.setSelectedItem(projectSettings.getServletContainerLogLevel());
+                spServletContainerDebugPort.setValue(projectSettings.getServletContainerDebugPort());
+                cbEnableWebSecurity.setSelected(projectSettings.getSecurityRealmEnabled());
+                cbAutoApply.setSelected(projectSettings.getAutoApplyWebSettings());
+                if (projectSettings.getWebApplicationContext() != null) {
+                    txtWebApplicationContext.setText(projectSettings.getWebApplicationContext());
+                }
+                if (projectSettings.getServletContainerRunCommand() != null) {
+                    txtServletContainerRunCommand.setText(projectSettings.getServletContainerRunCommand());
+                }
+                cbRunServletContainer.setSelected(projectSettings.getStartLocalServletContainer());
+            } finally {
+                isInit = false;
             }
-            if (projectSettings.getServletContainerRunCommand() != null) {
-                txtServletContainerRunCommand.setText(projectSettings.getServletContainerRunCommand());
-            }
-            cbRunServletContainer.setSelected(projectSettings.getStartLocalServletContainer());
         });
+    }
+
+    private Level[] getLogLevels() {
+        return new Level[]{Level.SEVERE, Level.WARNING, Level.INFO, Level.CONFIG, Level.FINE, Level.FINER, Level.FINEST};
     }
 
     /**
@@ -48,23 +62,29 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
     private void initComponents() {
 
         lblContext = new javax.swing.JLabel();
-        txtContext = new javax.swing.JTextField();
+        txtWebApplicationContext = new javax.swing.JTextField();
         cbEnableWebSecurity = new javax.swing.JCheckBox();
         cbAutoApply = new javax.swing.JCheckBox();
         lblServletContainerRunCommand = new javax.swing.JLabel();
         txtServletContainerRunCommand = new javax.swing.JTextField();
         cbRunServletContainer = new javax.swing.JCheckBox();
+        lblHttpPort = new javax.swing.JLabel();
+        spHttpPort = new javax.swing.JSpinner();
+        lblServletContainerLogLevel = new javax.swing.JLabel();
+        cbServletContainerLogLevel = new javax.swing.JComboBox();
+        lblServletContainerDebugPort = new javax.swing.JLabel();
+        spServletContainerDebugPort = new javax.swing.JSpinner();
 
         lblContext.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblContext.text")); // NOI18N
 
-        txtContext.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtWebApplicationContext.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContextFocusLost(evt);
+                txtWebApplicationContextFocusLost(evt);
             }
         });
-        txtContext.addActionListener(new java.awt.event.ActionListener() {
+        txtWebApplicationContext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContextActionPerformed(evt);
+                txtWebApplicationContextActionPerformed(evt);
             }
         });
 
@@ -102,6 +122,48 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
             }
         });
 
+        lblHttpPort.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblHttpPort.text")); // NOI18N
+
+        spHttpPort.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spHttpPortStateChanged(evt);
+            }
+        });
+        spHttpPort.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                spHttpPortFocusLost(evt);
+            }
+        });
+
+        lblServletContainerLogLevel.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblServletContainerLogLevel.text")); // NOI18N
+
+        cbServletContainerLogLevel.setModel(new javax.swing.DefaultComboBoxModel(getLogLevels()));
+        cbServletContainerLogLevel.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbServletContainerLogLevelItemStateChanged(evt);
+            }
+        });
+        cbServletContainerLogLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbServletContainerLogLevelActionPerformed(evt);
+            }
+        });
+
+        lblServletContainerDebugPort.setText(org.openide.util.NbBundle.getMessage(ServletContainerCustomizer.class, "ServletContainerCustomizer.lblServletContainerDebugPort.text")); // NOI18N
+
+        spServletContainerDebugPort.setMinimumSize(new java.awt.Dimension(36, 26));
+        spServletContainerDebugPort.setPreferredSize(new java.awt.Dimension(36, 26));
+        spServletContainerDebugPort.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spServletContainerDebugPortStateChanged(evt);
+            }
+        });
+        spServletContainerDebugPort.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                spServletContainerDebugPortFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,35 +172,56 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtServletContainerRunCommand)
+                        .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblServletContainerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 226, Short.MAX_VALUE))
+                    .addComponent(cbEnableWebSecurity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbAutoApply, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbEnableWebSecurity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbRunServletContainer)
-                            .addComponent(cbAutoApply, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
-                        .addGap(154, 154, 154))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblContext, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtContext))
-                    .addComponent(txtServletContainerRunCommand)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblServletContainerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(14, 14, 14))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblContext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblHttpPort, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblServletContainerLogLevel, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                    .addComponent(lblServletContainerDebugPort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtWebApplicationContext)
+                                    .addComponent(cbServletContainerLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spServletContainerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spHttpPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbRunServletContainer)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lblHttpPort)
+                    .addComponent(spHttpPort, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lblServletContainerLogLevel)
+                    .addComponent(cbServletContainerLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lblServletContainerDebugPort)
+                    .addComponent(spServletContainerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblContext)
-                    .addComponent(txtContext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtWebApplicationContext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(cbEnableWebSecurity)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbAutoApply)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
                 .addComponent(lblServletContainerRunCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtServletContainerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,13 +229,13 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtContextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContextActionPerformed
-        projectSettings.setWebApplicationContext(txtContext.getText());
-    }//GEN-LAST:event_txtContextActionPerformed
+    private void txtWebApplicationContextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWebApplicationContextActionPerformed
+        projectSettings.setWebApplicationContext(txtWebApplicationContext.getText());
+    }//GEN-LAST:event_txtWebApplicationContextActionPerformed
 
-    private void txtContextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContextFocusLost
-        projectSettings.setWebApplicationContext(txtContext.getText());
-    }//GEN-LAST:event_txtContextFocusLost
+    private void txtWebApplicationContextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtWebApplicationContextFocusLost
+        projectSettings.setWebApplicationContext(txtWebApplicationContext.getText());
+    }//GEN-LAST:event_txtWebApplicationContextFocusLost
 
     private void cbEnableWebSecurityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEnableWebSecurityActionPerformed
         projectSettings.setSecurityRealmEnabled(cbEnableWebSecurity.isSelected());
@@ -174,13 +257,45 @@ public class ServletContainerCustomizer extends javax.swing.JPanel {
         projectSettings.setStartLocalServletContainer(cbRunServletContainer.isSelected());
     }//GEN-LAST:event_cbRunServletContainerActionPerformed
 
+    private void spHttpPortStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spHttpPortStateChanged
+        if (!isInit) {
+            projectSettings.setServletContainerPort((Integer) spHttpPort.getValue());
+        }
+    }//GEN-LAST:event_spHttpPortStateChanged
+
+    private void spHttpPortFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spHttpPortFocusLost
+        projectSettings.setServletContainerPort((Integer) spHttpPort.getValue());
+    }//GEN-LAST:event_spHttpPortFocusLost
+
+    private void cbServletContainerLogLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbServletContainerLogLevelItemStateChanged
+        projectSettings.setServletContainerLogLevel((Level) cbServletContainerLogLevel.getSelectedItem());
+    }//GEN-LAST:event_cbServletContainerLogLevelItemStateChanged
+
+    private void cbServletContainerLogLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbServletContainerLogLevelActionPerformed
+        projectSettings.setServletContainerLogLevel((Level) cbServletContainerLogLevel.getSelectedItem());
+    }//GEN-LAST:event_cbServletContainerLogLevelActionPerformed
+
+    private void spServletContainerDebugPortStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spServletContainerDebugPortStateChanged
+        projectSettings.setServletContainerDebugPort((int) spServletContainerDebugPort.getValue());
+    }//GEN-LAST:event_spServletContainerDebugPortStateChanged
+
+    private void spServletContainerDebugPortFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spServletContainerDebugPortFocusLost
+        projectSettings.setServletContainerDebugPort((int) spServletContainerDebugPort.getValue());
+    }//GEN-LAST:event_spServletContainerDebugPortFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbAutoApply;
     private javax.swing.JCheckBox cbEnableWebSecurity;
     private javax.swing.JCheckBox cbRunServletContainer;
+    private javax.swing.JComboBox cbServletContainerLogLevel;
     private javax.swing.JLabel lblContext;
+    private javax.swing.JLabel lblHttpPort;
+    private javax.swing.JLabel lblServletContainerDebugPort;
+    private javax.swing.JLabel lblServletContainerLogLevel;
     private javax.swing.JLabel lblServletContainerRunCommand;
-    private javax.swing.JTextField txtContext;
+    private javax.swing.JSpinner spHttpPort;
+    private javax.swing.JSpinner spServletContainerDebugPort;
     private javax.swing.JTextField txtServletContainerRunCommand;
+    private javax.swing.JTextField txtWebApplicationContext;
     // End of variables declaration//GEN-END:variables
 }

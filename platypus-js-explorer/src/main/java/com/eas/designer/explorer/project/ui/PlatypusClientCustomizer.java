@@ -4,13 +4,14 @@ import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectSettings;
 import java.awt.EventQueue;
 import java.util.logging.Level;
+import javax.swing.JPanel;
 import org.openide.filesystems.FileObject;
 
 /**
  *
  * @author mg
  */
-public class PlatypusClientCustomizer extends javax.swing.JPanel {
+public class PlatypusClientCustomizer extends JPanel {
 
     protected final PlatypusProject project;
     protected final FileObject appRoot;
@@ -27,18 +28,6 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
         projectSettings = aProject.getSettings();
         initComponents();
         EventQueue.invokeLater(() -> {
-            if (projectSettings.getRunUser() != null) {
-                txtUserName.setText(projectSettings.getRunUser());
-            }
-            if (projectSettings.getRunPassword() != null) {
-                txtPassword.setText(projectSettings.getRunPassword());
-            }
-            if (projectSettings.getPlatypusClientOptions() != null) {
-                txtClientOptions.setText(projectSettings.getPlatypusClientOptions());
-            }
-            if (projectSettings.getPlatypusClientVmOptions() != null) {
-                txtClientVmOptions.setText(projectSettings.getPlatypusClientVmOptions());
-            }
             if (projectSettings.getPlatypusClientUrl() != null) {
                 txtClientUrl.setText(projectSettings.getPlatypusClientUrl());
             }
@@ -66,14 +55,6 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lblClientUrl = new javax.swing.JLabel();
         txtClientUrl = new javax.swing.JTextField();
-        lblUserName = new javax.swing.JLabel();
-        txtUserName = new javax.swing.JTextField();
-        lblPassword = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
-        lblClientOptions = new javax.swing.JLabel();
-        txtClientOptions = new javax.swing.JTextField();
-        lblClientVmOptions = new javax.swing.JLabel();
-        txtClientVmOptions = new javax.swing.JTextField();
         lblClientLogLevel = new javax.swing.JLabel();
         cbClientLogLevel = new javax.swing.JComboBox();
         lblClientDebugPort = new javax.swing.JLabel();
@@ -102,58 +83,6 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
         txtClientUrl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtClientUrlActionPerformed(evt);
-            }
-        });
-
-        lblUserName.setText(org.openide.util.NbBundle.getMessage(PlatypusClientCustomizer.class, "PlatypusClientCustomizer.lblUserName.text")); // NOI18N
-
-        txtUserName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtUserNameFocusLost(evt);
-            }
-        });
-        txtUserName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserNameActionPerformed(evt);
-            }
-        });
-
-        lblPassword.setText(org.openide.util.NbBundle.getMessage(PlatypusClientCustomizer.class, "PlatypusClientCustomizer.lblPassword.text")); // NOI18N
-
-        txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPasswordFocusLost(evt);
-            }
-        });
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-
-        lblClientOptions.setText(org.openide.util.NbBundle.getMessage(PlatypusClientCustomizer.class, "PlatypusClientCustomizer.lblClientOptions.text")); // NOI18N
-
-        txtClientOptions.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtClientOptionsFocusLost(evt);
-            }
-        });
-        txtClientOptions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClientOptionsActionPerformed(evt);
-            }
-        });
-
-        lblClientVmOptions.setText(org.openide.util.NbBundle.getMessage(PlatypusClientCustomizer.class, "PlatypusClientCustomizer.lblClientVmOptions.text")); // NOI18N
-
-        txtClientVmOptions.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtClientVmOptionsFocusLost(evt);
-            }
-        });
-        txtClientVmOptions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClientVmOptionsActionPerformed(evt);
             }
         });
 
@@ -205,91 +134,43 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblClientDebugPort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClientOptions, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .addComponent(lblClientVmOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClientUrl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClientLogLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbClientLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtClientVmOptions, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                                .addComponent(txtClientOptions, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtUserName, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtClientUrl, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(spClientDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblClientRunCommand, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtClientRunCommand)
-                    .addComponent(lblClientRunCommand, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblClientDebugPort, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                            .addComponent(lblClientUrl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblClientLogLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbClientLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spClientDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 362, Short.MAX_VALUE))
+                    .addComponent(txtClientUrl, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblClientUrl)
-                    .addComponent(txtClientUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblClientUrl)
+                .addGap(4, 4, 4)
+                .addComponent(txtClientUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblUserName)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblPassword)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblClientOptions)
-                    .addComponent(txtClientOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblClientVmOptions)
-                    .addComponent(txtClientVmOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientLogLevel)
                     .addComponent(cbClientLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClientDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(lblClientDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spClientDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                 .addComponent(lblClientRunCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtClientRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtClientOptionsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClientOptionsFocusLost
-        projectSettings.setPlatypusClientOptions(txtClientOptions.getText());
-    }//GEN-LAST:event_txtClientOptionsFocusLost
-
-    private void txtClientOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientOptionsActionPerformed
-        projectSettings.setPlatypusClientOptions(txtClientOptions.getText());
-    }//GEN-LAST:event_txtClientOptionsActionPerformed
-
-    private void txtUserNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserNameFocusLost
-        projectSettings.setRunUser(txtUserName.getText());
-    }//GEN-LAST:event_txtUserNameFocusLost
-
-    private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
-        projectSettings.setRunUser(txtUserName.getText());
-    }//GEN-LAST:event_txtUserNameActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        projectSettings.setRunPassword(new String(txtPassword.getPassword()));
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
-        projectSettings.setRunPassword(new String(txtPassword.getPassword()));
-    }//GEN-LAST:event_txtPasswordFocusLost
 
     private void txtClientUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientUrlActionPerformed
         projectSettings.setPlatypusClientUrl(txtClientUrl.getText());
@@ -298,14 +179,6 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
     private void txtClientUrlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClientUrlFocusLost
         projectSettings.setPlatypusClientUrl(txtClientUrl.getText());
     }//GEN-LAST:event_txtClientUrlFocusLost
-
-    private void txtClientVmOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientVmOptionsActionPerformed
-        projectSettings.setPlatypusClientVmOptions(txtClientVmOptions.getText());
-    }//GEN-LAST:event_txtClientVmOptionsActionPerformed
-
-    private void txtClientVmOptionsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClientVmOptionsFocusLost
-        projectSettings.setPlatypusClientVmOptions(txtClientVmOptions.getText());
-    }//GEN-LAST:event_txtClientVmOptionsFocusLost
 
     private void spClientDebugPortStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spClientDebugPortStateChanged
         projectSettings.setPlatypusClientDebugPort((int) spClientDebugPort.getValue());
@@ -336,18 +209,10 @@ public class PlatypusClientCustomizer extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblClientDebugPort;
     private javax.swing.JLabel lblClientLogLevel;
-    private javax.swing.JLabel lblClientOptions;
     private javax.swing.JLabel lblClientRunCommand;
     private javax.swing.JLabel lblClientUrl;
-    private javax.swing.JLabel lblClientVmOptions;
-    private javax.swing.JLabel lblPassword;
-    private javax.swing.JLabel lblUserName;
     private javax.swing.JSpinner spClientDebugPort;
-    private javax.swing.JTextField txtClientOptions;
     private javax.swing.JTextField txtClientRunCommand;
     private javax.swing.JTextField txtClientUrl;
-    private javax.swing.JTextField txtClientVmOptions;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

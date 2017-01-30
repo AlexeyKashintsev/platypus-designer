@@ -16,29 +16,41 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="txtServletContainerRunCommand" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="lblServletContainerRunCommand" min="-2" pref="304" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="226" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="cbEnableWebSecurity" alignment="0" max="32767" attributes="0"/>
+                  <Component id="cbAutoApply" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbEnableWebSecurity" alignment="0" max="32767" attributes="0"/>
                           <Component id="cbRunServletContainer" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbAutoApply" alignment="0" pref="352" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblContext" max="32767" attributes="0"/>
+                                  <Component id="lblHttpPort" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblServletContainerLogLevel" alignment="1" pref="76" max="32767" attributes="0"/>
+                                  <Component id="lblServletContainerDebugPort" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtWebApplicationContext" max="32767" attributes="0"/>
+                                  <Component id="cbServletContainerLogLevel" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="spServletContainerDebugPort" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="spHttpPort" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblContext" min="-2" pref="67" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtContext" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="txtServletContainerRunCommand" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblServletContainerRunCommand" min="-2" pref="191" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,16 +59,31 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cbRunServletContainer" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="lblHttpPort" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="spHttpPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="lblServletContainerLogLevel" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbServletContainerLogLevel" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="lblServletContainerDebugPort" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="spServletContainerDebugPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblContext" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtContext" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtWebApplicationContext" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="cbEnableWebSecurity" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="cbAutoApply" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <EmptySpace pref="142" max="32767" attributes="0"/>
               <Component id="lblServletContainerRunCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtServletContainerRunCommand" min="-2" max="-2" attributes="0"/>
@@ -73,10 +100,10 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtContext">
+    <Component class="javax.swing.JTextField" name="txtWebApplicationContext">
       <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtContextFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtContextActionPerformed"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtWebApplicationContextFocusLost"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtWebApplicationContextActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbEnableWebSecurity">
@@ -120,6 +147,58 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbRunServletContainerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHttpPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="ServletContainerCustomizer.lblHttpPort.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spHttpPort">
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spHttpPortStateChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spHttpPortFocusLost"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblServletContainerLogLevel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="ServletContainerCustomizer.lblServletContainerLogLevel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbServletContainerLogLevel">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(getLogLevels())" type="code"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbServletContainerLogLevelItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbServletContainerLogLevelActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblServletContainerDebugPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="ServletContainerCustomizer.lblServletContainerDebugPort.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="spServletContainerDebugPort">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[36, 26]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[36, 26]"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spServletContainerDebugPortStateChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spServletContainerDebugPortFocusLost"/>
       </Events>
     </Component>
   </SubComponents>

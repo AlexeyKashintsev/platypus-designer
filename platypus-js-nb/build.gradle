@@ -37,6 +37,8 @@ dependencies {
     runtime 'platypus-js:platypus-js-forms:5.11.0'
     runtime 'platypus-js:platypus-js-sql-parser:5.11.0'
     runtime 'platypus-js:platypus-js-forms:5.11.0'
+    runtime 'javax.servlet:javax.servlet-api:3.1.0'
+    runtime 'javax.websocket:javax.websocket-api:1.1'
     //
     compile "org.netbeans.api:org-openide-util:${nbVersion}"
     compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"

@@ -113,7 +113,7 @@
               <Component id="lblClientServerMessage" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="chGlobalApi" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+              <EmptySpace pref="85" max="32767" attributes="0"/>
               <Component id="lblCleanCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtCleanCommand" min="-2" max="-2" attributes="0"/>
@@ -121,7 +121,7 @@
               <Component id="lblBuildCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtBuildCommand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

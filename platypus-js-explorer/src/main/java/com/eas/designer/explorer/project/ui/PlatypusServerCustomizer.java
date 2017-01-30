@@ -4,13 +4,14 @@ import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.project.PlatypusProjectSettings;
 import java.awt.EventQueue;
 import java.util.logging.Level;
+import javax.swing.JPanel;
 import org.openide.filesystems.FileObject;
 
 /**
  *
  * @author mg
  */
-public class PlatypusServerCustomizer extends javax.swing.JPanel {
+public class PlatypusServerCustomizer extends JPanel {
 
     protected final PlatypusProject project;
     protected final FileObject appRoot;
@@ -30,19 +31,13 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
         EventQueue.invokeLater(() -> {
             isInit = true;
             try {
-                spServerPort.setValue(projectSettings.getServletContainerPort());
-                if (projectSettings.getPlatypusServerOptions() != null) {
-                    txtServerOptions.setText(projectSettings.getPlatypusServerOptions());
-                }
-                if (projectSettings.getPlatypusServerVmOptions() != null) {
-                    txtServerVmOptions.setText(projectSettings.getPlatypusServerVmOptions());
-                }
-                if (projectSettings.getPlatypusServerRunCommand() != null) {
-                    txtPlatypusServerRunCommand.setText(projectSettings.getPlatypusServerRunCommand());
-                }
+                spServerPort.setValue(projectSettings.getPlatypusServerPort());
                 cbRunPlatypusServer.setSelected(projectSettings.getStartLocalPlatypusServer());
                 cbServerLogLevel.setSelectedItem(projectSettings.getPlatypusServerLogLevel());
                 spServerDebugPort.setValue(projectSettings.getPlatypusServerDebugPort());
+                if (projectSettings.getPlatypusServerRunCommand() != null) {
+                    txtPlatypusServerRunCommand.setText(projectSettings.getPlatypusServerRunCommand());
+                }
             } finally {
                 isInit = false;
             }
@@ -65,10 +60,6 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         lblServerPort = new javax.swing.JLabel();
         spServerPort = new javax.swing.JSpinner();
-        lblServerOptions = new javax.swing.JLabel();
-        txtServerOptions = new javax.swing.JTextField();
-        lblServerVmOptions = new javax.swing.JLabel();
-        txtServerVmOptions = new javax.swing.JTextField();
         lblServerLogLevel = new javax.swing.JLabel();
         cbServerLogLevel = new javax.swing.JComboBox();
         lblServerDebugPort = new javax.swing.JLabel();
@@ -98,33 +89,6 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
         spServerPort.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 spServerPortFocusLost(evt);
-            }
-        });
-
-        lblServerOptions.setText(org.openide.util.NbBundle.getMessage(PlatypusServerCustomizer.class, "PlatypusServerCustomizer.lblServerOptions.text")); // NOI18N
-
-        txtServerOptions.setToolTipText(""); // NOI18N
-        txtServerOptions.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtServerOptionsFocusLost(evt);
-            }
-        });
-        txtServerOptions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtServerOptionsActionPerformed(evt);
-            }
-        });
-
-        lblServerVmOptions.setText(org.openide.util.NbBundle.getMessage(PlatypusServerCustomizer.class, "PlatypusServerCustomizer.lblServerVmOptions.text")); // NOI18N
-
-        txtServerVmOptions.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtServerVmOptionsFocusLost(evt);
-            }
-        });
-        txtServerVmOptions.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtServerVmOptionsActionPerformed(evt);
             }
         });
 
@@ -190,20 +154,14 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblServerPort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblServerVmOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblServerOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblServerLogLevel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblServerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtServerOptions)
-                            .addComponent(txtServerVmOptions)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbServerLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spServerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(spServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 350, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbServerLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spServerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 350, Short.MAX_VALUE))
                     .addComponent(lblPlatypusServerRunCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPlatypusServerRunCommand))
                 .addContainerGap())
@@ -219,35 +177,19 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
                     .addComponent(spServerPort, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblServerOptions)
-                    .addComponent(txtServerOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lblServerVmOptions)
-                    .addComponent(txtServerVmOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(lblServerLogLevel)
                     .addComponent(cbServerLogLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(lblServerDebugPort)
                     .addComponent(spServerDebugPort, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addComponent(lblPlatypusServerRunCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPlatypusServerRunCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtServerOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerOptionsActionPerformed
-        projectSettings.setPlatypusServerOptions(txtServerOptions.getText());
-    }//GEN-LAST:event_txtServerOptionsActionPerformed
-
-    private void txtServerOptionsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServerOptionsFocusLost
-        projectSettings.setPlatypusServerOptions(txtServerOptions.getText());
-    }//GEN-LAST:event_txtServerOptionsFocusLost
 
     private void spServerPortFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spServerPortFocusLost
         projectSettings.setPlatypusServerPort((Integer) spServerPort.getValue());
@@ -258,14 +200,6 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
             projectSettings.setPlatypusServerPort((Integer) spServerPort.getValue());
         }
     }//GEN-LAST:event_spServerPortStateChanged
-
-    private void txtServerVmOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerVmOptionsActionPerformed
-        projectSettings.setPlatypusServerVmOptions(txtServerVmOptions.getText());
-    }//GEN-LAST:event_txtServerVmOptionsActionPerformed
-
-    private void txtServerVmOptionsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServerVmOptionsFocusLost
-        projectSettings.setPlatypusServerVmOptions(txtServerVmOptions.getText());
-    }//GEN-LAST:event_txtServerVmOptionsFocusLost
 
     private void spServerDebugPortFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spServerDebugPortFocusLost
         projectSettings.setPlatypusServerDebugPort((int) spServerDebugPort.getValue());
@@ -302,13 +236,9 @@ public class PlatypusServerCustomizer extends javax.swing.JPanel {
     private javax.swing.JLabel lblPlatypusServerRunCommand;
     private javax.swing.JLabel lblServerDebugPort;
     private javax.swing.JLabel lblServerLogLevel;
-    private javax.swing.JLabel lblServerOptions;
     private javax.swing.JLabel lblServerPort;
-    private javax.swing.JLabel lblServerVmOptions;
     private javax.swing.JSpinner spServerDebugPort;
     private javax.swing.JSpinner spServerPort;
     private javax.swing.JTextField txtPlatypusServerRunCommand;
-    private javax.swing.JTextField txtServerOptions;
-    private javax.swing.JTextField txtServerVmOptions;
     // End of variables declaration//GEN-END:variables
 }

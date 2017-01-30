@@ -160,53 +160,11 @@ public interface PlatypusProjectSettings {
     AppServerType getApplicationServerType();
 
     /**
-     * Gets optional parameters provided to Platypus Client.
-     *
-     * @return parameters string
-     */
-    String getPlatypusClientOptions();
-
-    /**
      * Gets client type to be run.
      *
      * @return ClientType instance
      */
     ClientType getClientType();
-
-    /**
-     * Gets JVM options provided to Platypus Client.
-     *
-     * @return parameters string
-     */
-    String getPlatypusClientVmOptions();
-
-    /**
-     * Gets password for the Platypus user to login on application run.
-     *
-     * @return Platypus user name
-     */
-    String getRunPassword();
-
-    /**
-     * Gets optional parameters provided to Platypus Application Server.
-     *
-     * @return parameters string
-     */
-    String getPlatypusServerOptions();
-
-    /**
-     * Gets JVM options provided to Platypus Application Server.
-     *
-     * @return parameters string
-     */
-    String getPlatypusServerVmOptions();
-
-    /**
-     * Gets username for the Platypus user to login on application run.
-     *
-     * @return Platypus user name
-     */
-    String getRunUser();
 
     /**
      * Gets application's context name.
@@ -258,25 +216,11 @@ public interface PlatypusProjectSettings {
     void save() throws Exception;
 
     /**
-     * Sets optional parameters provided to Platypus Client.
-     *
-     * @param aValue
-     */
-    void setPlatypusClientOptions(String aValue);
-
-    /**
      * Sets url used with platyous client.
      *
      * @param aValue Url string
      */
     void setPlatypusClientUrl(String aValue);
-
-    /**
-     * Sets JVM options provided to Platypus Client.
-     *
-     * @param aValue
-     */
-    void setPlatypusClientVmOptions(String aValue);
 
     /**
      * Sets JPDA debugging port for Platypus Client on local computer on
@@ -352,32 +296,11 @@ public interface PlatypusProjectSettings {
     void setClientType(ClientType aValue);
 
     /**
-     * Sets password for the Platypus user to login on application run.
-     *
-     * @param aValue Platypus user name
-     */
-    void setRunPassword(String aValue);
-
-    /**
-     * Sets username for the Platypus user to login on application run.
-     *
-     * @param aValue Platypus user name
-     */
-    void setRunUser(String aValue);
-
-    /**
      * Sets application's context name.
      *
      * @param aValue The name of the context string
      */
     void setWebApplicationContext(String aValue);
-
-    /**
-     * Sets optional parameters provided to Platypus Application Server.
-     *
-     * @param aValue
-     */
-    void setPlatypusServerOptions(String aValue);
 
     /**
      * Sets platypus port.
@@ -400,17 +323,10 @@ public interface PlatypusProjectSettings {
      */
     void setServletContainerDebugPort(int aValue);
 
-    /**
-     * Sets JVM options provided to Platypus Application Server.
-     *
-     * @param aValue
-     */
-    void setPlatypusServerVmOptions(String aValue);
-
     String getCleanCommand();
 
     String getBuildCommand();
-
+    
     String getPlatypusServerRunCommand();
 
     String getServletContainerRunCommand();
@@ -420,7 +336,7 @@ public interface PlatypusProjectSettings {
     void setCleanCommand(String aValue);
 
     void setBuildCommand(String aValue);
-
+    
     void setPlatypusServerRunCommand(String aValue);
 
     void setServletContainerRunCommand(String aValue);

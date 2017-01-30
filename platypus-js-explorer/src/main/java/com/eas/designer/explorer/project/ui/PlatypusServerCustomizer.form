@@ -36,34 +36,27 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblPlatypusServerRunCommand" max="32767" attributes="0"/>
+                  <Component id="txtPlatypusServerRunCommand" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="cbRunPlatypusServer" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblServerPort" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblServerVmOptions" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblServerOptions" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblServerLogLevel" alignment="1" max="32767" attributes="0"/>
-                          <Component id="lblServerDebugPort" min="-2" pref="76" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtServerOptions" max="32767" attributes="0"/>
-                          <Component id="txtServerVmOptions" max="32767" attributes="0"/>
+                          <Component id="cbRunPlatypusServer" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lblServerPort" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblServerLogLevel" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="lblServerDebugPort" min="-2" pref="76" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="cbServerLogLevel" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
                                   <Component id="spServerDebugPort" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
                                   <Component id="spServerPort" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="320" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="lblPlatypusServerRunCommand" max="32767" attributes="0"/>
-                  <Component id="txtPlatypusServerRunCommand" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -81,16 +74,6 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblServerOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtServerOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="lblServerVmOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtServerVmOptions" alignment="2" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="lblServerLogLevel" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="cbServerLogLevel" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -99,11 +82,11 @@
                   <Component id="lblServerDebugPort" alignment="2" min="-2" max="-2" attributes="0"/>
                   <Component id="spServerDebugPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="209" max="32767" attributes="0"/>
               <Component id="lblPlatypusServerRunCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtPlatypusServerRunCommand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -120,35 +103,6 @@
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="spServerPortStateChanged"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="spServerPortFocusLost"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblServerOptions">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusServerCustomizer.lblServerOptions.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtServerOptions">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="" noResource="true"/>
-      </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtServerOptionsFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtServerOptionsActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblServerVmOptions">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="PlatypusServerCustomizer.lblServerVmOptions.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtServerVmOptions">
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtServerVmOptionsFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtServerVmOptionsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblServerLogLevel">

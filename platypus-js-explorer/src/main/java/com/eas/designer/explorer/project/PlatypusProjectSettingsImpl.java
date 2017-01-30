@@ -24,7 +24,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public static final int DEFAULT_SERVLET_CONTAINER_PORT       = 8085;
     public static final int DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT   = 5001;
     public static final int DEFAULT_PLATYPUS_SERVER_DEBUG_PORT   = 5004;
-    public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5006;
+    public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5007;
     public static final Level DEFAULT_LOG_LEVEL                  = Level.INFO;
     public static final String DEFAULT_APP_FOLDER                = "app"; //NOI18N
     public static final String PROJECT_COMMANDS_FILE             = ".platypus"; //NOI18N
@@ -40,10 +40,8 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public static final String CLIENT_TYPE_KEY                   = "run.clientType"; //NOI18N
     public static final String SERVER_TYPE_KEY                   = "run.serverType"; //NOI18N
     public static final String SOURCE_PATH_KEY                   = "run.sourcePath"; //NOI18N
-    public static final String RUN_USER_NAME_KEY                 = "user.name"; //NOI18N
-    public static final String RUN_USER_PASSWORD_KEY             = "user.password"; //NOI18N
-    public static final String SERVLET_CONTAINER_PORT_KEY        = "http.port";//NOI18N
-    public static final String PLATYPUS_SERVER_PORT_KEY          = "platypus.port";//NOI18N
+    public static final String HTTP_PORT_KEY                     = "http.port";//NOI18N
+    public static final String PLATYPUS_PORT_KEY                 = "platypus.port";//NOI18N
     public static final String WEB_APPLICATION_CONTEXT_KEY       = "webApplication.context";//NOI18N
     public static final String AUTO_APPLY_WEB_XML_KEY            = "webApplication.autoApplyWebXml"; //NOI18N
     public static final String ENABLE_SECURITY_REALM_KEY         = "webApplication.enableSecurityRealm";//NOI18N
@@ -51,14 +49,10 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     public static final String BROWSER_CACHE_BUSTING_KEY         = "browser.cacheBusting";//NOI18N
     public static final String BROWSER_RUN_COMMAND_KEY           = "browser.runCommand"; //NOI18N
     public static final String PLATYPUS_CLIENT_URL_KEY           = "platypusClient.customUrl";//NOI18N
-    public static final String PLATYPUS_CLIENT_OPTIONS_KEY       = "platypusClient.options"; //NOI18N
     public static final String PLATYPUS_CLIENT_LOG_LEVEL_KEY     = "platypusClient.logLevel"; //NOI18N
-    public static final String PLATYPUS_CLIENT_VM_OPTIONS_KEY    = "PlatypusClient.vmOptions"; //NOI18N
     public static final String PLATYPUS_CLIENT_DEBUG_PORT_KEY    = "platypusClient.debugPort"; //NOI18N
     public static final String PLATYPUS_CLIENT_RUN_COMMAND_KEY   = "platypusClient.runCommand"; //NOI18N
-    public static final String PLATYPUS_SERVER_OPTIONS_KEY       = "platypusServer.options"; //NOI18N
     public static final String PLATYPUS_SERVER_LOG_LEVEL_KEY     = "platypusServer.logLevel"; //NOI18N
-    public static final String PLATYPUS_SERVER_VM_OPTIONS_KEY    = "platypusServer.vmOptions"; //NOI18N
     public static final String PLATYPUS_SERVER_DEBUG_PORT_KEY    = "platypusServer.debugPort"; //NOI18N
     public static final String START_LOCAL_PLATYPUS_SERVER_KEY   = "platypusServer.startLocal"; //NOI18N
     public static final String PLATYPUS_SERVER_RUN_COMMAND_KEY   = "platypusServer.runCommand"; //NOI18N
@@ -241,168 +235,6 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     }
 
     /**
-     * Gets username for the Platypus user to login on application run.
-     *
-     * @return Platypus user name
-     */
-    @Override
-    public String getRunUser() {
-        return projectPrivateProperties.get(RUN_USER_NAME_KEY);
-    }
-
-    /**
-     * Sets username for the Platypus user to login on application run.
-     *
-     * @param aValue Platypus user name
-     */
-    @Override
-    public void setRunUser(String aValue) {
-        String oldValue = getRunUser();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_USER_NAME_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(RUN_USER_NAME_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(RUN_USER_NAME_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets password for the Platypus user to login on application run.
-     *
-     * @return Platypus user name
-     */
-    @Override
-    public String getRunPassword() {
-        return projectPrivateProperties.get(RUN_USER_PASSWORD_KEY);
-    }
-
-    /**
-     * Sets password for the Platypus user to login on application run.
-     *
-     * @param aValue Platypus user name
-     */
-    @Override
-    public void setRunPassword(String aValue) {
-        String oldValue = getRunPassword();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(RUN_USER_PASSWORD_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(RUN_USER_PASSWORD_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(RUN_USER_PASSWORD_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets optional parameters provided to Platypus Client.
-     *
-     * @return parameters string
-     */
-    @Override
-    public String getPlatypusClientOptions() {
-        return projectPrivateProperties.get(PLATYPUS_CLIENT_OPTIONS_KEY);
-    }
-
-    /**
-     * Sets optional parameters provided to Platypus Client.
-     *
-     * @param aValue
-     */
-    @Override
-    public void setPlatypusClientOptions(String aValue) {
-        String oldValue = getPlatypusClientOptions();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_OPTIONS_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(PLATYPUS_CLIENT_OPTIONS_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_CLIENT_OPTIONS_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets JVM options provided to Platypus Client.
-     *
-     * @return parameters string
-     */
-    @Override
-    public String getPlatypusClientVmOptions() {
-        return projectPrivateProperties.get(PLATYPUS_CLIENT_VM_OPTIONS_KEY);
-    }
-
-    /**
-     * Sets JVM options provided to Platypus Client.
-     *
-     * @param aValue
-     */
-    @Override
-    public void setPlatypusClientVmOptions(String aValue) {
-        String oldValue = getPlatypusClientVmOptions();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(PLATYPUS_CLIENT_VM_OPTIONS_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(PLATYPUS_CLIENT_VM_OPTIONS_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_CLIENT_VM_OPTIONS_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets optional parameters provided to Platypus Application Server.
-     *
-     * @return parameters string
-     */
-    @Override
-    public String getPlatypusServerOptions() {
-        return projectPrivateProperties.get(PLATYPUS_SERVER_OPTIONS_KEY);
-    }
-
-    /**
-     * Sets optional parameters provided to Platypus Application Server.
-     *
-     * @param aValue
-     */
-    @Override
-    public void setPlatypusServerOptions(String aValue) {
-        String oldValue = getPlatypusServerOptions();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(PLATYPUS_SERVER_OPTIONS_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(PLATYPUS_SERVER_OPTIONS_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_SERVER_OPTIONS_KEY, oldValue, aValue);
-    }
-
-    /**
-     * Gets JVM options provided to Platypus Application Server.
-     *
-     * @return parameters string
-     */
-    @Override
-    public String getPlatypusServerVmOptions() {
-        return projectPrivateProperties.get(PLATYPUS_SERVER_VM_OPTIONS_KEY);
-    }
-
-    /**
-     * Sets JVM options provided to Platypus Application Server.
-     *
-     * @param aValue
-     */
-    @Override
-    public void setPlatypusServerVmOptions(String aValue) {
-        String oldValue = getPlatypusServerVmOptions();
-        if (aValue != null) {
-            projectPrivateProperties.setProperty(PLATYPUS_SERVER_VM_OPTIONS_KEY, aValue);
-        } else {
-            projectPrivateProperties.remove(PLATYPUS_SERVER_VM_OPTIONS_KEY);
-        }
-        projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_SERVER_VM_OPTIONS_KEY, oldValue, aValue);
-    }
-
-    /**
      * Gets application server's host.
      *
      * @return Url string
@@ -431,7 +263,7 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
 
     @Override
     public int getPlatypusServerPort() {
-        return StringUtils.parseInt(projectPrivateProperties.get(PLATYPUS_SERVER_PORT_KEY), DEFAULT_PLATYPUS_SERVER_PORT);
+        return StringUtils.parseInt(projectPrivateProperties.get(PLATYPUS_PORT_KEY), DEFAULT_PLATYPUS_SERVER_PORT);
     }
 
     /**
@@ -442,9 +274,9 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
     @Override
     public void setPlatypusServerPort(int aValue) {
         int oldValue = getPlatypusServerPort();
-        projectPrivateProperties.setProperty(PLATYPUS_SERVER_PORT_KEY, String.valueOf(aValue));
+        projectPrivateProperties.setProperty(PLATYPUS_PORT_KEY, String.valueOf(aValue));
         projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(PLATYPUS_SERVER_PORT_KEY, oldValue, aValue);
+        changeSupport.firePropertyChange(PLATYPUS_PORT_KEY, oldValue, aValue);
     }
 
     /**
@@ -454,15 +286,15 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
      */
     @Override
     public int getServletContainerPort() {
-        return StringUtils.parseInt(projectPrivateProperties.get(SERVLET_CONTAINER_PORT_KEY), DEFAULT_SERVLET_CONTAINER_PORT);
+        return StringUtils.parseInt(projectPrivateProperties.get(HTTP_PORT_KEY), DEFAULT_SERVLET_CONTAINER_PORT);
     }
 
     @Override
     public void setServletContainerPort(int aValue) {
         int oldValue = getServletContainerPort();
-        projectPrivateProperties.setProperty(SERVLET_CONTAINER_PORT_KEY, String.valueOf(aValue));
+        projectPrivateProperties.setProperty(HTTP_PORT_KEY, String.valueOf(aValue));
         projectPrivatePropertiesDirty = true;
-        changeSupport.firePropertyChange(SERVLET_CONTAINER_PORT_KEY, oldValue, aValue);
+        changeSupport.firePropertyChange(HTTP_PORT_KEY, oldValue, aValue);
     }
 
     /**
