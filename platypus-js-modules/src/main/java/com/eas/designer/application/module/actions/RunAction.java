@@ -45,7 +45,7 @@ public class RunAction implements ActionListener {
                     appElementName = FileUtil.getRelativePath(pProject.getSrcRoot(), dataObject.getPrimaryFile());
                 }
                 PlatypusProjectActions actions = pProject.getLookup().lookup(PlatypusProjectActions.class);
-                actions.start(appElementName, false);
+                actions.start(appElementName);
             } catch (Exception ex) {
                 ErrorManager.getDefault().notify(ex);
             }

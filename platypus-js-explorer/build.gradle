@@ -36,18 +36,14 @@ dependencies {
     compile "org.netbeans.api:org-netbeans-api-progress-nb:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-api-java-classpath:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-db:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-server:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-queries:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectuiapi:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectuiapi-base:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-j2ee-dd:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-settings:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-j2eeserver:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-api:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-extexecution:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-extexecution-base:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-j2ee-metadata:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-indexing:${nbVersion}"
     compile project(':platypus-js-nb')
     compile project(':platypus-diagrams-ui')
