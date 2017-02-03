@@ -1,0 +1,2 @@
+OpenIDE-Module-Package-Dependencies: com.sun.jdi[VirtualMachineManager]
+OpenIDE-Module-Layer: com/eas/designer/application/layer.xml

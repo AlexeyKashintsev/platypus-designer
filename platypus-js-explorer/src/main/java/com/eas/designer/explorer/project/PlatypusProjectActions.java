@@ -286,7 +286,7 @@ public class PlatypusProjectActions implements ActionProvider {
     }
 
     private static boolean isConnectionValid(DatabaseConnection connection) {
-        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && connection.getDisplayName().matches("[a-zA-Z_][a-zA-Z0-9_]*") //NOI18N
+        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && connection.getDisplayName().matches("[a-zA-Z_/\\-][a-zA-Z0-9_/\\-]*") //NOI18N
                 && connection.getDatabaseURL() != null && !connection.getDatabaseURL().isEmpty()
                 && connection.getUser() != null && !connection.getUser().isEmpty();
     }
@@ -299,10 +299,6 @@ public class PlatypusProjectActions implements ActionProvider {
     private void prepareDatasources() throws Exception {
         PlatypusProjectSettings pps = project.getSettings();
         EditableProperties projectProperties = pps.getProjectProperties();
-        projectProperties.remove(PlatypusProjectSettings.DEFAULT_DATA_SOURCE_ELEMENT_KEY);
-        if(pps.getDefaultDataSourceName() != null && !pps.getDefaultDataSourceName().isEmpty()){
-            projectProperties.setProperty(PlatypusProjectSettings.DEFAULT_DATA_SOURCE_ELEMENT_KEY, pps.getDefaultDataSourceName());
-        }
         // Let's clear old datasources
         projectProperties.entrySet().removeIf(e -> e.getKey().startsWith(DatasourcesArgsConsumer.DB_RESOURCE_CONF_PARAM + "."));
         // Let's add current datasources
@@ -336,7 +332,9 @@ public class PlatypusProjectActions implements ActionProvider {
             wa.addAppListener(new AppListener(PlatypusSessionsSynchronizer.class.getName()));
             configureParams(wa);
             configureServlet(wa);
-            configureDatasources(wa);
+            if (project.getSettings().getAcceptDesginerDatasources()) {
+                configureDatasources(wa);
+            }
             if (project.getSettings().getSecurityRealmEnabled()) {
                 configureSecurity(wa);
             }

@@ -6,13 +6,6 @@
             <file name="com-eas-designer-application-module-actions-WhereUsedAction.instance_hidden"/>
         </folder>
     </folder>
-    <folder name="Editors">
-        <folder name="text">
-            <folder name="javascript">
-                <file name="com-eas-designer-application-indexer-FileIndexerFactory.instance"/>
-            </folder>
-        </folder>
-    </folder>
     <folder name="Loaders">
         <folder name="text">
             <folder name="javascript">
