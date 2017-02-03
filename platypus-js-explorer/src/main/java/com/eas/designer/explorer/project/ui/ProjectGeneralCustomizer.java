@@ -67,6 +67,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                     txtBuildCommand.setText(projectSettings.getBuildCommand());
                 }
                 chGlobalApi.setSelected(projectSettings.getGlobalAPI());
+                chAcceptDesignerDatasources.setSelected(projectSettings.getAcceptDesginerDatasources());
                 cbClientType.setSelectedItem(projectSettings.getClientType());
                 cbAppServerType.setSelectedItem(projectSettings.getApplicationServerType());
                 checkRunClientServerConfiguration();
@@ -126,6 +127,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         txtCleanCommand = new javax.swing.JTextField();
         lblBuildCommand = new javax.swing.JLabel();
         txtBuildCommand = new javax.swing.JTextField();
+        chAcceptDesignerDatasources = new javax.swing.JCheckBox();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -239,6 +241,13 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
             }
         });
 
+        chAcceptDesignerDatasources.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.chAcceptDesignerDatasources.text")); // NOI18N
+        chAcceptDesignerDatasources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chAcceptDesignerDatasourcesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -272,10 +281,12 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                     .addComponent(lblCleanCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCleanCommand)
                     .addComponent(lblBuildCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtBuildCommand)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(chGlobalApi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtBuildCommand))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chGlobalApi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chAcceptDesignerDatasources, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -307,7 +318,9 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 .addComponent(lblClientServerMessage)
                 .addGap(18, 18, 18)
                 .addComponent(chGlobalApi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(chAcceptDesignerDatasources)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(lblCleanCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCleanCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -381,7 +394,13 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     }//GEN-LAST:event_chGlobalApiActionPerformed
 
     private void cbAppServerTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAppServerTypeActionPerformed
-        // TODO add your handling code here:
+        if (!isInit) {
+            projectSettings.setApplicationServerType((AppServerType) cbAppServerType.getSelectedItem());
+            if (!AppServerType.SERVLET_CONTAINER.equals((AppServerType) cbAppServerType.getSelectedItem()) && ClientType.WEB_BROWSER.equals((ClientType) cbClientType.getSelectedItem())) {
+                cbClientType.setSelectedItem(ClientType.PLATYPUS_CLIENT);
+            }
+            checkRunClientServerConfiguration();
+        }
     }//GEN-LAST:event_cbAppServerTypeActionPerformed
 
     private void txtSourcePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSourcePathActionPerformed
@@ -408,12 +427,17 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         projectSettings.setBuildCommand(txtBuildCommand.getText());
     }//GEN-LAST:event_txtBuildCommandFocusLost
 
+    private void chAcceptDesignerDatasourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chAcceptDesignerDatasourcesActionPerformed
+        projectSettings.setAcceptDesignerDatasources(chAcceptDesignerDatasources.isSelected());
+    }//GEN-LAST:event_chAcceptDesignerDatasourcesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDatasource;
     private javax.swing.JButton btnBrowse;
     private javax.swing.JComboBox cbAppServerType;
     private javax.swing.JComboBox cbClientType;
     private javax.swing.JComboBox cbConnections;
+    private javax.swing.JCheckBox chAcceptDesignerDatasources;
     private javax.swing.JCheckBox chGlobalApi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBuildCommand;

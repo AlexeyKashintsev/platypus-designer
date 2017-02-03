@@ -10,7 +10,7 @@ import org.openide.util.NbBundle;
  *
  * @author mg
  */
-@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "browserClient", categoryLabel = "#browserClient", projectType = "org-netbeans-modules-platypus", position = 14)
+@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "browserClient", categoryLabel = "#browserClient", projectType = "org-netbeans-modules-platypus", position = 12)
 public class BroswerCategoryProvider implements ProjectCustomizer.CompositeCategoryProvider {
 
     @Override

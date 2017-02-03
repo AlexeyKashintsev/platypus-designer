@@ -38,20 +38,24 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblClientRunCommand" alignment="1" max="32767" attributes="0"/>
                   <Component id="txtClientRunCommand" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblClientDebugPort" pref="76" max="32767" attributes="0"/>
-                          <Component id="lblClientUrl" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="lblClientLogLevel" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbClientLogLevel" min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="spClientDebugPort" min="-2" pref="93" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="362" max="32767" attributes="0"/>
-                  </Group>
                   <Component id="txtClientUrl" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblClientUrl" min="-2" pref="262" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblClientDebugPort" max="32767" attributes="0"/>
+                                  <Component id="lblClientLogLevel" alignment="1" min="-2" pref="76" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cbClientLogLevel" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <Component id="spClientDebugPort" min="-2" pref="93" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="273" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -62,7 +66,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblClientUrl" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="txtClientUrl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -74,7 +78,7 @@
                   <Component id="lblClientDebugPort" alignment="2" min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="spClientDebugPort" alignment="2" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="202" max="32767" attributes="0"/>
+              <EmptySpace pref="200" max="32767" attributes="0"/>
               <Component id="lblClientRunCommand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtClientRunCommand" min="-2" max="-2" attributes="0"/>

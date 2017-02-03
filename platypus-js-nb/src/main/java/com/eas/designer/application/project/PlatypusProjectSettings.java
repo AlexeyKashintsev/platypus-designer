@@ -3,6 +3,7 @@ package com.eas.designer.application.project;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.logging.Level;
+import org.openide.filesystems.FileObject;
 import org.openide.util.EditableProperties;
 
 /**
@@ -11,6 +12,46 @@ import org.openide.util.EditableProperties;
  */
 public interface PlatypusProjectSettings {
 
+    public static final int DEFAULT_PLATYPUS_SERVER_PORT         = 7500;
+    public static final int DEFAULT_SERVLET_CONTAINER_PORT       = 8085;
+    public static final int DEFAULT_PLATYPUS_CLIENT_DEBUG_PORT   = 5001;
+    public static final int DEFAULT_PLATYPUS_SERVER_DEBUG_PORT   = 5004;
+    public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5007;
+    public static final Level DEFAULT_LOG_LEVEL                  = Level.INFO;
+    public static final String DEFAULT_APP_FOLDER                = "app"; //NOI18N
+    public static final String PROJECT_COMMANDS_FILE             = ".platypus"; //NOI18N
+    public static final String PROJECT_PRIVATE_SETTINGS_FILE     = "private.properties"; //NOI18N
+    public static final String PROJECT_SETTINGS_FILE             = "project.properties"; //NOI18N
+    public static final String PROJECT_DISPLAY_NAME_KEY          = "project.displayName"; //NOI18N
+    public static final String CLEAN_COMMAND_KEY                 = "project.cleanCommand"; //NOI18N
+    public static final String BUILD_COMMAND_KEY                 = "project.buildCommand"; //NOI18N
+    public static final String ACCEPT_DESIGNER_DATASOURCES_KEY   = "project.acceptNetBeansDatasources"; //NOI18N
+    public static final String DEFAULT_DATA_SOURCE_ELEMENT_KEY   = "project.generalDataSource"; //NOI18N
+    public static final String RUN_ELEMENT_KEY                   = "run.module"; //NOI18N
+    public static final String GLOBAL_API_KEY                    = "run.globalAPI";//NOI18N
+    public static final String CLIENT_TYPE_KEY                   = "run.clientType"; //NOI18N
+    public static final String SERVER_TYPE_KEY                   = "run.serverType"; //NOI18N
+    public static final String SOURCE_PATH_KEY                   = "run.sourcePath"; //NOI18N
+    public static final String HTTP_PORT_KEY                     = "http.port";//NOI18N
+    public static final String PLATYPUS_PORT_KEY                 = "platypus.port";//NOI18N
+    public static final String WEB_APPLICATION_CONTEXT_KEY       = "webApplication.context";//NOI18N
+    public static final String AUTO_APPLY_WEB_XML_KEY            = "webApplication.autoApplyWebXml"; //NOI18N
+    public static final String ENABLE_SECURITY_REALM_KEY         = "webApplication.enableSecurityRealm";//NOI18N
+    public static final String BROWSER_CUSTOM_URL_KEY            = "browser.customUrl";//NOI18N
+    public static final String BROWSER_CACHE_BUSTING_KEY         = "browser.cacheBusting";//NOI18N
+    public static final String BROWSER_RUN_COMMAND_KEY           = "browser.runCommand"; //NOI18N
+    public static final String PLATYPUS_CLIENT_URL_KEY           = "platypusClient.customUrl";//NOI18N
+    public static final String PLATYPUS_CLIENT_LOG_LEVEL_KEY     = "platypusClient.logLevel"; //NOI18N
+    public static final String PLATYPUS_CLIENT_DEBUG_PORT_KEY    = "platypusClient.debugPort"; //NOI18N
+    public static final String PLATYPUS_CLIENT_RUN_COMMAND_KEY   = "platypusClient.runCommand"; //NOI18N
+    public static final String PLATYPUS_SERVER_LOG_LEVEL_KEY     = "platypusServer.logLevel"; //NOI18N
+    public static final String PLATYPUS_SERVER_DEBUG_PORT_KEY    = "platypusServer.debugPort"; //NOI18N
+    public static final String START_LOCAL_PLATYPUS_SERVER_KEY   = "platypusServer.startLocal"; //NOI18N
+    public static final String PLATYPUS_SERVER_RUN_COMMAND_KEY   = "platypusServer.runCommand"; //NOI18N
+    public static final String SERVLET_CONTAINER_LOG_LEVEL_KEY   = "servletContainer.logLevel"; //NOI18N
+    public static final String SERVLET_CONTAINER_DEBUG_PORT_KEY  = "servletContainer.debugPort"; //NOI18N
+    public static final String START_LOCAL_SERVLET_CONTAINER_KEY = "servletContainer.startLocal"; //NOI18N
+    public static final String SERVLET_CONTAINER_RUN_COMMAND_KEY = "servletContainer.runCommand"; //NOI18N
     public static final String START_JS_FILE_NAME = "start.js"; //NOI18N
 
     PropertyChangeSupport getChangeSupport();
@@ -354,7 +395,10 @@ public interface PlatypusProjectSettings {
     void load() throws IOException;
 
     public EditableProperties getProjectProperties();
+    
+    public FileObject getProjectSettingsFileObject();
 
     public EditableProperties getProjectPrivateProperties();
 
+    public FileObject getProjectPrivateSettingsFileObject();
 }

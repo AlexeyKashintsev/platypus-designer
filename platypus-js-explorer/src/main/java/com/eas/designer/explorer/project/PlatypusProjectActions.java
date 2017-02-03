@@ -67,7 +67,7 @@ public class PlatypusProjectActions implements ActionProvider {
 
     public static final String COMMAND_CONNECT = "connect-to-db"; // NOI18N
     public static final String COMMAND_DISCONNECT = "disconnect-from-db"; // NOI18N
-    private static final String LOCALHOST_NAME = "localhost"; //NOI18N
+    //private static final String LOCALHOST_NAME = "localhost"; //NOI18N
     /**
      * Some routine global actions for which we can supply a display name. These
      * are IDE-specific.
@@ -204,7 +204,7 @@ public class PlatypusProjectActions implements ActionProvider {
             projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Application_Starting"));
             switch (pps.getApplicationServerType()) {
                 case SERVLET_CONTAINER:
-                    boolean startServletContainer = pps.getStartLocalPlatypusServer();
+                    boolean startServletContainer = pps.getStartLocalServletContainer();
                     if (startServletContainer) {
                         prepareWebApplication();
                         command(pps.getServletContainerRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Servlet_Container"), true, null);
@@ -213,7 +213,7 @@ public class PlatypusProjectActions implements ActionProvider {
                             attachDebuggerTo(pps.getServletContainerDebugPort());
                             projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Servlet_Container_Debug_Activated"));//NOI18N
                         }
-                        */
+                         */
                     }
                     break;
                 case PLATYPUS_SERVER:
@@ -225,7 +225,7 @@ public class PlatypusProjectActions implements ActionProvider {
                             attachDebuggerTo(pps.getPlatypusServerDebugPort());
                             projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Server_Debug_Activated"));//NOI18N
                         }
-                        */
+                         */
                     }
                     break;
                 default:
@@ -238,7 +238,7 @@ public class PlatypusProjectActions implements ActionProvider {
                     attachDebuggerTo(pps.getPlatypusClientDebugPort());
                     projectIo.getOut().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Client_Debug_Activated"));//NOI18N
                 }
-                */
+                 */
             } else if (ClientType.WEB_BROWSER.equals(pps.getClientType())) {
                 command(project.getSettings().getBrowserRunCommand(), project.getDisplayName() + " - " + NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Starting_Web_Browser"), true, null);
             }
@@ -262,8 +262,7 @@ public class PlatypusProjectActions implements ActionProvider {
 
         });
     }
-    */
-
+     */
     private void preapreStartJs(String aModuleName) throws IOException, Exception {
         FileObject appSrcDir = project.getSrcRoot();
         FileObject startJs = appSrcDir.getFileObject(PlatypusProjectSettings.START_JS_FILE_NAME);
@@ -287,7 +286,7 @@ public class PlatypusProjectActions implements ActionProvider {
     }
 
     private static boolean isConnectionValid(DatabaseConnection connection) {
-        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && connection.getDisplayName().matches("[a-zA-Z_]+") //NOI18N
+        return connection.getDisplayName() != null && !connection.getDisplayName().isEmpty() && connection.getDisplayName().matches("[a-zA-Z_][a-zA-Z0-9_]*") //NOI18N
                 && connection.getDatabaseURL() != null && !connection.getDatabaseURL().isEmpty()
                 && connection.getUser() != null && !connection.getUser().isEmpty();
     }
@@ -300,6 +299,10 @@ public class PlatypusProjectActions implements ActionProvider {
     private void prepareDatasources() throws Exception {
         PlatypusProjectSettings pps = project.getSettings();
         EditableProperties projectProperties = pps.getProjectProperties();
+        projectProperties.remove(PlatypusProjectSettings.DEFAULT_DATA_SOURCE_ELEMENT_KEY);
+        if(pps.getDefaultDataSourceName() != null && !pps.getDefaultDataSourceName().isEmpty()){
+            projectProperties.setProperty(PlatypusProjectSettings.DEFAULT_DATA_SOURCE_ELEMENT_KEY, pps.getDefaultDataSourceName());
+        }
         // Let's clear old datasources
         projectProperties.entrySet().removeIf(e -> e.getKey().startsWith(DatasourcesArgsConsumer.DB_RESOURCE_CONF_PARAM + "."));
         // Let's add current datasources
@@ -319,7 +322,9 @@ public class PlatypusProjectActions implements ActionProvider {
                 project.getOutputWindowIO().getErr().println(NbBundle.getMessage(PlatypusProjectActions.class, "MSG_Invalid_Database", connection.getDisplayName()));
             }
         }
-        pps.save();
+        try (OutputStream os = pps.getProjectSettingsFileObject().getOutputStream()) {
+            projectProperties.store(os);
+        }
     }
 
     private void prepareWebApplication() throws Exception {

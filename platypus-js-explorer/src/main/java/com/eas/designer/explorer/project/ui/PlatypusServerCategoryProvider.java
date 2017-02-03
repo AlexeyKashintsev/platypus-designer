@@ -10,7 +10,7 @@ import org.openide.util.NbBundle;
  *
  * @author mg
  */
-@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "platypusServer", categoryLabel = "#platypusServer", projectType = "org-netbeans-modules-platypus", position = 12)
+@ProjectCustomizer.CompositeCategoryProvider.Registration(category = "platypusServer", categoryLabel = "#platypusServer", projectType = "org-netbeans-modules-platypus", position = 13)
 public class PlatypusServerCategoryProvider implements ProjectCustomizer.CompositeCategoryProvider {
 
     @Override
