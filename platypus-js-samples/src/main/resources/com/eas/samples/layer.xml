@@ -8,23 +8,23 @@
                     <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus"/>
                     <attr name="position" intvalue="400"/>
 
-                    <file name="WidgetsDemo" url="WidgetsDemo.zip">
+                    <file name="ui-demo" url="ui-demo.zip">
                         <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus/WidgetsDemo"/>
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>
-                        <attr name="instantiatingIterator" methodvalue="com.eas.samples.WithDatabaseWizardIterator.createIterator"/>
+                        <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
                         <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/WidgetsDemo.html"/>
                         <attr name="template" boolvalue="true"/>
                     </file>
-                    <file name="PetHotel" url="PetHotel.zip">
+                    <file name="pet-hotel" url="pet-hotel.zip">
                         <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus/PetHotel"/>
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>
-                        <attr name="instantiatingIterator" methodvalue="com.eas.samples.WithDatabaseWizardIterator.createIterator"/>
+                        <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
                         <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/PetHotel.html"/>
                         <attr name="template" boolvalue="true"/>
                     </file>
-                    <file name="WebSocketDemo" url="WebSocketDemo.zip">
+                    <file name="web-socket-demo" url="web-socket-demo.zip">
                         <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus/WebSocketDemo"/>
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>

@@ -50,6 +50,8 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
 
     /**
      * Creates new form PanelProjectLocationVisual
+     *
+     * @param aPanel
      */
     public PlatypusSamplesPanelVisual(PlatypusSamplesWizardPanel aPanel) {
         super();
@@ -231,12 +233,12 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
         String name = StringUtils.replaceFileNamesInvalidCharacters(projectNameTextField.getText().trim());
         String folder = createdFolderTextField.getText().trim();
 
-        settings.putProperty(PlatypusSamples.PROJ_DIR, new File(folder));
+        settings.putProperty(PlatypusSamples.LOCATION_DIR, new File(folder + File.separator + "src"));
         settings.putProperty(PlatypusSamples.NAME, name);
     }
 
     void read(WizardDescriptor settings) {
-        File projectLocation = (File) settings.getProperty(PlatypusSamples.PROJ_DIR);
+        File projectLocation = (File) settings.getProperty(PlatypusSamples.LOCATION_DIR);
         if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
             projectLocation = ProjectChooser.getProjectsFolder();
         } else {
@@ -281,7 +283,7 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
         }
 
         if (projectLocationTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PlatypusSamples.PROJ_DIR, null, projectLocationTextField.getText());
+            firePropertyChange(PlatypusSamples.LOCATION_DIR, null, projectLocationTextField.getText());
         }
 
         Document doc = e.getDocument();

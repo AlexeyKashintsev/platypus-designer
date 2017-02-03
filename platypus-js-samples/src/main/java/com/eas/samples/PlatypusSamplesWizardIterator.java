@@ -1,15 +1,10 @@
 package com.eas.samples;
 
-import com.eas.designer.explorer.project.PlatypusProjectSettingsImpl;
 import java.awt.Component;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -25,9 +20,7 @@ import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileLock;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.util.EditableProperties;
 import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
 
 public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressInstantiatingIterator {
 
@@ -66,35 +59,12 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
         handle.progress(NbBundle.getMessage(PlatypusSamplesWizardIterator.class, "LBL_NewSampleProjectWizardIterator_WizardProgress_CreatingProject"), 1); // NOI18N
 
         Set resultSet = new LinkedHashSet();
-        File projectDir = FileUtil.normalizeFile((File) wiz.getProperty(PlatypusSamples.PROJ_DIR));
+        File projectDir = FileUtil.normalizeFile((File) wiz.getProperty(PlatypusSamples.LOCATION_DIR));
         projectDir.mkdirs();
 
         FileObject template = Templates.getTemplate(wiz);
         try (InputStream templateStream = template.getInputStream()) {
             unZipFile(templateStream, projectDir);
-        }
-
-        Path projectDirPath = Paths.get(Utilities.toURI(projectDir));
-        Path generalPropertiesPath = projectDirPath.resolve(PlatypusProjectSettingsImpl.PROJECT_SETTINGS_FILE);
-        EditableProperties generalProperties = new EditableProperties(true);
-        try (InputStream ppIn = new FileInputStream(generalPropertiesPath.toFile())) {
-            generalProperties.load(ppIn);
-        }
-        Path privatePropertiesPath = projectDirPath.resolve(PlatypusProjectSettingsImpl.PROJECT_PRIVATE_SETTINGS_FILE);
-        EditableProperties privateProperties = new EditableProperties(true);
-        if (privatePropertiesPath.toFile().exists()) {
-            try (InputStream ppIn = new FileInputStream(privatePropertiesPath.toFile())) {
-                privateProperties.load(ppIn);
-            }
-        }
-
-        processProjectProperties(generalProperties, privateProperties);
-
-        try (OutputStream ppOut = new FileOutputStream(generalPropertiesPath.toFile())) {
-            generalProperties.store(ppOut);
-        }
-        try (OutputStream pppOut = new FileOutputStream(privatePropertiesPath.toFile())) {
-            privateProperties.store(pppOut);
         }
 
         ProjectManager.getDefault().clearNonProjectCache();
@@ -110,12 +80,6 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
 
         handle.finish();
         return resultSet;
-    }
-
-    protected void processProjectProperties(EditableProperties aGeneralProperties, EditableProperties aPrivateProperties) {
-        String projectName = (String) wiz.getProperty(PlatypusSamples.NAME);
-        aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.PROJECT_DISPLAY_NAME_KEY, projectName);
-        aGeneralProperties.setProperty(PlatypusProjectSettingsImpl.WEB_APPLICATION_CONTEXT_KEY, projectName);
     }
 
     @Override
@@ -149,7 +113,7 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
 
     @Override
     public void uninitialize(WizardDescriptor wiz) {
-        this.wiz.putProperty(PlatypusSamples.PROJ_DIR, null);
+        this.wiz.putProperty(PlatypusSamples.LOCATION_DIR, null);
         this.wiz.putProperty(PlatypusSamples.NAME, null);
         this.wiz = null;
         panels = null;
