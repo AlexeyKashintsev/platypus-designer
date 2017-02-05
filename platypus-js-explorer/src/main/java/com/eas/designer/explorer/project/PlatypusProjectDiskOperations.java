@@ -39,12 +39,18 @@ public class PlatypusProjectDiskOperations implements DataFilesProviderImplement
      */
     @Override
     public List<FileObject> getMetadataFiles() {
-        return Collections.unmodifiableList(Arrays.asList(project.getSettings().getProjectSettingsFileObject(), project.getSettings().getProjectCommandsFileObject()));
+        return Collections.unmodifiableList(Arrays.asList(
+                project.getSettings().getProjectSettingsFileObject(),
+                project.getSettings().getProjectPrivateSettingsFileObject(),
+                project.getSettings().getProjectCommandsFileObject()));
     }
 
     @Override
     public List<FileObject> getDataFiles() {
-        return Collections.unmodifiableList(Arrays.asList(project.getSrcRoot()));
+        return Collections.unmodifiableList(Arrays.asList(
+                project.getSrcRoot(),
+                project.getLibRoot(),
+                project.getApiRoot()));
     }
 
     /*
@@ -73,7 +79,7 @@ public class PlatypusProjectDiskOperations implements DataFilesProviderImplement
             //project - newly, just created project
             //original - old (original) project
             assert original != project;
-            project.getProjectInfo().setDisplayName(project.getProjectInfo().getDisplayName() + " ["+aNewName+"]");
+            project.getProjectInfo().setDisplayName(project.getProjectInfo().getDisplayName() + " [" + aNewName + "]");
             project.getState().markModified();
         }
     }
@@ -92,7 +98,7 @@ public class PlatypusProjectDiskOperations implements DataFilesProviderImplement
             //project - newly, just created project
             //original - old (original) project
             assert original != project;
-            ((PlatypusProjectImpl)original).getState().notifyDeleted();
+            ((PlatypusProjectImpl) original).getState().notifyDeleted();
         }
     }
 

@@ -6,45 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
-import org.netbeans.modules.j2ee.deployment.devmodules.api.J2eePlatform;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import com.eas.util.StringUtils;
+import java.nio.file.Path;
 
 public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListener {
-
-    public static final class J2eePlatformAdapter {
-
-        public static final J2eePlatformAdapter UNKNOWN_PLATFORM_ADAPRER = new J2eePlatformAdapter(null, null);
-        private final J2eePlatform platform;
-        private final String serverInstanceId;
-
-        public J2eePlatformAdapter(J2eePlatform aPlatform, String aServerInstanceId) {
-            super();
-            platform = aPlatform;
-            serverInstanceId = aServerInstanceId;
-        }
-
-        public J2eePlatform getJ2eePlatform() {
-            return platform;
-        }
-
-        public String getServerInstanceId() {
-            return serverInstanceId;
-        }
-
-        @Override
-        public String toString() {
-            if (platform != null) {
-                return platform.getDisplayName() != null ? platform.getDisplayName() : "";// NOI18N
-            } else {
-                return NbBundle.getMessage(PlatypusSamplesPanelVisual.class, "cbj2eeServer.NoneText");// NOI18N
-            }
-        }
-    }
 
     private final PlatypusSamplesWizardPanel panel;
 
@@ -193,32 +163,21 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
 
             return false; // Display name not specified
         }
-        String projectLocation = projectLocationTextField.getText();
-        File f = FileUtil.normalizeFile(new File(projectLocation).getAbsoluteFile());
-        if (!f.isDirectory() || projectLocation.length() == 0) {
+
+        Path projectLocation = new File(projectLocationTextField.getText()).toPath();
+        while (projectLocation != null
+                && (!projectLocation.toFile().exists()
+                || !projectLocation.toFile().isDirectory()
+                || !projectLocation.toFile().canWrite())) {
+            projectLocation = projectLocation.getParent();
+        }
+        if (projectLocation == null) {
             String message = NbBundle.getMessage(PlatypusSamplesPanelVisual.class, "MSG_InvalidPath");
             wizardDescriptor.putProperty(WizardDescriptor.PROP_ERROR_MESSAGE, message);
             return false;
         }
-        final File destFolder = FileUtil.normalizeFile(new File(createdFolderTextField.getText()).getAbsoluteFile());
-
-        File projLoc = destFolder;
-        while (projLoc != null && !projLoc.exists()) {
-            projLoc = projLoc.getParentFile();
-        }
-        if (projLoc == null || !projLoc.canWrite()) {
-            wizardDescriptor.putProperty(WizardDescriptor.PROP_ERROR_MESSAGE,
-                    NbBundle.getMessage(PlatypusSamplesPanelVisual.class, "MSG_FolderCannotBeCreated"));
-
-            return false;
-        }
-        if (FileUtil.toFileObject(projLoc) == null) {
-            String message = NbBundle.getMessage(PlatypusSamplesPanelVisual.class, "MSG_InvalidPath");
-            wizardDescriptor.putProperty(WizardDescriptor.PROP_ERROR_MESSAGE, message);
-            return false;
-        }
-        File[] kids = destFolder.listFiles();
-        if (destFolder.exists() && kids != null && kids.length > 0) {
+        Path projectFolder = projectLocation.resolve(projectNameTextField.getText());
+        if(projectFolder.toFile().exists() && projectFolder.toFile().list().length > 0){
             // Folder exists and is not empty
             wizardDescriptor.putProperty(WizardDescriptor.PROP_ERROR_MESSAGE,
                     NbBundle.getMessage(PlatypusSamplesPanelVisual.class, "MSG_FolderAlreadyExists"));
@@ -231,20 +190,18 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
 
     void store(WizardDescriptor settings) {
         String name = StringUtils.replaceFileNamesInvalidCharacters(projectNameTextField.getText().trim());
-        String folder = createdFolderTextField.getText().trim();
+        String locationFolder = projectLocationTextField.getText().trim();
 
-        settings.putProperty(PlatypusSamples.LOCATION_DIR, new File(folder + File.separator + "src"));
+        settings.putProperty(PlatypusSamples.LOCATION_DIR, new File(locationFolder).toPath());
         settings.putProperty(PlatypusSamples.NAME, name);
     }
 
     void read(WizardDescriptor settings) {
-        File projectLocation = (File) settings.getProperty(PlatypusSamples.LOCATION_DIR);
-        if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
-            projectLocation = ProjectChooser.getProjectsFolder();
-        } else {
-            projectLocation = projectLocation.getParentFile();
+        Path projectLocation = (Path) settings.getProperty(PlatypusSamples.LOCATION_DIR);
+        if (projectLocation == null || !projectLocation.toFile().isDirectory()) {
+            projectLocation = ProjectChooser.getProjectsFolder().toPath();
         }
-        projectLocationTextField.setText(projectLocation.getAbsolutePath());
+        projectLocationTextField.setText(projectLocation.toString());
 
         String projectName = (String) settings.getProperty(PlatypusSamples.NAME);
         if (projectName == null) {
@@ -283,7 +240,7 @@ public class PlatypusSamplesPanelVisual extends JPanel implements DocumentListen
         }
 
         if (projectLocationTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PlatypusSamples.LOCATION_DIR, null, projectLocationTextField.getText());
+            firePropertyChange(PlatypusSamples.LOCATION_DIR, null, new File(projectLocationTextField.getText()).toPath());
         }
 
         Document doc = e.getDocument();

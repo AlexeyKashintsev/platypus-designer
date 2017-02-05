@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -59,23 +60,23 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
         handle.progress(NbBundle.getMessage(PlatypusSamplesWizardIterator.class, "LBL_NewSampleProjectWizardIterator_WizardProgress_CreatingProject"), 1); // NOI18N
 
         Set resultSet = new LinkedHashSet();
-        File projectDir = FileUtil.normalizeFile((File) wiz.getProperty(PlatypusSamples.LOCATION_DIR));
-        projectDir.mkdirs();
+        Path locationDir = (Path) wiz.getProperty(PlatypusSamples.LOCATION_DIR);
+        Path projectDir = locationDir.resolve((String) wiz.getProperty(PlatypusSamples.NAME));
+        projectDir.toFile().mkdirs();
 
         FileObject template = Templates.getTemplate(wiz);
         try (InputStream templateStream = template.getInputStream()) {
-            unZipFile(templateStream, projectDir);
+            unZipFile(templateStream, projectDir.toFile());
         }
 
         ProjectManager.getDefault().clearNonProjectCache();
         handle.progress(NbBundle.getMessage(PlatypusSamplesWizardIterator.class, "LBL_NewSampleProjectWizardIterator_WizardProgress_PreparingToOpen"), 2); // NOI18N
 
         // Open top folder as a project
-        resultSet.add(FileUtil.toFileObject(projectDir));
+        resultSet.add(FileUtil.toFileObject(projectDir.resolve("src").toFile()));
 
-        File parent = projectDir.getParentFile();
-        if (parent != null && parent.exists()) {
-            ProjectChooser.setProjectsFolder(parent);
+        if (locationDir.toFile().exists()) {
+            ProjectChooser.setProjectsFolder(locationDir.toFile());
         }
 
         handle.finish();
