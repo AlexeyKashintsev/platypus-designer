@@ -35,7 +35,7 @@ import org.openide.util.lookup.Lookups;
 
 /**
  *
- * @author Gala
+ * @author mg
  */
 public class PlatypusProjectView implements LogicalViewProvider {
 

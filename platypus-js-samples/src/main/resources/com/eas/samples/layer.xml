@@ -3,17 +3,27 @@
 <filesystem>
     <folder name="Templates">
         <folder name="Project">
+            <folder name="Platypus.js">
+                <file name="platypus-gradle-skeleton" url="platypus-gradle-skeleton.zip">
+                    <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Platypus/PlatypusGradleSkeleton"/>
+                    <attr name="iconBase" stringvalue="com/eas/samples/gradle.png"/>
+                    <attr name="position" intvalue="20"/>
+                    <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/platypus-gradle-skeleton.html"/>
+                    <attr name="template" boolvalue="true"/>
+                </file>
+            </folder>
             <folder name="Samples">
                 <folder name="Platypus.js">
                     <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus"/>
                     <attr name="position" intvalue="400"/>
 
                     <file name="ui-demo" url="ui-demo.zip">
-                        <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus/WidgetsDemo"/>
+                        <attr name="displayName" bundlevalue="com.eas.samples.Bundle#Templates/Project/Samples/Platypus/UiDemo"/>
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>
                         <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
-                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/WidgetsDemo.html"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/ui-demo.html"/>
                         <attr name="template" boolvalue="true"/>
                     </file>
                     <file name="pet-hotel" url="pet-hotel.zip">
@@ -21,7 +31,7 @@
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>
                         <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
-                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/PetHotel.html"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/pet-hotel.html"/>
                         <attr name="template" boolvalue="true"/>
                     </file>
                     <file name="web-socket-demo" url="web-socket-demo.zip">
@@ -29,7 +39,7 @@
                         <attr name="iconBase" stringvalue="com/eas/samples/pencil-ruler.png"/>
                         <attr name="position" intvalue="20"/>
                         <attr name="instantiatingIterator" methodvalue="com.eas.samples.PlatypusSamplesWizardIterator.createIterator"/>
-                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/WebSocketDemo.html"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/samples/descriptions/web-socket-demo.html"/>
                         <attr name="template" boolvalue="true"/>
                     </file>
                 </folder>
