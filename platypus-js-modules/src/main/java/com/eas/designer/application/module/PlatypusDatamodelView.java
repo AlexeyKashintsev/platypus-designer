@@ -370,6 +370,7 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
     public void requestActive() {
         if (multiViewObserver != null) {
             multiViewObserver.requestActive();
+            multiViewObserver.getTopComponent().setToolTipText(dataObject.getPrimaryFile().getPath());
         } else {
             super.requestActive();
         }
@@ -441,6 +442,13 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
             }
         } catch (Exception ex) {
             ErrorManager.getDefault().notify(ex);
+        }
+        if (multiViewObserver != null) {
+            multiViewObserver.getTopComponent().requestActive();
+            multiViewObserver.getTopComponent().setToolTipText(
+                    dataObject instanceof PlatypusModuleDataObject ?
+                            ((PlatypusModuleDataObject)dataObject).getModelFile().getPath() :
+                            dataObject.getPrimaryFile().getPath());
         }
         super.componentActivated();
     }

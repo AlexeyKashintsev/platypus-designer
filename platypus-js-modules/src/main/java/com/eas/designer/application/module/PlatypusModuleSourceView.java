@@ -116,7 +116,10 @@ public final class PlatypusModuleSourceView extends CloneableEditor implements M
         if (dataObject.isValid()) {
             EditorContextDispatcher.getDefault(); //initialize EditorContextDispatcher's global lookup's listeners
         }
-        callback.getTopComponent().requestActive();
+        if (callback != null) {
+            callback.getTopComponent().requestActive();
+            callback.getTopComponent().setToolTipText(dataObject.getPrimaryFile().getPath());
+        }
         super.componentActivated();
     }
 

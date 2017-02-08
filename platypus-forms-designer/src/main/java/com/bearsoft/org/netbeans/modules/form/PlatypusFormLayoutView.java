@@ -1559,6 +1559,13 @@ public class PlatypusFormLayoutView extends CloneableTopComponent implements Mul
                 handleLayer.requestFocus();
             }
         }
+        if (multiViewObserver != null) {
+            multiViewObserver.getTopComponent().requestActive();
+            multiViewObserver.getTopComponent().setToolTipText(
+                    formModel.getDataObject() instanceof PlatypusFormDataObject ?
+                            ((PlatypusFormDataObject)formModel.getDataObject()).getFormFile().getPath() :
+                            formModel.getDataObject().getPrimaryFile().getPath());
+        }
         super.componentActivated();
     }
 
