@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.module;
 
 import com.eas.client.cache.PlatypusFiles;
@@ -36,7 +32,7 @@ public class PlatypusModuleDataObject extends PlatypusDataObject implements Mode
     public final static Object DATAOBJECT_DOC_PROPERTY = "dataObject";
     protected transient Entry modelEntry;
     protected transient ApplicationDbModel model;
-    protected transient ModelNode<ApplicationDbEntity, ApplicationDbModel> modelNode;
+    protected transient ModelNode<ApplicationDbEntity, Relation<ApplicationDbEntity>, ApplicationDbModel> modelNode;
     protected transient ModelEditingListener<ApplicationDbEntity> entitiesPublisher;
     private transient ListenerRegistration queriesReg;
     protected transient PlatypusProject.QueriesChangeListener modelValidator = () -> {
@@ -137,7 +133,7 @@ public class PlatypusModuleDataObject extends PlatypusDataObject implements Mode
     }
 
     @Override
-    public ModelNode<ApplicationDbEntity, ApplicationDbModel> getModelNode() throws Exception {
+    public ModelNode<ApplicationDbEntity, Relation<ApplicationDbEntity>, ApplicationDbModel> getModelNode() throws Exception {
         checkModelRead();
         return modelNode;
     }

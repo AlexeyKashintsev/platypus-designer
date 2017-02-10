@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.datamodel.nodes;
 
 import com.eas.client.metadata.Field;
@@ -114,7 +110,7 @@ public class EntityNode<E extends Entity<?, ?, E>> extends AbstractNode implemen
         if (isParametersEntity()) {
             return DatamodelDesignUtils.getLocalizedString("Parameters");
         } else {
-            return entity.getTitle();
+            return entity.getTitle() != null && !entity.getTitle().isEmpty() ? entity.getTitle() : entity.getName();
         }
     }
 

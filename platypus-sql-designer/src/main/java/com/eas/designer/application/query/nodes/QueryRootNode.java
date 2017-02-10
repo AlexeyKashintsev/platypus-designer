@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query.nodes;
 
+import com.eas.client.model.Relation;
 import com.eas.client.model.query.QueryEntity;
 import com.eas.client.model.query.QueryModel;
 import com.eas.designer.application.query.PlatypusQueryDataObject;
@@ -24,11 +21,11 @@ import org.openide.util.NbBundle;
  *
  * @author mg
  */
-public class QueryRootNode extends ModelNode<QueryEntity, QueryModel> implements PropertyChangeListener {
+public class QueryRootNode extends ModelNode<QueryEntity, Relation<QueryEntity>, QueryModel> implements PropertyChangeListener {
 
     public static final String ICON_PATH = "com/eas/designer/application/query/query.png";
 
-    public QueryRootNode(ModelNodeChildren<QueryEntity, QueryModel> aChildren, PlatypusQueryDataObject aDataObject) throws Exception {
+    public QueryRootNode(ModelNodeChildren<QueryEntity, Relation<QueryEntity>, QueryModel> aChildren, PlatypusQueryDataObject aDataObject) throws Exception {
         super(aChildren, aDataObject);
         setIconBaseWithExtension(ICON_PATH);
         dataObject.addPropertyChangeListener(this);

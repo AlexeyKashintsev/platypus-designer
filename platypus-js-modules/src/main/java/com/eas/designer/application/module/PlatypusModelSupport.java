@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.module;
 
+import com.eas.client.model.Relation;
 import com.eas.client.model.application.ApplicationDbEntity;
 import com.eas.client.model.application.ApplicationDbModel;
+import com.eas.client.model.application.ReferenceRelation;
 import com.eas.client.model.store.ApplicationModel2XmlDom;
 import com.eas.client.model.store.XmlDom2ApplicationModel;
 import com.eas.designer.application.PlatypusUtils;
@@ -43,7 +40,7 @@ public class PlatypusModelSupport extends OpenSupport implements
 
     protected PlatypusModelDataObject dataObject;
     protected ApplicationDbModel model;
-    protected ModelNode<ApplicationDbEntity, ApplicationDbModel> modelNode;
+    protected ModelNode<ApplicationDbEntity, Relation<ApplicationDbEntity>, ApplicationDbModel> modelNode;
     protected UndoRedo.Manager modelUndo;
 
     public PlatypusModelSupport(PlatypusModelDataObject aDataObject) {
@@ -149,14 +146,14 @@ public class PlatypusModelSupport extends OpenSupport implements
         }
     }
 
-    protected ModelNode<ApplicationDbEntity, ApplicationDbModel> createModelNode() {
+    protected ModelNode<ApplicationDbEntity, Relation<ApplicationDbEntity>, ApplicationDbModel> createModelNode() {
         return new ModelNode<>(new ApplicationModelNodeChildren(model,
                 modelUndo,
                 dataObject.getLookup()), dataObject);
     }
 
     @Override
-    public ModelNode<ApplicationDbEntity, ApplicationDbModel> getModelNode() throws Exception {
+    public ModelNode<ApplicationDbEntity, Relation<ApplicationDbEntity>, ApplicationDbModel> getModelNode() throws Exception {
         checkModelRead();
         return modelNode;
     }

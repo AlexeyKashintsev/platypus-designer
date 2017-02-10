@@ -62,7 +62,6 @@ public class ApplicationEntityNode extends EntityNode<ApplicationDbEntity> {
 
     @Override
     public void processNodePropertyChange(PropertyChangeEvent nodeEvent) {
-        Property<?> prop = nameToProperty.get(nodeEvent.getPropertyName());
         if (Entity.QUERY_ID_PROPERTY.equals(nodeEvent.getPropertyName())) {
             try {
                 entity.getModel().validate();
@@ -71,8 +70,7 @@ public class ApplicationEntityNode extends EntityNode<ApplicationDbEntity> {
                     NewReferenceRelationEdit edit = new NewReferenceRelationEdit(aRelation);
                     edit.redo();
                     undoReciever.addEdit(edit);
-                }, entity.getModel()
-                );
+                }, entity.getModel());
             } catch (Exception ex) {
                 Logger.getLogger(EntityNode.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
@@ -101,19 +99,15 @@ public class ApplicationEntityNode extends EntityNode<ApplicationDbEntity> {
     protected Sheet createSheet() {
         Sheet sheet = super.createSheet();
         try {
+            Sheet.Set pSet = sheet.get(Sheet.PROPERTIES);
+            sheet.put(pSet);
             if (!isParametersEntity()) {
-                Sheet.Set pSet = sheet.get(Sheet.PROPERTIES);
                 PropertySupport.Reflection<String> queryIdProp = new PropertySupport.Reflection<>(entity, String.class, Entity.QUERY_ID_PROPERTY);
                 queryIdProp.setName(Entity.QUERY_ID_PROPERTY);
                 queryIdProp.setDisplayName("queryName");
                 nameToProperty.put(Entity.QUERY_ID_PROPERTY, queryIdProp);
                 pSet.put(queryIdProp);
-                sheet.put(pSet);
             }
-            Sheet.Set eSet = new Sheet.Set();
-            eSet.setDisplayName(NbBundle.getMessage(ApplicationEntityNode.class, "CTL_Events"));
-            eSet.setShortDescription(NbBundle.getMessage(ApplicationEntityNode.class, "HINT_Events"));
-            sheet.put(eSet);
             return sheet;
         } catch (NoSuchMethodException ex) {
             Logger.getLogger(EntityNode.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);

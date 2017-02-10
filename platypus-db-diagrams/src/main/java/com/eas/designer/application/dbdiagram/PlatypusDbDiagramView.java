@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.dbdiagram;
 
 import com.eas.client.dbstructure.gui.DbSchemeEditorView;
@@ -42,7 +38,6 @@ import org.openide.awt.UndoRedo;
 import org.openide.explorer.ExplorerManager;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
-import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
@@ -261,8 +256,7 @@ public class PlatypusDbDiagramView extends CloneableTopComponent {
                     @Override
                     public void selectionChanged(Set<FieldsEntity> oldSelected, Set<FieldsEntity> newSelected) {
                         try {
-                            Node[] oldNodes = getActivatedNodes();
-                            Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getModelNode(), oldNodes, oldSelected, newSelected);
+                            Node[] newNodes = ModelInspector.convertSelectedEntitiesToNodes(dataObject.getModelNode(), oldSelected, newSelected);
                             setActivatedNodes(newNodes);
                         } catch (Exception ex) {
                             ErrorManager.getDefault().notify(ex);
@@ -272,8 +266,7 @@ public class PlatypusDbDiagramView extends CloneableTopComponent {
                     @Override
                     public void selectionChanged(List<SelectedField<FieldsEntity>> aParameters, List<SelectedField<FieldsEntity>> aFields) {
                         try {
-                            Node[] oldNodes = getActivatedNodes();
-                            Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getModelNode(), oldNodes, aParameters, aFields);
+                            Node[] newNodes = ModelInspector.convertSelectedFieldsToNodes(dataObject.getModelNode(), aParameters, aFields);
                             setActivatedNodes(newNodes);
                         } catch (Exception ex) {
                             ErrorManager.getDefault().notify(ex);
@@ -281,7 +274,7 @@ public class PlatypusDbDiagramView extends CloneableTopComponent {
                     }
 
                     @Override
-                    public void selectionChanged(Collection<Relation<FieldsEntity>> clctn, Collection<Relation<FieldsEntity>> clctn1) {
+                    public void selectionChanged(Collection<Relation<FieldsEntity>> oldSelected, Collection<Relation<FieldsEntity>> newSelected) {
                     }
                 });
                 UndoRedo ur = getUndoRedo();

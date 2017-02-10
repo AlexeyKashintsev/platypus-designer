@@ -1,8 +1,3 @@
-/*
- * DatamodelView.java
- *
- * Created on 13 Август 2008 г., 9:16
- */
 package com.eas.client.model.gui.view.model;
 
 import com.bearsoft.routing.Connector;
@@ -175,6 +170,11 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
     public void silentSelectView(EntityView<E> aView) {
         aView.setEntityViewSelectedLook();
         selectedEntities.add(aView.getEntity());
+        checkActions();
+    }
+
+    public void silentSelectRelation(Relation<E> aRelation) {
+        selectedRelations.add(aRelation);
         checkActions();
     }
 

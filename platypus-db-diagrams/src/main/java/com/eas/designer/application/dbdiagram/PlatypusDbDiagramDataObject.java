@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.dbdiagram;
 
+import com.eas.client.model.Relation;
 import com.eas.client.model.dbscheme.DbSchemeModel;
 import com.eas.client.model.dbscheme.FieldsEntity;
 import com.eas.client.model.store.DbSchemeModel2XmlDom;
@@ -14,6 +11,7 @@ import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.datamodel.nodes.EntityNode;
 import com.eas.designer.datamodel.nodes.ModelNode;
 import com.eas.designer.datamodel.nodes.ModelNodeChildren;
+import com.eas.designer.datamodel.nodes.RelationNode;
 import com.eas.designer.explorer.PlatypusDataObject;
 import com.eas.xml.dom.Source2XmlDom;
 import com.eas.xml.dom.XmlDom2String;
@@ -37,7 +35,7 @@ import org.w3c.dom.Document;
 public class PlatypusDbDiagramDataObject extends PlatypusDataObject {
 
     protected transient DbSchemeModel model;
-    protected transient ModelNode<FieldsEntity, DbSchemeModel> modelNode;
+    protected transient ModelNode<FieldsEntity, Relation<FieldsEntity>, DbSchemeModel> modelNode;
 
     public PlatypusDbDiagramDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);
@@ -90,11 +88,17 @@ public class PlatypusDbDiagramDataObject extends PlatypusDataObject {
     protected void checkModelRead() throws Exception {
         if (model == null) {
             readModel();
-            modelNode = new ModelNode<>(new ModelNodeChildren<FieldsEntity, DbSchemeModel>(model, getUndoRedo(), getLookup()) {
+            modelNode = new ModelNode<>(new ModelNodeChildren<FieldsEntity, Relation<FieldsEntity>, DbSchemeModel>(model, getUndoRedo(), getLookup()) {
                 @Override
-                protected EntityNode<FieldsEntity> createNode(FieldsEntity key) throws Exception {
+                protected EntityNode<FieldsEntity> createEntityNode(FieldsEntity key) throws Exception {
                     return new TableEntityNode(key, new ProxyLookup(getLookup(), Lookups.fixed(key, getUndoRedo())));
                 }
+
+                @Override
+                protected RelationNode<FieldsEntity, Relation<FieldsEntity>> createRelationNode(Relation<FieldsEntity> key) throws Exception {
+                    return super.createRelationNode(key);
+                }
+                
             }, this);
         }
     }
@@ -108,7 +112,7 @@ public class PlatypusDbDiagramDataObject extends PlatypusDataObject {
         return model;
     }
 
-    public ModelNode<FieldsEntity, DbSchemeModel> getModelNode() throws Exception {
+    public ModelNode<FieldsEntity, Relation<FieldsEntity>, DbSchemeModel> getModelNode() throws Exception {
         checkModelRead();
         return modelNode;
     }

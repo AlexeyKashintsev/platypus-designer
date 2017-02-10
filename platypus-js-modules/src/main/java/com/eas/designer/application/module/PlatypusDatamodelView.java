@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.module;
 
 import com.eas.client.metadata.Field;
@@ -20,6 +16,7 @@ import com.eas.designer.application.indexer.PlatypusPathRecognizer;
 import com.eas.designer.datamodel.ModelUndoProvider;
 import com.eas.designer.datamodel.nodes.EntityNode;
 import com.eas.designer.datamodel.nodes.FieldNode;
+import com.eas.designer.datamodel.nodes.RelationNode;
 import com.eas.designer.explorer.PlatypusDataObject;
 import com.eas.designer.explorer.model.windows.ModelInspector;
 import com.eas.designer.explorer.model.windows.QueriesDragHandler;
@@ -90,7 +87,6 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                     try {
                         Node[] nodes = ModelInspector.getInstance().getExplorerManager().getSelectedNodes();
                         appModelEditor.getModelView().silentClearSelection();
-                        appModelEditor.getModelView().clearEntitiesFieldsSelection();
                         Map<EntityView<ApplicationDbEntity>, Set<Field>> toSelectFields = new HashMap<>();
                         Map<EntityView<ApplicationDbEntity>, Set<Parameter>> toSelectParameters = new HashMap<>();
                         for (Node node : nodes) {
@@ -98,6 +94,8 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                             if (node instanceof EntityNode<?>) {
                                 ev = appModelEditor.getModelView().getEntityView(((EntityNode<ApplicationDbEntity>) node).getEntity());
                                 appModelEditor.getModelView().silentSelectView(ev);
+                            } else if (node instanceof RelationNode) {
+                                appModelEditor.getModelView().silentSelectRelation(((RelationNode) node).getRelation());
                             } else if (node instanceof FieldNode) {
                                 if (node.getParentNode() != null) {
                                     ev = appModelEditor.getModelView().getEntityView(((EntityNode<ApplicationDbEntity>) node.getParentNode()).getEntity());
@@ -127,6 +125,8 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                             ev.addSelectedFields(fEntry.getValue());
                         });
                         setActivatedNodes(nodes);
+                        appModelEditor.getModelView().invalidate();
+                        appModelEditor.getModelView().repaint();
                     } finally {
                         processing = false;
                     }
@@ -176,40 +176,6 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                     ErrorManager.getDefault().notify(ex);
                 }
             });
-            /*
-            clientChangeListener = dataObject.addClientChangeListener(new PlatypusProject.ClientChangeListener() {
-
-                @Override
-                public void connected(String aDatasourceName) {
-                    try {
-                        dataObject.setModelValid(false);
-                        dataObject.startModelValidating();
-                    } catch (Exception ex) {
-                        ErrorManager.getDefault().notify(ex);
-                    }
-                }
-
-                @Override
-                public void disconnected(String aDatasourceName) {
-                    try {
-                        dataObject.setModelValid(false);
-                        dataObject.startModelValidating();
-                    } catch (Exception ex) {
-                        ErrorManager.getDefault().notify(ex);
-                    }
-                }
-
-                @Override
-                public void defaultDatasourceNameChanged(String aOldDatasourceName, String aNewDatasourceName) {
-                    try {
-                        dataObject.setModelValid(false);
-                        dataObject.startModelValidating();
-                    } catch (Exception ex) {
-                        ErrorManager.getDefault().notify(ex);
-                    }
-                }
-            });
-            */
         }
     }
 
@@ -256,15 +222,33 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                 @Override
                 public void selectionChanged(Set<ApplicationDbEntity> oldSelected, Set<ApplicationDbEntity> newSelected) {
                     try {
-                        Node[] oldNodes = getActivatedNodes();
                         // Hack. When multi-view element with no any activated node is activated,
                         // NetBeans' property sheet stay with a node from previous multi-view element.
                         // So, we need to simulate non-empty activated nodes and take this into account
                         // here.
-                        if (oldNodes != null && oldNodes.length == 1 && oldNodes[0] == (dataObject.getBasesProxy() != null ? dataObject.getLookup().lookup(ModelProvider.class).getModelNode() : dataObject.getNodeDelegate())) {
-                            oldNodes = new Node[]{};
-                        }
-                        Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getLookup().lookup(ModelProvider.class).getModelNode(), oldNodes, oldSelected, newSelected);
+                        Node[] newNodes = ModelInspector.convertSelectedEntitiesToNodes(
+                                dataObject.getLookup().lookup(ModelProvider.class).getModelNode(),
+                                oldSelected, newSelected);
+                        // Hack! NetBeans doesn't properly handle activated nodes in multi view's elements
+                        // So, we need to use dummy explorer manager and it's lookup, associated with this multiview element TopComponent
+                        // to produce satisfactory events.
+                        explorerManager.setSelectedNodes(newNodes);
+                        setActivatedNodes(newNodes);
+                    } catch (Exception ex) {
+                        ErrorManager.getDefault().notify(ex);
+                    }
+                }
+
+                @Override
+                public void selectionChanged(Collection<Relation<ApplicationDbEntity>> oldSelected, Collection<Relation<ApplicationDbEntity>> newSelected) {
+                    try {
+                        // Hack. When multi-view element with no any activated node is activated,
+                        // NetBeans' property sheet stay with a node from previous multi-view element.
+                        // So, we need to simulate non-empty activated nodes and take this into account
+                        // here.
+                        Node[] newNodes = ModelInspector.convertSelectedRelationsToNodes(
+                                dataObject.getLookup().lookup(ModelProvider.class).getModelNode(),
+                                oldSelected, newSelected);
                         // Hack! NetBeans doesn't properly handle activated nodes in multi view's elements
                         // So, we need to use dummy explorer manager and it's lookup, associated with this multiview element TopComponent
                         // to produce satisfactory events.
@@ -278,15 +262,13 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                 @Override
                 public void selectionChanged(List<SelectedField<ApplicationDbEntity>> aParameters, List<SelectedField<ApplicationDbEntity>> aFields) {
                     try {
-                        Node[] oldNodes = getActivatedNodes();
                         // Hack. When multi-view element with no any activated node is activated,
                         // NetBeans' property sheet stay with a node from previous multi-view element.
                         // So, we need to simulate non-empty activated nodes and take this into account
                         // here.
-                        if (oldNodes != null && oldNodes.length == 1 && oldNodes[0] == (dataObject.getBasesProxy() != null ? dataObject.getLookup().lookup(ModelProvider.class).getModelNode() : dataObject.getNodeDelegate())) {
-                            oldNodes = new Node[]{};
-                        }
-                        Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getLookup().lookup(ModelProvider.class).getModelNode(), oldNodes, aParameters, aFields);
+                        Node[] newNodes = ModelInspector.convertSelectedFieldsToNodes(
+                                dataObject.getLookup().lookup(ModelProvider.class).getModelNode(),
+                                aParameters, aFields);
                         // Hack! NetBeans doesn't properly handle activated nodes in multi view's elements
                         // So, we need to use dummy explorer manager and it's lookup, associated with this multiview element TopComponent
                         // to produce satisfactory events.
@@ -297,9 +279,6 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
                     }
                 }
 
-                @Override
-                public void selectionChanged(Collection<Relation<ApplicationDbEntity>> clctn, Collection<Relation<ApplicationDbEntity>> clctn1) {
-                }
             });
             explorerManager.setRootContext(dataObject.getLookup().lookup(ModelProvider.class).getModelNode());
             getModelView().complementReferenceRelationsByKeys((ReferenceRelation<ApplicationDbEntity> aRelation) -> {
@@ -445,10 +424,9 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
         }
         if (multiViewObserver != null) {
             multiViewObserver.getTopComponent().requestActive();
-            multiViewObserver.getTopComponent().setToolTipText(
-                    dataObject instanceof PlatypusModuleDataObject ?
-                            ((PlatypusModuleDataObject)dataObject).getModelFile().getPath() :
-                            dataObject.getPrimaryFile().getPath());
+            multiViewObserver.getTopComponent().setToolTipText(((PlatypusModuleDataObject) dataObject).getModelFile().getPath());
+        } else {
+            dataObject.getPrimaryFile().getPath();
         }
         super.componentActivated();
     }
@@ -488,7 +466,7 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
         if (clientChangeListener != null) {
             clientChangeListener.remove();
         }
-        */
+         */
         if (modelValidChangeListener != null) {
             modelValidChangeListener.remove();
         }

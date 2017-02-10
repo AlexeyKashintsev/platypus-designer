@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query.nodes;
 
+import com.eas.client.model.Relation;
 import com.eas.client.model.query.QueryEntity;
 import com.eas.client.model.query.QueryModel;
 import com.eas.client.model.query.QueryParametersEntity;
@@ -26,7 +23,7 @@ import org.openide.util.lookup.ProxyLookup;
  *
  * @author vv
  */
-public class QueryNodeChildren extends ModelNodeChildren<QueryEntity, QueryModel> {
+public class QueryNodeChildren extends ModelNodeChildren<QueryEntity, Relation<QueryEntity>, QueryModel> {
 
     protected PlatypusQueryDataObject dataObject;
     protected OutputFieldsNodeKey outputNodeKey = new OutputFieldsNodeKey();
@@ -50,8 +47,8 @@ public class QueryNodeChildren extends ModelNodeChildren<QueryEntity, QueryModel
     protected Node[] createNodes(Object key) {
         if (key instanceof QueryEntity) {
             try {
-                Node createdNode = createNode((QueryEntity) key);
-                createdNode.addPropertyChangeListener(undoRecordrer);
+                EntityNode<QueryEntity> createdNode = createEntityNode((QueryEntity) key);
+                createdNode.addPropertyChangeListener(entitiedUndoRecordrer);
                 return new Node[]{createdNode};
             } catch (Exception ex) {
                 ErrorManager.getDefault().notify(ex);
@@ -63,7 +60,7 @@ public class QueryNodeChildren extends ModelNodeChildren<QueryEntity, QueryModel
     }
 
     @Override
-    protected EntityNode createNode(QueryEntity key) throws Exception {
+    protected EntityNode<QueryEntity> createEntityNode(QueryEntity key) throws Exception {
         EntityNode node;
         FieldsOrderSupport fos;
         Lookup lkp;

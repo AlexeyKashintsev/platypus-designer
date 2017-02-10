@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.model.windows;
 
 import com.eas.client.SqlQuery;
 import com.eas.client.model.Entity;
+import com.eas.client.model.Model;
 import com.eas.client.model.Relation;
 import com.eas.client.model.gui.view.model.SelectedField;
 import com.eas.client.model.gui.view.ModelSelectionListener;
 import com.eas.client.model.gui.view.model.ModelView;
 import com.eas.designer.datamodel.nodes.EntityNode;
-import com.eas.designer.datamodel.nodes.FieldNode;
 import com.eas.designer.datamodel.nodes.ModelNode;
 import com.eas.designer.datamodel.nodes.ShowEntityAction;
 import java.awt.datatransfer.Clipboard;
@@ -249,24 +245,34 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
         }
     }
 
-    // performer for CopyAction and CutAction
-    private class CopyCutActionPerformer extends javax.swing.AbstractAction {
+    // performer for CopyAction
+    private class CopyActionPerformer extends javax.swing.AbstractAction {
 
-        private boolean copy;
-
-        public CopyCutActionPerformer(boolean aCopy) {
+        public CopyActionPerformer() {
             super();
-            copy = aCopy;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Action toExecute;
-            if (copy) {
-                toExecute = viewData.getModelView().getActionMap().get(ModelView.Copy.class.getSimpleName());
-            } else {
-                toExecute = viewData.getModelView().getActionMap().get(ModelView.Cut.class.getSimpleName());
+            toExecute = viewData.getModelView().getActionMap().get(ModelView.Copy.class.getSimpleName());
+            assert toExecute != null;
+            if (toExecute.isEnabled()) {
+                toExecute.actionPerformed(e);
             }
+        }
+    }
+    
+    private class CutActionPerformer extends javax.swing.AbstractAction {
+
+        public CutActionPerformer() {
+            super();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Action toExecute;
+            toExecute = viewData.getModelView().getActionMap().get(ModelView.Cut.class.getSimpleName());
             assert toExecute != null;
             if (toExecute.isEnabled()) {
                 toExecute.actionPerformed(e);
@@ -275,19 +281,19 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
     }
     private final transient ExplorerManager explorerManager;
     private final transient EmptyInspectorNode emptyInspectorNode;
-    private final transient CopyCutActionPerformer copyActionPerformer = new CopyCutActionPerformer(true);
-    private final transient CopyCutActionPerformer cutActionPerformer = new CopyCutActionPerformer(false);
-    private final transient DeleteActionPerformer deleteActionPerformer = new DeleteActionPerformer();
-    private final transient PasteActionPerformer pasteActionPerformer = new PasteActionPerformer();
+    private final transient javax.swing.AbstractAction copyActionPerformer = new CopyActionPerformer();
+    private final transient javax.swing.AbstractAction cutActionPerformer = new CutActionPerformer();
+    private final transient javax.swing.AbstractAction deleteActionPerformer = new DeleteActionPerformer();
+    private final transient javax.swing.AbstractAction pasteActionPerformer = new PasteActionPerformer();
     private transient ClipboardListener clipboardListener;
     private transient PropertyChangeListener nodesReflector;
-    private transient ViewData<?, ?> viewData;
+    private transient ViewData<?, ?, ?> viewData;
 
-    public ViewData<?, ?> getViewData() {
-        return viewData;
+    public <E extends Entity<M, SqlQuery, E>, M extends Model<E, SqlQuery>, MV extends ModelView<E, M>> ViewData<E, M, MV> getViewData() {
+        return (ViewData<E, M, MV>)viewData;
     }
 
-    public <E extends Entity<?, SqlQuery, E>> void setViewData(ViewData<E, ?> aViewData) {
+    public <E extends Entity<M, SqlQuery, E>, M extends Model<E, SqlQuery>, MV extends ModelView<E, M>> void setViewData(ViewData<E, M, MV> aViewData) {
         if (viewData != aViewData) {
             if (viewData != null) {
                 viewData.setNodesSelector(null);
@@ -347,12 +353,12 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
         }
     }
 
-    public class NodesSelector<E extends Entity<?, SqlQuery, E>> implements ModelSelectionListener<E> {
+    public class NodesSelector<E extends Entity<M, SqlQuery, E>, M extends Model<E, SqlQuery>> implements ModelSelectionListener<E> {
 
         protected transient PropertyChangeListener nodesReflector;
-        protected transient ModelNode<E, ?> currentRootNode;
+        protected transient ModelNode<E, Relation<E>, M> currentRootNode;
 
-        public NodesSelector(PropertyChangeListener aNodesReflector, ModelNode<E, ?> aRootNode) {
+        public NodesSelector(PropertyChangeListener aNodesReflector, ModelNode<E, Relation<E>, M> aRootNode) {
             super();
             nodesReflector = aNodesReflector;
             currentRootNode = aRootNode;
@@ -362,8 +368,7 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
         public void selectionChanged(Set<E> oldSelected, Set<E> newSelected) {
             getExplorerManager().removePropertyChangeListener(nodesReflector);
             try {
-                Node[] oldNodes = getExplorerManager().getSelectedNodes();
-                Node[] newNodes = convertSelectedToNodes(currentRootNode, oldNodes, oldSelected, newSelected);
+                Node[] newNodes = convertSelectedEntitiesToNodes(currentRootNode, oldSelected, newSelected);
                 getExplorerManager().setSelectedNodes(newNodes);
                 setActivatedNodes(getExplorerManager().getSelectedNodes());
             } catch (PropertyVetoException ex) {
@@ -377,9 +382,8 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
         public void selectionChanged(List<SelectedField<E>> aParameters, List<SelectedField<E>> aFields) {
             if (aParameters != null || aFields != null) {
                 getExplorerManager().removePropertyChangeListener(nodesReflector);
-                Node[] oldNodes = getExplorerManager().getSelectedNodes();
                 try {
-                    Node[] newNodes = convertSelectedToNodes(currentRootNode, oldNodes, aParameters, aFields);
+                    Node[] newNodes = convertSelectedFieldsToNodes(currentRootNode, aParameters, aFields);
                     getExplorerManager().setSelectedNodes(newNodes);
                     setActivatedNodes(getExplorerManager().getSelectedNodes());
                 } catch (PropertyVetoException ex) {
@@ -392,24 +396,28 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
 
         @Override
         public void selectionChanged(Collection<Relation<E>> oldRelations, Collection<Relation<E>> newRelations) {
-        }
-    }
-
-    public static <E extends Entity<?, SqlQuery, E>> Node[] convertSelectedToNodes(ModelNode<E, ?> aRootNode, Node[] oldNodes, Set<E> oldSelected, Set<E> newSelected) {
-        List<Node> nodesToSelect = new ArrayList<>();
-        nodesToSelect.addAll(Arrays.asList(aRootNode.entitiesToNodes(newSelected)));
-        // changes were made to entities selection, and so no changes to fields selection should happen
-        if (oldNodes != null) {
-            for (Node n : oldNodes) {
-                if (!(n instanceof EntityNode<?>)) {
-                    nodesToSelect.add(n);
-                }
+            getExplorerManager().removePropertyChangeListener(nodesReflector);
+            try {
+                Node[] newNodes = convertSelectedRelationsToNodes(currentRootNode, oldRelations, newRelations);
+                getExplorerManager().setSelectedNodes(newNodes);
+                setActivatedNodes(getExplorerManager().getSelectedNodes());
+            } catch (PropertyVetoException ex) {
+                ErrorManager.getDefault().notify(ex);
+            } finally {
+                getExplorerManager().addPropertyChangeListener(nodesReflector);
             }
         }
-        return nodesToSelect.toArray(new Node[]{});
     }
 
-    public static <E extends Entity<?, SqlQuery, E>> Node[] convertSelectedToNodes(ModelNode<E, ?> aRootNode, Node[] oldNodes, List<SelectedField<E>> aParameters, List<SelectedField<E>> aFields) {
+    public static <E extends Entity<M, SqlQuery, E>, R extends Relation<E>, M extends Model<E, SqlQuery>> Node[] convertSelectedEntitiesToNodes(ModelNode<E, R, M> aRootNode, Set<E> oldSelected, Set<E> newSelected) {
+        return aRootNode.entitiesToNodes(newSelected);
+    }
+
+    public static <E extends Entity<M, SqlQuery, E>, R extends Relation<E>, M extends Model<E, SqlQuery>> Node[] convertSelectedRelationsToNodes(ModelNode<E, R, M> aRootNode, Collection<R> oldSelected, Collection<R> newSelected) {
+        return aRootNode.relationsToNodes(newSelected);
+    }
+
+    public static <E extends Entity<M, SqlQuery, E>, R extends Relation<E>, M extends Model<E, SqlQuery>> Node[] convertSelectedFieldsToNodes(ModelNode<E, R, M> aRootNode, List<SelectedField<E>> aParameters, List<SelectedField<E>> aFields) {
         List<Node> nodesToSelect = new ArrayList<>();
         if (aParameters != null) {
             for (SelectedField<E> sp : aParameters) {
@@ -433,34 +441,24 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
                 }
             }
         }
-        // changes were made to fields selection, and so, no changes to entities selection should happen
-        if (oldNodes != null) {
-            for (Node n : oldNodes) {
-                if (n != null && !(n instanceof FieldNode)) {
-                    nodesToSelect.add(n);
-                }
-            }
-        }
         return nodesToSelect.toArray(new Node[]{});
     }
 
-    public static class ViewData<E extends Entity<?, SqlQuery, E>, MV extends ModelView<E, ?>> {
-
-        // current view data
+    public static class ViewData<E extends Entity<M, SqlQuery, E>, M extends Model<E, SqlQuery>, MV extends ModelView<E, M>> {
         protected transient MV modelView;
         protected transient UndoRedo undoRedo;
-        protected transient ModelNode<E, ?> rootNode;
-        protected transient NodesSelector<E> nodesSelector;
+        protected transient ModelNode<E, Relation<E>, M> rootNode;
+        protected transient NodesSelector<E, M> nodesSelector;
         protected transient ShowEntityActionPerformer<E, MV> showEntityActionPerformer;
 
-        public ViewData(MV aModelView, UndoRedo aUndoRedo, ModelNode<E, ?> aRootNode) {
+        public ViewData(MV aModelView, UndoRedo aUndoRedo, ModelNode<E, Relation<E>, M> aRootNode) {
             super();
             modelView = aModelView;
             undoRedo = aUndoRedo;
             rootNode = aRootNode;
         }
 
-        public ModelNode<E, ?> getRootNode() {
+        public ModelNode<E, Relation<E>, M> getRootNode() {
             return rootNode;
         }
 
@@ -480,11 +478,11 @@ public final class ModelInspector extends TopComponent implements ExplorerManage
             return showEntityActionPerformer;
         }
 
-        public NodesSelector<E> getNodesSelector() {
+        public NodesSelector<E, M> getNodesSelector() {
             return nodesSelector;
         }
 
-        public void setNodesSelector(NodesSelector<E> aNodesSelector) {
+        public void setNodesSelector(NodesSelector<E, M> aNodesSelector) {
             if (modelView != null && nodesSelector != aNodesSelector) {
                 if (nodesSelector != null) {
                     modelView.removeModelSelectionListener(nodesSelector);

@@ -530,42 +530,42 @@ public class PlatypusFormLayoutView extends CloneableTopComponent implements Mul
             FormLAF.setUsePreviewDefaults(classLoader, previewInfo);
             result = FormLAF.<Container>executeWithLookAndFeel(formModel,
                     new Mutex.ExceptionAction<Container>() {
-                        @Override
-                        public Container run() throws Exception {
-                            VisualReplicator r = new VisualReplicator(aFormEditor, false);
-                            Container rootView = (Container) r.createClone();
-                            Container container = new JFrame();
-                            container.add(rootView);
-                            if (container instanceof RootPaneContainer) {
-                                JRootPane rootPane = ((RootPaneContainer) container).getRootPane();
-                                JLayeredPane newPane = new JLayeredPane() {
-                                    @Override
-                                    public void paint(Graphics g) {
-                                        try {
-                                            FormLAF.setUsePreviewDefaults(classLoader, previewInfo);
-                                            super.paint(g);
-                                        } finally {
-                                            FormLAF.setUsePreviewDefaults(null, null);
-                                        }
-                                    }
-                                };
-                                // Copy components from the original layered pane into our one
-                                JLayeredPane oldPane = rootPane.getLayeredPane();
-                                Component[] comps = oldPane.getComponents();
-                                for (Component comp : comps) {
-                                    newPane.add(comp, Integer.valueOf(oldPane.getLayer(comp)));
+                @Override
+                public Container run() throws Exception {
+                    VisualReplicator r = new VisualReplicator(aFormEditor, false);
+                    Container rootView = (Container) r.createClone();
+                    Container container = new JFrame();
+                    container.add(rootView);
+                    if (container instanceof RootPaneContainer) {
+                        JRootPane rootPane = ((RootPaneContainer) container).getRootPane();
+                        JLayeredPane newPane = new JLayeredPane() {
+                            @Override
+                            public void paint(Graphics g) {
+                                try {
+                                    FormLAF.setUsePreviewDefaults(classLoader, previewInfo);
+                                    super.paint(g);
+                                } finally {
+                                    FormLAF.setUsePreviewDefaults(null, null);
                                 }
-                                // Use our layered pane that knows about LAF switching
-                                rootPane.setLayeredPane(newPane);
-                                // Make the glass pane visible to force repaint of the whole layered pane
-                                rootPane.getGlassPane().setVisible(true);
-                                // Mark it as design preview
-                                rootPane.putClientProperty("designPreview", Boolean.TRUE); // NOI18N
-                            } // else AWT Frame - we don't care that the L&F of the Swing
-                            // components may not look good - it is a strange use case
-                            return container;
+                            }
+                        };
+                        // Copy components from the original layered pane into our one
+                        JLayeredPane oldPane = rootPane.getLayeredPane();
+                        Component[] comps = oldPane.getComponents();
+                        for (Component comp : comps) {
+                            newPane.add(comp, Integer.valueOf(oldPane.getLayer(comp)));
                         }
-                    });
+                        // Use our layered pane that knows about LAF switching
+                        rootPane.setLayeredPane(newPane);
+                        // Make the glass pane visible to force repaint of the whole layered pane
+                        rootPane.getGlassPane().setVisible(true);
+                        // Mark it as design preview
+                        rootPane.putClientProperty("designPreview", Boolean.TRUE); // NOI18N
+                    } // else AWT Frame - we don't care that the L&F of the Swing
+                    // components may not look good - it is a strange use case
+                    return container;
+                }
+            });
         } finally {
             FormLAF.setUsePreviewDefaults(null, null);
         }
@@ -705,7 +705,7 @@ public class PlatypusFormLayoutView extends CloneableTopComponent implements Mul
      }
      }
      */
-    /*
+ /*
      private void checkDesignerSize() {
      if (formModel.isFreeDesignDefaultLayout()
      && topDesignComponent instanceof RADVisualComponent
@@ -1561,10 +1561,9 @@ public class PlatypusFormLayoutView extends CloneableTopComponent implements Mul
         }
         if (multiViewObserver != null) {
             multiViewObserver.getTopComponent().requestActive();
-            multiViewObserver.getTopComponent().setToolTipText(
-                    formModel.getDataObject() instanceof PlatypusFormDataObject ?
-                            ((PlatypusFormDataObject)formModel.getDataObject()).getFormFile().getPath() :
-                            formModel.getDataObject().getPrimaryFile().getPath());
+            multiViewObserver.getTopComponent().setToolTipText(((PlatypusFormDataObject) formModel.getDataObject()).getFormFile().getPath());
+        } else {
+            formModel.getDataObject().getPrimaryFile().getPath();
         }
         super.componentActivated();
     }

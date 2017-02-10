@@ -193,7 +193,7 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
     protected QueryModel model;
     protected List<StoredFieldMetadata> outputFieldsHints;
     // Generated data
-    protected transient ModelNode<QueryEntity, QueryModel> modelNode;
+    protected transient ModelNode<QueryEntity, Relation<QueryEntity>, QueryModel> modelNode;
     protected transient Statement statement;
     protected transient Statement commitedStatement;
     protected transient ParseException statementError;
@@ -470,7 +470,7 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
         // Model's modified staus is the case.
     }
 
-    public ModelNode<QueryEntity, QueryModel> getModelNode() throws Exception {
+    public ModelNode<QueryEntity, Relation<QueryEntity>, QueryModel> getModelNode() throws Exception {
         checkQueryRead();
         return modelNode;
     }

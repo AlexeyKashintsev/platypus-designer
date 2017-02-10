@@ -1,8 +1,3 @@
-/*
- * PlatypusQueryTopComponent.java
- *
- * Created on 04.04.2011, 11:01:28
- */
 package com.eas.designer.application.query;
 
 import com.eas.client.metadata.Field;
@@ -365,8 +360,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
                     @Override
                     public void selectionChanged(Set<QueryEntity> oldSelected, Set<QueryEntity> newSelected) {
                         try {
-                            Node[] oldNodes = getActivatedNodes();
-                            Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getModelNode(), oldNodes, oldSelected, newSelected);
+                            Node[] newNodes = ModelInspector.convertSelectedEntitiesToNodes(dataObject.getModelNode(), oldSelected, newSelected);
                             setActivatedNodes(newNodes);
                         } catch (Exception ex) {
                             ErrorManager.getDefault().notify(ex);
@@ -376,8 +370,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
                     @Override
                     public void selectionChanged(List<SelectedField<QueryEntity>> aParameters, List<SelectedField<QueryEntity>> aFields) {
                         try {
-                            Node[] oldNodes = getActivatedNodes();
-                            Node[] newNodes = ModelInspector.convertSelectedToNodes(dataObject.getModelNode(), oldNodes, aParameters, aFields);
+                            Node[] newNodes = ModelInspector.convertSelectedFieldsToNodes(dataObject.getModelNode(), aParameters, aFields);
                             setActivatedNodes(newNodes);
                         } catch (Exception ex) {
                             ErrorManager.getDefault().notify(ex);
@@ -385,7 +378,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
                     }
 
                     @Override
-                    public void selectionChanged(Collection<Relation<QueryEntity>> clctn, Collection<Relation<QueryEntity>> clctn1) {
+                    public void selectionChanged(Collection<Relation<QueryEntity>> oldSelected, Collection<Relation<QueryEntity>> newSelected) {
                     }
                 });
                 UndoRedo ur = getUndoRedo();

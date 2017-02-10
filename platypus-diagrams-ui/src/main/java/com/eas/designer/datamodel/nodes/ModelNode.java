@@ -1,17 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.datamodel.nodes;
 
 import com.eas.client.SqlQuery;
 import com.eas.client.model.Entity;
 import com.eas.client.model.Model;
+import com.eas.client.model.Relation;
 import com.eas.client.model.gui.IconCache;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.openide.loaders.DataObject;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Node;
@@ -22,12 +21,12 @@ import org.openide.util.ImageUtilities;
 /**
  * @author mg
  */
-public class ModelNode<E extends Entity<?, SqlQuery, E>, M extends Model<E, SqlQuery>> extends AbstractNode {
+public class ModelNode<E extends Entity<?, SqlQuery, E>, R extends Relation<E>, M extends Model<E, SqlQuery>> extends AbstractNode {
 
     protected static final String DATAMODEL_ICON_NAME = "datamodel16.png"; //NOI18N
     protected DataObject dataObject;
 
-    public ModelNode(ModelNodeChildren<E, M> aChildren, DataObject aDataObject) {
+    public ModelNode(ModelNodeChildren<E, R, M> aChildren, DataObject aDataObject) {
         super(aChildren);
         dataObject = aDataObject;
     }
@@ -66,16 +65,15 @@ public class ModelNode<E extends Entity<?, SqlQuery, E>, M extends Model<E, SqlQ
         return getIcon(type);
     }
 
-    public Node[] entitiesToNodes(Set<E> entities) {
-        Set<Node> convertedNodes = new HashSet<>();
+    public Node[] entitiesToNodes(Collection<E> entities) {
         if (entities != null) {
-            entities.forEach((E e)->{
-                EntityNode entityNode = ((ModelNodeChildren)getChildren()).nodeByEntity(e);
-                if(entityNode != null)
-                    convertedNodes.add(entityNode);
-            });
+            return entities.stream()
+                    .map(e -> ((ModelNodeChildren) getChildren()).nodeByEntity(e))
+                    .filter(n -> n != null)
+                    .collect(Collectors.toList()).toArray(new Node[]{});
+        } else {
+            return new Node[]{};
         }
-        return convertedNodes.toArray(new Node[0]);
     }
 
     public Node entityToNode(E entity) {
@@ -86,6 +84,17 @@ public class ModelNode<E extends Entity<?, SqlQuery, E>, M extends Model<E, SqlQ
             return res[0];
         } else {
             return null;
+        }
+    }
+
+    public Node[] relationsToNodes(Collection<R> relations) {
+        if (relations != null) {
+            return relations.stream()
+                    .map(r -> ((ModelNodeChildren) getChildren()).nodeByRelation(r))
+                    .filter(n -> n != null)
+                    .collect(Collectors.toList()).toArray(new Node[]{});
+        } else {
+            return new Node[]{};
         }
     }
 
