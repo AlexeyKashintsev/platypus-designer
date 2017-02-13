@@ -260,7 +260,7 @@ public class PlatypusProjectImpl implements PlatypusProject {
         if (connecting2Db == null) {
             connecting2Db = RP.create(() -> {
                 try {
-                    connect2db(aDatasourceName);
+                    connect2db(aDatasourceName);// connect2db has it's own logic regarding project's datasource.
                 } catch (Exception ex) {
                     Logger.getLogger(PlatypusProjectImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }

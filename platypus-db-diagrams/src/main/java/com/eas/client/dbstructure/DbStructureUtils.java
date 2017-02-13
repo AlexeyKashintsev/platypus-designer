@@ -29,11 +29,11 @@ public class DbStructureUtils {
         }
         ForeignKeyRule fkUpdateRule = aRel.getFkUpdateRule();
         if (fkUpdateRule == null) {
-            fkUpdateRule = ForeignKeyRule.CASCADE;
+            fkUpdateRule = ForeignKeyRule.NOACTION;
         }
         ForeignKeyRule fkDeleteRule = aRel.getFkDeleteRule();
         if (fkDeleteRule == null) {
-            fkDeleteRule = ForeignKeyRule.CASCADE;
+            fkDeleteRule = ForeignKeyRule.NOACTION;
         }
         boolean fkDeferrable = aRel.isFkDeferrable();
         return new ForeignKeySpec(lEntity.getTableSchemaName(), lEntity.getTableName(), aRel.getLeftField().getName(), fkName, fkUpdateRule, fkDeleteRule, fkDeferrable, rEntity.getTableSchemaName(), rEntity.getTableName(), aRel.getRightField().getName(), null);
