@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * DbStructureEditorView.java
- *
- * Created on 09.08.2009, 21:39:25
- */
 package com.eas.client.dbstructure.gui;
 
 import com.eas.client.dbstructure.DbStructureUtils;
@@ -25,7 +15,6 @@ import com.eas.client.metadata.Field;
 import com.eas.client.model.gui.view.model.ModelView;
 import com.eas.client.utils.scalableui.JScalableScrollPane;
 import com.eas.client.model.gui.DatamodelDesignUtils;
-import com.eas.client.utils.scalableui.ScaleListener;
 import com.eas.designer.application.query.result.QueryResultTopComponent;
 import com.eas.designer.application.query.result.QueryResultsView;
 import com.eas.gui.JDropDownButton;
@@ -50,7 +39,7 @@ import org.openide.windows.WindowManager;
 
 /**
  *
- * @author Марат
+ * @author mg
  */
 public class DbSchemeEditorView extends JPanel implements ContainerListener {
 
@@ -238,7 +227,7 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
     //protected TableFieldsView fView = null;
     protected FieldsEntitiesViewsSelectionListener entitySelectionListener = new FieldsEntitiesViewsSelectionListener();
     // misc
-    protected JScalableScrollPane dbSchemeScroll;
+    protected JScrollPane dbSchemeScroll;
 //    protected JScrollPane dbSchemeScroll = null;
     protected SqlActionsController sqlController;
     protected static final String[] zoomLevelsData = new String[]{"25%", "50%", "75%", "100%", "150%", "200%", "300%"};
@@ -268,20 +257,20 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
 
         dbSchemeScroll = new JScalableScrollPane();
         //dbSchemeScroll = new JScrollPane();
+        
         dbSchemeScroll.setViewportView(modelView);
-        dbSchemeScroll.getScalablePanel().getDrawWall().setComponentPopupMenu(popupSchema);
+        if (dbSchemeScroll instanceof JScalableScrollPane) {
+            ((JScalableScrollPane) dbSchemeScroll).getScalablePanel().getDrawWall().setComponentPopupMenu(popupSchema);
 
-        dbSchemeScroll.addScaleListener(new ScaleListener() {
-            @Override
-            public void scaleChanged(float oldScale, float newScale) {
+            ((JScalableScrollPane) dbSchemeScroll).addScaleListener((float oldScale, float newScale) -> {
                 comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
                 String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
                 if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
                     ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
                 }
                 comboZoom.setSelectedItem(newSelectedZoom);
-            }
-        });
+            });
+        }
         pnlScheme.add(dbSchemeScroll, BorderLayout.CENTER);
         modelView.addContainerListener(this);
         modelView.setModel(schemeModel);
@@ -557,7 +546,9 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
 
     @Override
     public void componentAdded(ContainerEvent e) {
-        dbSchemeScroll.checkComponents();
+        if (dbSchemeScroll instanceof JScalableScrollPane) {
+            ((JScalableScrollPane) dbSchemeScroll).checkComponents();
+        }
         Component comp = e.getChild();
         if (comp != null && comp instanceof EntityView<?>) {
             EntityView<FieldsEntity> ef = (EntityView<FieldsEntity>) comp;

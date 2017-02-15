@@ -16,14 +16,14 @@ import com.eas.designer.application.module.PlatypusModuleDataObject;
 import com.eas.designer.codecompletion.InterceptorUtils;
 import java.util.Collection;
 import java.util.regex.Pattern;
-import org.netbeans.modules.csl.api.OffsetRange;
-import org.netbeans.modules.javascript2.editor.model.JsObject;
-import org.netbeans.modules.javascript2.editor.model.TypeUsage;
-import org.netbeans.modules.javascript2.editor.spi.model.FunctionInterceptor;
-import org.netbeans.modules.javascript2.editor.spi.model.ModelElementFactory;
+import org.netbeans.modules.javascript2.model.api.JsObject;
+import org.netbeans.modules.javascript2.model.spi.FunctionInterceptor;
+import org.netbeans.modules.javascript2.model.spi.ModelElementFactory;
+import org.netbeans.modules.javascript2.types.api.TypeUsage;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.loaders.DataObjectNotFoundException;
+import org.netbeans.modules.csl.api.OffsetRange;
 
 /**
  *

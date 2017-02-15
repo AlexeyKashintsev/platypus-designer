@@ -22,10 +22,15 @@ dependencies {
     compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-lexer:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-csl-api:${nbVersion}"
+    compile "org.netbeans.api:org-netbeans-modules-csl-types:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-api:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-indexing:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-javascript2-lexer:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-javascript2-model:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-javascript2-types:${nbVersion}"
     compile "org.netbeans.modules:org-netbeans-modules-javascript2-editor:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-javascript2-requirejs:${nbVersion}"
     compile project(':platypus-forms-designer')
     compile project(':platypus-js-modules')
     compile project(':platypus-diagrams-ui')

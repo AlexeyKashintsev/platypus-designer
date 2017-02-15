@@ -56,8 +56,8 @@ public class RequireJsSupportIndexer extends EmbeddingIndexer {
     public static final class Factory extends EmbeddingIndexerFactory {
 
         public static final String NAME = "requirejs"; // NOI18N
-        public static final int VERSION = 1;
-        private static final int PRIORITY = 220;
+        public static final int VERSION = 2;
+        private static final int PRIORITY = 200;
 
         @Override
         public EmbeddingIndexer createIndexer(Indexable indexable, Snapshot snapshot) {

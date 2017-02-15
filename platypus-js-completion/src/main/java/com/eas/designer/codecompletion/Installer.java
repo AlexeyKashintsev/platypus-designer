@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.codecompletion;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.openide.modules.ModuleInfo;
@@ -21,7 +16,12 @@ import org.openide.modules.Modules;
  */
 public class Installer extends ModuleInstall {
 
-    private static final Collection<String> FRIEND_OF_WHOM = Collections.singleton("org.netbeans.modules.javascript2.editor");
+    private static final Collection<String> FRIEND_OF_WHOM = Arrays.asList(
+    "org.netbeans.modules.javascript2.editor",
+    "org.netbeans.modules.javascript2.lexer",
+    "org.netbeans.modules.javascript2.model",
+    "org.netbeans.modules.javascript2.types"
+    );
 
     @Override
     public void validate() throws IllegalStateException {

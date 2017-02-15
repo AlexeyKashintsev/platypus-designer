@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.client.model.gui.view;
 
-import com.eas.client.SQLUtils;
 import com.eas.client.SqlQuery;
 import com.eas.client.metadata.Field;
 import com.eas.client.metadata.Parameter;
@@ -32,7 +27,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;

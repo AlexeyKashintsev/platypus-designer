@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 import org.netbeans.api.lexer.Token;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
-import org.netbeans.modules.javascript2.editor.api.lexer.JsTokenId;
-import org.netbeans.modules.javascript2.editor.api.lexer.LexUtilities;
-import org.netbeans.modules.javascript2.editor.model.DeclarationScope;
-import org.netbeans.modules.javascript2.editor.model.JsObject;
-import org.netbeans.modules.javascript2.editor.model.TypeUsage;
-import org.netbeans.modules.javascript2.editor.spi.model.FunctionArgument;
-import org.netbeans.modules.javascript2.editor.spi.model.FunctionInterceptor;
-import org.netbeans.modules.javascript2.editor.spi.model.ModelElementFactory;
+import org.netbeans.modules.javascript2.lexer.api.JsTokenId;
+import org.netbeans.modules.javascript2.lexer.api.LexUtilities;
+import org.netbeans.modules.javascript2.model.api.JsObject;
+import org.netbeans.modules.javascript2.model.spi.FunctionArgument;
+import org.netbeans.modules.javascript2.model.spi.FunctionInterceptor;
+import org.netbeans.modules.javascript2.model.spi.ModelElementFactory;
+import org.netbeans.modules.javascript2.types.api.DeclarationScope;
+import org.netbeans.modules.javascript2.types.api.TypeUsage;
 import org.netbeans.modules.parsing.api.Snapshot;
 import org.openide.filesystems.FileObject;
 
@@ -31,7 +31,7 @@ import org.openide.filesystems.FileObject;
  */
 public abstract class ModelInterceptor implements FunctionInterceptor {
     
-    private static final String MODEL_MODULE_NAME = "application-platypus-model"/*Crazy RequireJsIndexer! It should be datamodel/application-platypus-entity */;
+    private static final String MODEL_MODULE_NAME = "application-platypus-model"/*Crazy RequireJsIndexer! It should be datamodel/application-platypus-model */;
     private final String interceptedName;
     
     public ModelInterceptor(String aInterceptedName) {
