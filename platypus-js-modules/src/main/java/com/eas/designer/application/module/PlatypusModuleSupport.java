@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.module;
 
 import com.eas.designer.datamodel.ModelUndoProvider;
@@ -158,7 +154,7 @@ public class PlatypusModuleSupport extends DataEditorSupport implements OpenCook
         PlatypusModuleSourceDescription sourceDesc = new PlatypusModuleSourceDescription(dataObject);
         PlatypusModuleDatamodelDescription modelDesc = new PlatypusModuleDatamodelDescription(dataObject);
         MultiViewDescription[] descs = new MultiViewDescription[]{sourceDesc, modelDesc};
-        CloneableTopComponent mv = MultiViewFactory.createCloneableMultiView(descs, sourceDesc, new CloseHandler(dataObject));
+        CloneableTopComponent mv = MultiViewFactory.createCloneableMultiView(descs, modelDesc, new CloseHandler(dataObject));
         CloneableEditorSupport.Pane pane = (CloneableEditorSupport.Pane) mv;
         return pane;
     }
@@ -298,12 +294,12 @@ public class PlatypusModuleSupport extends DataEditorSupport implements OpenCook
      * the array is normal display name, the second item of the array is HTML
      * display name.
      *
-     * @param formDataObject form data object representing the multiview tc.
+     * @param moduleDataObject module data object representing the multiview tc.
      * @return display names of the MVTC. The second item can * be
      * <code>null</code>.
      */
-    protected String[] getMVTCDisplayName(PlatypusModuleDataObject formDataObject) {
-        Node node = formDataObject.getNodeDelegate();
+    protected String[] getMVTCDisplayName(PlatypusModuleDataObject moduleDataObject) {
+        Node node = moduleDataObject.getNodeDelegate();
         String title = node.getDisplayName();
         String htmlTitle = node.getHtmlDisplayName();
         if (htmlTitle == null) {
@@ -313,8 +309,8 @@ public class PlatypusModuleSupport extends DataEditorSupport implements OpenCook
                 htmlTitle = "???";
             }
         }
-        boolean modified = formDataObject.isModified();
-        boolean readOnly = readOnly(formDataObject);
+        boolean modified = moduleDataObject.isModified();
+        boolean readOnly = readOnly(moduleDataObject);
         return new String[]{
             DataEditorSupport.annotateName(title, false, modified, readOnly),
             DataEditorSupport.annotateName(htmlTitle, true, modified, readOnly)

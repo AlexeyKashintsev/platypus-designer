@@ -48,7 +48,7 @@ public class InterceptorUtils {
         Project project = FileOwnerQuery.getOwner(aSource);
         if (project != null) {
             final Collection<FileObject> roots = new ArrayList<>(QuerySupport.findRoots(project, null, Collections.<String>emptyList(), Collections.<String>emptyList()));
-            QuerySupport querySupport = QuerySupport.forRoots(RequireJsSupportIndexer.Factory.NAME, RequireJsSupportIndexer.Factory.VERSION, roots.toArray(new FileObject[]{}));
+            QuerySupport querySupport = QuerySupport.forRoots(RequireJsSupportIndexer.Factory.NAME, RequireJsSupportIndexer.Factory.REQUIRE_JS_INDEXER_VERSION, roots.toArray(new FileObject[]{}));
             return querySupport;
         } else {
             return null;

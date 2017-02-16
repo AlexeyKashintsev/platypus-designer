@@ -57,6 +57,7 @@ public class RequireJsSupportIndexer extends EmbeddingIndexer {
 
         public static final String NAME = "requirejs"; // NOI18N
         public static final int VERSION = 2;
+        public static final int REQUIRE_JS_INDEXER_VERSION = 2;
         private static final int PRIORITY = 200;
 
         @Override

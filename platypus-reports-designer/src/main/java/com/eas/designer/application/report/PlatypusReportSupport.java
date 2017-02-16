@@ -29,7 +29,7 @@ public class PlatypusReportSupport extends PlatypusModuleSupport {
         PlatypusModuleDatamodelDescription modelDesc = new PlatypusModuleDatamodelDescription(dataObject);
         PlatypusReportLayoutDescription layoutDesc = new PlatypusReportLayoutDescription((PlatypusReportDataObject) dataObject);
         MultiViewDescription[] descs = new MultiViewDescription[]{sourceDesc, layoutDesc, modelDesc};
-        CloneableTopComponent mv = MultiViewFactory.createCloneableMultiView(descs, layoutDesc, new CloseHandler(dataObject));
+        CloneableTopComponent mv = MultiViewFactory.createCloneableMultiView(descs, modelDesc, new CloseHandler(dataObject));
         return (CloneableEditorSupport.Pane) mv;
     }
 

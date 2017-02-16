@@ -423,7 +423,6 @@ public final class PlatypusDatamodelView extends CloneableTopComponent implement
             ErrorManager.getDefault().notify(ex);
         }
         if (multiViewObserver != null) {
-            multiViewObserver.getTopComponent().requestActive();
             multiViewObserver.getTopComponent().setToolTipText(((PlatypusModuleDataObject) dataObject).getModelFile().getPath());
         } else {
             dataObject.getPrimaryFile().getPath();
