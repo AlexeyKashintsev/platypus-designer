@@ -22,7 +22,7 @@ import org.openide.util.lookup.ProxyLookup;
 
 /**
  *
- * @author Gala
+ * @author mg
  */
 public class CategoryNode extends FilterNode {
 

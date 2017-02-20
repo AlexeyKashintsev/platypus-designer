@@ -15,7 +15,7 @@ import org.openide.filesystems.FileUtil;
  */
 public final class SearchFilter extends SearchFilterDefinition {
 
-    private static final List<String> ignoredPaths = Arrays.asList(new String[] {"web/pwc", "web/pub", "web/META-INF", "web/WEB-INF/lib"});//NOI18N
+    private static final List<String> IGNORED_PATHS = Arrays.asList(new String[] {"pwc", "pub", "WEB-INF/lib"});//NOI18N
     private final PlatypusProjectImpl project;
     private final Path projectPath;
 
@@ -42,6 +42,6 @@ public final class SearchFilter extends SearchFilterDefinition {
         }
         File file = FileUtil.toFile(fo);
         String relPath = projectPath.relativize(file.toPath()).toString().replace(File.separator, "/");//NOI18N
-        return !file.isHidden() && !ignoredPaths.contains(relPath) ? FolderResult.TRAVERSE : FolderResult.DO_NOT_TRAVERSE;
+        return !file.isHidden() && !IGNORED_PATHS.contains(relPath) ? FolderResult.TRAVERSE : FolderResult.DO_NOT_TRAVERSE;
     }
 }

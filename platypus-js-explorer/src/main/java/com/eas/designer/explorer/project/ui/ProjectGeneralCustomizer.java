@@ -54,6 +54,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         EventQueue.invokeLater(() -> {
             isInit = true;
             try {
+                txtProjectFolder.setText(project.getProjectDirectory().getPath());
                 if (projectSettings.getRunElement() != null) {
                     txtRunPath.setText(projectSettings.getRunElement());
                 }
@@ -128,6 +129,8 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         lblBuildCommand = new javax.swing.JLabel();
         txtBuildCommand = new javax.swing.JTextField();
         chAcceptDesignerDatasources = new javax.swing.JCheckBox();
+        lblProjectFolder = new javax.swing.JLabel();
+        txtProjectFolder = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -248,6 +251,10 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
             }
         });
 
+        lblProjectFolder.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.lblProjectFolder.text")); // NOI18N
+
+        txtProjectFolder.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,8 +262,18 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCleanCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCleanCommand)
+                    .addComponent(lblBuildCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtBuildCommand)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chGlobalApi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chAcceptDesignerDatasources, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 173, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblProjectFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblServeType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblClientType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblSourcePath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,22 +294,18 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                                     .addComponent(btnBrowse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblClientServerMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 246, Short.MAX_VALUE))))
-                    .addComponent(lblCleanCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCleanCommand)
-                    .addComponent(lblBuildCommand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtBuildCommand)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chGlobalApi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chAcceptDesignerDatasources, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtProjectFolder))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProjectFolder)
+                    .addComponent(txtProjectFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRunPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRunPath)
@@ -320,7 +333,7 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 .addComponent(chGlobalApi)
                 .addGap(18, 18, 18)
                 .addComponent(chAcceptDesignerDatasources)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(lblCleanCommand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCleanCommand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -445,11 +458,13 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     private javax.swing.JLabel lblClientServerMessage;
     private javax.swing.JLabel lblClientType;
     private javax.swing.JLabel lblDefDatasource;
+    private javax.swing.JLabel lblProjectFolder;
     private javax.swing.JLabel lblRunPath;
     private javax.swing.JLabel lblServeType;
     private javax.swing.JLabel lblSourcePath;
     private javax.swing.JTextField txtBuildCommand;
     private javax.swing.JTextField txtCleanCommand;
+    private javax.swing.JTextField txtProjectFolder;
     private javax.swing.JTextField txtRunPath;
     private javax.swing.JTextField txtSourcePath;
     // End of variables declaration//GEN-END:variables

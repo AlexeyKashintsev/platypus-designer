@@ -114,13 +114,12 @@ public class PlatypusProjectView implements LogicalViewProvider {
     }
 
     private Node findNode(Node start, String[] path) {
-        Node found = null;
         try {
-            found = NodeOp.findPath(start, path);
+            return NodeOp.findPath(start, path);
         } catch (NodeNotFoundException ex) {
             // ignored
+            return null;
         }
-        return found;
     }
 
     private boolean hasObject(Node node, Object obj) {
@@ -169,7 +168,7 @@ public class PlatypusProjectView implements LogicalViewProvider {
 
         @Override
         public String getShortDescription() {
-            return info.getDisplayName();
+            return project.getProjectDirectory().getPath();
         }
 
         @Override
@@ -214,15 +213,11 @@ public class PlatypusProjectView implements LogicalViewProvider {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            RP.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    fireNameChange(null, null);
-                    fireDisplayNameChange(null, null);
-                    fireIconChange();
-                    fireOpenedIconChange();
-                }
+            RP.post(() -> {
+                fireNameChange(null, null);
+                fireDisplayNameChange(null, null);
+                fireIconChange();
+                fireOpenedIconChange();
             });
         }
 

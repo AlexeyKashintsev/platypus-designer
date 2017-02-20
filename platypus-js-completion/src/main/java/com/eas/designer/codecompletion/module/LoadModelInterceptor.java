@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.codecompletion.module;
 
 import com.eas.client.SqlQuery;
@@ -58,8 +53,11 @@ public class LoadModelInterceptor extends ModelInterceptor {
             if (modelContainer.isModelRead()) {
                 ApplicationDbModel model = modelContainer.getModel();
                 TypeUsage numberType = factory.newType("Number", loadModelOffset, true);
-                TypeUsage arrayType = factory.newType("Array", loadModelOffset, true);
+                TypeUsage stringType = factory.newType("String", loadModelOffset, true);
+                TypeUsage dateType = factory.newType("Date", loadModelOffset, true);
+                TypeUsage booleanType = factory.newType("Boolean", loadModelOffset, true);
                 TypeUsage objectType = factory.newType("Object", loadModelOffset, true);
+                TypeUsage arrayType = factory.newType("Array", loadModelOffset, true);
                 for (ApplicationDbEntity modelEntity : model.getEntities().values()) {
                     if (modelEntity.getName() != null && !modelEntity.getName().isEmpty()) {
                         JsObject jsEntity = factory.newObject(jsModel, modelEntity.getName(), new OffsetRange(loadModelOffset, loadModelOffset), false);
@@ -85,7 +83,7 @@ public class LoadModelInterceptor extends ModelInterceptor {
                             jsSchemaLength.addAssignment(numberType, -1);
                             jsSchema.addProperty(jsSchemaLength.getName(), jsSchemaLength);
                             Collection<TypeUsage> apiFieldTypes = InterceptorUtils.getModuleExposedTypes(fo, loadModelOffset, factory, FIELD_MODULE_NAME);
-                            for (int i = 1; i < fields.getFieldsCount(); i++) {
+                            for (int i = 1; i <= fields.getFieldsCount(); i++) {
                                 Field field = fields.get(i);
                                 JsObject jsField = factory.newObject(jsSchema, field.getName(), new OffsetRange(loadModelOffset, loadModelOffset), false);
                                 apiFieldTypes.stream().forEach((apiFieldType) -> {
@@ -102,17 +100,29 @@ public class LoadModelInterceptor extends ModelInterceptor {
                             JsObject jsParamsLength = factory.newObject(jsParams, LENGTH_PROP_NAME, new OffsetRange(loadModelOffset, loadModelOffset), false);
                             jsParamsLength.addAssignment(numberType, loadModelOffset);
                             jsParams.addProperty(jsParamsLength.getName(), jsParamsLength);
-                            Collection<TypeUsage> apiParameterTypes = InterceptorUtils.getModuleExposedTypes(fo, loadModelOffset, factory, PARAMETER_MODULE_NAME);
-                            for (int i = 1; i < params.getParametersCount(); i++) {
+                            for (int i = 1; i <= params.getParametersCount(); i++) {
                                 Parameter parameter = params.get(i);
                                 JsObject jsParameter = factory.newObject(jsParams, parameter.getName(), new OffsetRange(loadModelOffset, loadModelOffset), false);
-                                apiParameterTypes.stream().forEach((apiParameterType) -> {
-                                    jsParameter.addAssignment(apiParameterType, apiParameterType.getOffset());
-                                });
+                                switch(parameter.getType()){
+                                    case "String":
+                                        jsParameter.addAssignment(stringType, loadModelOffset);
+                                        break;
+                                    case "Number":
+                                        jsParameter.addAssignment(numberType, loadModelOffset);
+                                        break;
+                                    case "Date":
+                                        jsParameter.addAssignment(dateType, loadModelOffset);
+                                        break;
+                                    case "Boolean":
+                                        jsParameter.addAssignment(booleanType, loadModelOffset);
+                                        break;
+                                    default:
+                                        jsParameter.addAssignment(objectType, loadModelOffset);
+                                        break;
+                                }
                                 jsParams.addProperty(jsParameter.getName(), jsParameter);
                             }
                             jsEntity.addProperty(jsParams.getName(), jsParams);
-                            //
                             jsModel.addProperty(jsEntity.getName(), jsEntity);
                         }
                     }
