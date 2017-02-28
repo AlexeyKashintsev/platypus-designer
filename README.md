@@ -1,5 +1,5 @@
 # Platypus.js designer
-This project contains plugins for NetBeans IDE. Theese plugins allow to edit Platypus.js forms, datamodels, entities based on Sql queries, database structure diagrams, etc.
+This project contains plugins for NetBeans IDE. These plugins allow to edit Platypus.js forms, datamodels, entities based on Sql queries, database structure diagrams, etc.
 
 ## Build instructions
 To build plugins as NetBeans modules cluster from sources, run the following command:
@@ -7,13 +7,13 @@ To build plugins as NetBeans modules cluster from sources, run the following com
 gradlew suite
 ```
 While building, you will need Platypus.js jars. They will be resolved as dependencies from either remote or local maven repository.
-If you what to build theese plugins in isolation, please, clone Platypus.js sources and build them with the following commands:
+If you what to build these plugins in isolation, please, clone Platypus.js sources and build them with the following commands:
 ```
 git clone https://github.com/altsoft/PlatypusJS.git
 cd PlatypusJS
 gradlew install
 ```
-Theese commands will build Platypus.js jars and install artifacts in local Maven repository.
+These commands will build Platypus.js jars and install artifacts in local Maven repository.
 
 To build plugins as NetBeans plugin archives (nbm) from sources, run the following command:
 ```
@@ -25,4 +25,4 @@ If you whant to run just assembled plugins as a cluster of modules, execute the 
 ```
 gradlew netBeansRun "-PnetBeansInstallDir=c:\program files\netbeans 8.2"
 ```
-Note, that you need NetBeans 8.2 installed to use it with theese plugins.
+Note, that you need NetBeans 8.2 installed to use it with these plugins.
