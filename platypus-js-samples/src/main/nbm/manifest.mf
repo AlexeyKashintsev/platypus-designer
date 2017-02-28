@@ -1,1 +1,1 @@
-OpenIDE-Module-Layer: com/eas/samples/layer.xml
+OpenIDE-Module-Layer: com/eas/designer/samples/layer.xml

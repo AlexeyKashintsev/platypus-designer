@@ -8,7 +8,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "cz.kubacki.gradle.plugins:gradle-nbm-plugin:1.12.0"
+        classpath "cz.kubacki.gradle.plugins:gradle-nbm-plugin:1.16.0"
         gradleApi()
     }
 }
@@ -34,10 +34,14 @@ subprojects{
     
     nbm {
         keyStore {
-            keyStoreFile = project.file('sign')
+            keyStoreFile = file('sign')
             username = 'altsoft'
             password = 'altsoftsign'
         }
+        homePage = 'http://platypus-platform.org'
+        licenseFile = 'license'
+        moduleAuthor = 'Marat F. Gainullin'
+        needsRestart = true
     }
     
     repositories {
@@ -60,22 +64,19 @@ subprojects{
 
     task filterManifest() {
         doFirst {
-            if(project != project(':platypus-js-nb')){
-                def manifestFile = generateModuleManifest.getGeneratedManifestFile()
-                def Manifest manifest = new Manifest()
-                def manifestInput = new FileInputStream(manifestFile)
-                try{
-                    manifest.read(manifestInput);
-                }finally{
-                    manifestInput.close()
-                }
-                def mClassPath = manifest.getMainAttributes().remove(new Attributes.Name("Class-Path"))
-                def manifestOutput = new FileOutputStream(manifestFile)
-                try{
-                    manifest.write(manifestOutput);
-                }finally{
-                    manifestOutput.close();
-                }
+            def manifestFile = generateModuleManifest.getGeneratedManifestFile()
+            def manifest = manifestFile.withInputStream {
+                def toRead = new Manifest()
+                toRead.read it
+                return toRead
+            }
+            if(project == project(':platypus-js-nb')){
+                manifest.getMainAttributes().put(new Attributes.Name("OpenIDE-Module-Public-Packages"), 'javax.**, com.**, org.**, net.**, oracle.**')
+            } else{
+                manifest.getMainAttributes().remove(new Attributes.Name("Class-Path"))
+            }
+            manifestFile.withOutputStream {
+                manifest.write it
             }
         }
     }
@@ -87,6 +88,12 @@ subprojects{
         into "${parent.buildDir}/platypus"
     }
     suite.dependsOn netbeans
+    
+    task nbms(type: Copy){
+        from "build/nbm"
+        into "${parent.buildDir}/nbms"
+    }
+    nbms.dependsOn 'nbm'
 }
 
 task netBeansRun(type: Exec) {

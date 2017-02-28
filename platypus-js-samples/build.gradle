@@ -1,8 +1,8 @@
 nbm {
-    moduleName = 'com.eas.samples'
+    moduleName = 'com.eas.designer.samples'
     specificationVersion = '5'
     implementationVersion = '3'
-    localizingBundle = 'com/eas/samples/Bundle.properties'
+    localizingBundle = 'com/eas/designer/samples/Bundle.properties'
 }
 
 dependencies {
@@ -14,11 +14,7 @@ dependencies {
     compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"
     compile "org.netbeans.api:org-openide-filesystems:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-api-progress:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-db:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-server:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
-    compile "org.netbeans.api:org-netbeans-modules-j2eeserver:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectuiapi:${nbVersion}"
-    compile project(':platypus-js-explorer')
     compile project(':platypus-js-nb')
 }

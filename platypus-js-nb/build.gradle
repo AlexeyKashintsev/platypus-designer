@@ -4,6 +4,7 @@ nbm {
     implementationVersion = '88'
     moduleInstall = 'com.eas.designer.application.Installer'
     localizingBundle = 'com/eas/designer/application/Bundle.properties'
+    /* // moved to filterManifest task in the root project
     [
         'javax.**'
         ,'com.**'
@@ -14,6 +15,7 @@ nbm {
     ].each {
         friendPackages.add it
     }
+    */
 }
 
 dependencies {

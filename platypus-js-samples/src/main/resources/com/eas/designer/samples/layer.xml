@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Templates">
+        <folder name="Project">
+            <folder name="Platypus.js">
+                <file name="platypus-gradle-skeleton" url="platypus-gradle-skeleton.zip">
+                    <attr name="displayName" bundlevalue="com.eas.designer.samples.Bundle#Templates/Project/Platypus/PlatypusGradleSkeleton"/>
+                    <attr name="iconBase" stringvalue="com/eas/designer/samples/gradle.png"/>
+                    <attr name="position" intvalue="20"/>
+                    <attr name="instantiatingIterator" methodvalue="com.eas.designer.samples.PlatypusSamplesWizardIterator.createIterator"/>
+                    <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/samples/descriptions/platypus-gradle-skeleton.html"/>
+                    <attr name="template" boolvalue="true"/>
+                </file>
+            </folder>
+            <folder name="Samples">
+                <folder name="Platypus.js">
+                    <attr name="displayName" bundlevalue="com.eas.designer.samples.Bundle#Templates/Project/Samples/Platypus"/>
+                    <attr name="position" intvalue="400"/>
+
+                    <file name="ui-demo" url="ui-demo.zip">
+                        <attr name="displayName" bundlevalue="com.eas.designer.samples.Bundle#Templates/Project/Samples/Platypus/UiDemo"/>
+                        <attr name="iconBase" stringvalue="com/eas/designer/samples/pencil-ruler.png"/>
+                        <attr name="position" intvalue="20"/>
+                        <attr name="instantiatingIterator" methodvalue="com.eas.designer.samples.PlatypusSamplesWizardIterator.createIterator"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/samples/descriptions/ui-demo.html"/>
+                        <attr name="template" boolvalue="true"/>
+                    </file>
+                    <file name="pet-hotel" url="pet-hotel.zip">
+                        <attr name="displayName" bundlevalue="com.eas.designer.samples.Bundle#Templates/Project/Samples/Platypus/PetHotel"/>
+                        <attr name="iconBase" stringvalue="com/eas/designer/samples/pencil-ruler.png"/>
+                        <attr name="position" intvalue="20"/>
+                        <attr name="instantiatingIterator" methodvalue="com.eas.designer.samples.PlatypusSamplesWizardIterator.createIterator"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/samples/descriptions/pet-hotel.html"/>
+                        <attr name="template" boolvalue="true"/>
+                    </file>
+                    <file name="web-socket-demo" url="web-socket-demo.zip">
+                        <attr name="displayName" bundlevalue="com.eas.designer.samples.Bundle#Templates/Project/Samples/Platypus/WebSocketDemo"/>
+                        <attr name="iconBase" stringvalue="com/eas/designer/samples/pencil-ruler.png"/>
+                        <attr name="position" intvalue="20"/>
+                        <attr name="instantiatingIterator" methodvalue="com.eas.designer.samples.PlatypusSamplesWizardIterator.createIterator"/>
+                        <attr name="instantiatingWizardURL" urlvalue="nbresloc:/com/eas/designer/samples/descriptions/web-socket-demo.html"/>
+                        <attr name="template" boolvalue="true"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
