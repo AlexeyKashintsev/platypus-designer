@@ -6,7 +6,7 @@ nbm {
 }
 
 dependencies {
-    providedCompile 'platypus-js:platypus-js-common-utils:5.11.0'
+    providedCompile 'com.eas.platypus:platypus-js-common-utils:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-util:${nbVersion}"
     compile "org.netbeans.api:org-openide-dialogs:${nbVersion}"
