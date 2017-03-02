@@ -13,12 +13,13 @@ import java.awt.Font;
 import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.MatteBorder;
 
 public class FieldsParametersListCellRenderer<E extends Entity<?, ?, E>> implements ListCellRenderer<Field> {
 
-    public static final Color interFieldsColor = new Color(245, 245, 245);
+    public static final Color interFieldsColor = new JTextField().getBackground().darker();
     protected Font fieldFont;
     protected Font bindedFieldFont;
     protected E entity;

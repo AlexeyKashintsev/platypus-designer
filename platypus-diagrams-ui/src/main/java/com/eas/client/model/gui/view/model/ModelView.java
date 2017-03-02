@@ -873,7 +873,7 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
         InputMap im = DatamodelDesignUtils.fillInputMap(getActionMap());
         setInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, im);
         setInputMap(WHEN_FOCUSED, im);
-        setBackground(Color.white);
+        setBackground(new JTextField().getBackground());
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentMoved(ComponentEvent e) {

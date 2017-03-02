@@ -57,6 +57,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
@@ -784,6 +785,7 @@ public class QueryResultsView extends javax.swing.JPanel {
         grid = new ModelGrid();
         grid.setRowsHeight(20);
         grid.setAutoRefreshHeader(false);
+        grid.setOddRowsColor(grid.getBackground().darker());
         gridPanel.add(grid);
         Fields fields = query.getFields();
         if (fields != null) {

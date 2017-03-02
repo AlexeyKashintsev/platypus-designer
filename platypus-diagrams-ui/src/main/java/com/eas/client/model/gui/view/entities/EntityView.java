@@ -50,15 +50,15 @@ import javax.swing.undo.UndoableEditSupport;
 public abstract class EntityView<E extends Entity<?, ?, E>> extends JPanel {
 
     // Constants
-    public static final Color selectedColor = (new JButton()).getBackground().darker();//(new JTextField()).getSelectionColor();
+    public static final Color selectedColor = (new JButton()).getBackground().darker();
     public static final Color unselectedColor = (new JButton()).getBackground();
     public static final Color borderColor = selectedColor;
     public static final Color selectedBorderColor = selectedColor.darker();
     public static final Stroke allwaysBorderStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.0f, new float[]{2, 2}, 0);
     public static final int ENTITY_VIEW_DEFAULT_WIDTH = 150;
     public static final int ENTITY_VIEW_DEFAULT_HEIGHT = 200;
-    public static final Border ordinaryBorder = new CompoundBorder(new LineBorder(borderColor, 1, false), new LineBorder(borderColor.brighter().brighter().brighter().brighter(), 1, false));
-    public static final Border selectedBorder = new CompoundBorder(new LineBorder(selectedBorderColor.darker(), 1, false), new LineBorder(borderColor.brighter().brighter().brighter().brighter(), 1, false));
+    public static final Border ordinaryBorder = new CompoundBorder(new LineBorder(borderColor, 1, false), new LineBorder(borderColor.brighter().brighter(), 1, false));
+    public static final Border selectedBorder = new CompoundBorder(new LineBorder(selectedBorderColor.darker(), 1, false), new LineBorder(borderColor.brighter().brighter(), 1, false));
     // Zone around of each view to guarantee accessibility
     // to any view
     public static final Integer INSET_ZONE = 6; //minimum 3

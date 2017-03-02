@@ -454,7 +454,6 @@ public class PlatypusFormLayoutView extends CloneableTopComponent implements Mul
                     case FormLoaderSettings.PROP_SELECTION_BORDER_SIZE:
                     case FormLoaderSettings.PROP_SELECTION_BORDER_COLOR:
                     case FormLoaderSettings.PROP_CONNECTION_BORDER_COLOR:
-                    case FormLoaderSettings.PROP_FORMDESIGNER_BACKGROUND_COLOR:
                     case FormLoaderSettings.PROP_FORMDESIGNER_BORDER_COLOR: {
                         updateVisualSettings();
                         break;

@@ -1,13 +1,17 @@
 package com.eas.designer.samples;
 
+import com.eas.designer.application.project.PlatypusProjectSettings;
 import java.awt.Component;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -61,7 +65,8 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
 
         Set resultSet = new LinkedHashSet();
         Path locationDir = (Path) wiz.getProperty(PlatypusSamples.LOCATION_DIR);
-        Path projectDir = locationDir.resolve((String) wiz.getProperty(PlatypusSamples.NAME));
+        String projectName = (String) wiz.getProperty(PlatypusSamples.NAME);
+        Path projectDir = locationDir.resolve(projectName);
         projectDir.toFile().mkdirs();
 
         FileObject template = Templates.getTemplate(wiz);
@@ -72,8 +77,23 @@ public class PlatypusSamplesWizardIterator implements WizardDescriptor.ProgressI
         ProjectManager.getDefault().clearNonProjectCache();
         handle.progress(NbBundle.getMessage(PlatypusSamplesWizardIterator.class, "LBL_NewSampleProjectWizardIterator_WizardProgress_PreparingToOpen"), 2); // NOI18N
 
+        Path srcDir = projectDir.resolve("src");
+
+        File projectProperties = srcDir.resolve(PlatypusProjectSettings.PROJECT_SETTINGS_FILE).toFile();
+        if (projectProperties.exists()) {
+            Properties props = new Properties();
+            try (InputStream input = new FileInputStream(projectProperties)) {
+                props.load(input);
+            }
+            props.setProperty(PlatypusProjectSettings.PROJECT_DISPLAY_NAME_KEY, projectName);
+            props.setProperty(PlatypusProjectSettings.WEB_APPLICATION_CONTEXT_KEY, projectName);
+            try (OutputStream input = new FileOutputStream(projectProperties)) {
+                props.store(input, null);
+            }
+        }
+
         // Open top folder as a project
-        resultSet.add(FileUtil.toFileObject(projectDir.resolve("src").toFile()));
+        resultSet.add(FileUtil.toFileObject(srcDir.toFile()));
 
         if (locationDir.toFile().exists()) {
             ProjectChooser.setProjectsFolder(locationDir.toFile());

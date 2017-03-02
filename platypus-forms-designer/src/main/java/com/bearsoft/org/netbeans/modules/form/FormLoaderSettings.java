@@ -45,6 +45,7 @@ package com.bearsoft.org.netbeans.modules.form;
 
 import java.awt.Color;
 import java.util.prefs.Preferences;
+import javax.swing.JButton;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbPreferences;
 
@@ -74,11 +75,6 @@ public class FormLoaderSettings implements HelpCtx.Provider {
      * Property name of the guidingLineColor property
      */
     public static final String PROP_GUIDING_LINE_COLOR = "guidingLineColor"; // NOI18N
-    /**
-     * Property name of the formDesignerBackgroundColor property
-     */
-    public static final String PROP_FORMDESIGNER_BACKGROUND_COLOR =
-            "formDesignerBackgroundColor"; // NOI18N
     /**
      * Property name of the formDesignerBorderColor property
      */
@@ -395,21 +391,8 @@ public class FormLoaderSettings implements HelpCtx.Provider {
      * @return background color of the designer.
      */
     public java.awt.Color getFormDesignerBackgroundColor() {
-        int rgb = getPreferences().getInt(PROP_FORMDESIGNER_BACKGROUND_COLOR, Color.white.getRGB());
-        return new Color(rgb);
+        return new JButton().getBackground();
 
-    }
-
-    /**
-     * Setter for the formDesignerBackgroundColor option.
-     *
-     * @param value background color of the designer.
-     */
-    public void setFormDesignerBackgroundColor(java.awt.Color value) {
-        if (value == null) {
-            return;
-        }
-        getPreferences().putInt(PROP_FORMDESIGNER_BACKGROUND_COLOR, value.getRGB());
     }
 
     /**

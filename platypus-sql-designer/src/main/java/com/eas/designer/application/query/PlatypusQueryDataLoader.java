@@ -19,9 +19,10 @@ import org.openide.loaders.MultiFileLoader;
  * @author mg
  */
 @DataObject.Registrations(value = {
+    @DataObject.Registration(position = 200, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/x-sql"),
     @DataObject.Registration(position = 200, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/x-platypus-sql"),
-    @DataObject.Registration(position = 200, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/model+xml"),
-    @DataObject.Registration(position = 200, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/fields+xml")
+    @DataObject.Registration(position = 201, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/model+xml"),
+    @DataObject.Registration(position = 202, displayName = "#LBL_PlatypusQuery_loader_name", iconBase = "com/eas/designer/application/query/query.png", mimeType = "text/fields+xml")
 })
 public class PlatypusQueryDataLoader extends MultiFileLoader {
 
