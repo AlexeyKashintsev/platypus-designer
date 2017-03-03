@@ -1,4 +1,4 @@
-package com.eas.designer.codecompletion;
+package com.eas.designer.application.query;
 
 import com.eas.designer.explorer.InstallerAdapter;
 import java.util.Arrays;
@@ -13,10 +13,7 @@ public class Installer extends InstallerAdapter {
     @Override
     protected Collection<String> friendOfWhom() {
         return Arrays.asList(
-                "org.netbeans.modules.javascript2.editor",
-                "org.netbeans.modules.javascript2.lexer",
-                "org.netbeans.modules.javascript2.model",
-                "org.netbeans.modules.javascript2.types"
+                "org.netbeans.modules.db.core"
         );
     }
 

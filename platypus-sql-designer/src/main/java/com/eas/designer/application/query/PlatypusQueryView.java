@@ -66,6 +66,7 @@ import org.openide.windows.CloneableTopComponent;
 import org.openide.windows.TopComponent;
 import org.openide.windows.TopComponentGroup;
 import org.openide.windows.WindowManager;
+import org.netbeans.modules.db.api.sql.execute.SQLExecution;
 
 /**
  *
@@ -194,6 +195,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
     protected transient ListenerRegistration modelValidChangeListener;
 
     protected PlatypusQueryDataObject dataObject;
+    protected SQLExecution sqlExecution = new PlatypusSqlExecution();
     protected static final Dimension BTN_DIMENSION = new Dimension(28, 28);
 
     public PlatypusQueryView() throws Exception {
@@ -221,7 +223,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
 
     @Override
     public Lookup getLookup() {
-        return new ProxyLookup(super.getLookup(), Lookups.fixed(getDataObject()));
+        return new ProxyLookup(super.getLookup(), Lookups.fixed(getDataObject(), sqlExecution));
     }
 
     public void setDataObject(PlatypusQueryDataObject aDataObject) throws Exception {
@@ -233,7 +235,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
 
         initComponents();
 
-        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
         txtSqlPane.setEditorKit(editorKit);
         txtSqlPane.setDocument(dataObject.getSqlTextDocument());
         Component refinedComponent = initCustomEditor(txtSqlPane);
@@ -312,6 +314,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
         boolean isConnected = dataObject.getProject().isDbConnected(dataObject.getDatasourceName());
         pnlFromNWhere.removeAll();
         if (isConnected) {
+            sqlExecution.setDatabaseConnection(dataObject.getProject().getDbConnection(dataObject.getDatasourceName()));
             if (dataObject.isModelValid()) {
                 if (modelView != null) {
                     modelView.setModel(null);
@@ -413,6 +416,7 @@ public class PlatypusQueryView extends CloneableTopComponent {
             mnuPaste.setText(clientMissingMessage);
             tablesSelector.setBasesProxy(null);
             pnlFromNWhere.add(dataObject.getProject().generateDbPlaceholder(dataObject.getDatasourceName()), BorderLayout.CENTER);
+            sqlExecution.setDatabaseConnection(null);
         }
         revalidate();
         repaint();

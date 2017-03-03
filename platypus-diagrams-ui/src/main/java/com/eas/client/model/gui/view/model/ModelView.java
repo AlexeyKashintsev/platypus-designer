@@ -1092,6 +1092,7 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
     protected void paintConnector(Graphics2D g2d, Relation<E> aRel, Connector aConnector, Stroke aConnectorsStroke) {
         g2d.drawPolyline(aConnector.getX(), aConnector.getY(), aConnector.getSize());
     }
+
     /*
      protected void paintLastSlots(Graphics2D g2d, Set<Relation<E>> aRels, Stroke aConnectorsStroke, int aWide) {
      if (aRels != null && !aRels.isEmpty()) {
@@ -1115,7 +1116,6 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
      }
      }
      */
-
     protected void paintLastSlot(Graphics2D g2d, Segment aSlot, int aWide) {
         if (aSlot != null) {
             int[] xDirectionPoints = new int[3];
@@ -1762,13 +1762,21 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
             if (getParent() != null && getParent().getParent() != null
                     && getParent().getParent() instanceof JScalablePanel) {
                 JScalablePanel sp = (JScalablePanel) getParent().getParent();
-                sp.ZoomOut();
+                if (sp.getScale() > 0.1f) {
+                    sp.ZoomOut();
+                }
             }
         }
 
         @Override
         public boolean isEnabled() {
-            return true;
+            if (getParent() != null && getParent().getParent() != null
+                    && getParent().getParent() instanceof JScalablePanel) {
+                JScalablePanel sp = (JScalablePanel) getParent().getParent();
+                return sp.getScale() > 0.1f;
+            } else {
+                return false;
+            }
         }
 
         @Override

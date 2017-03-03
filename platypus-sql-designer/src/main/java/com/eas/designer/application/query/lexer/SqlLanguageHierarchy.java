@@ -20,6 +20,7 @@ import org.netbeans.spi.lexer.LexerRestartInfo;
  */
 public class SqlLanguageHierarchy extends LanguageHierarchy<SqlTokenId> {
 
+    public static final String NETBEANS_SQL_MIME_TYPE_NAME = "text/x-sql";
     public static final String PLATYPUS_SQL_MIME_TYPE_NAME = "text/x-platypus-sql";
     //
     public static final String DIGIT_CATEGORY_NAME = "number";

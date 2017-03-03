@@ -51,9 +51,9 @@ public class QuerySetupView extends javax.swing.JPanel {
     protected Dialog dialog;
     protected ParametersGrid parametersGrid;
     protected Document sqlTextDocument;
-    protected EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+    protected EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
     protected CCJSqlParserManager parserManager = new CCJSqlParserManager();
-    protected static final Logger logger = Logger.getLogger(QuerySetupView.class.getName());
+    protected static final Logger LOG = Logger.getLogger(QuerySetupView.class.getName());
 
     public QuerySetupView(QueryResultsView aParentView) throws Exception {
         super();
@@ -211,7 +211,7 @@ public class QuerySetupView extends javax.swing.JPanel {
 
     private void initDocument() throws BadLocationException {
         sqlTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
         //sqlTextDocument.putProperty(PlatypusQueryDataObject.DATAOBJECT_DOC_PROPERTY, parentView.getQueryDataObject());// to enable code completion
         sqlTextDocument.insertString(0, parentView.getQueryText(), null);
     }
@@ -244,7 +244,7 @@ public class QuerySetupView extends javax.swing.JPanel {
                     parametersGrid.setParams(null);
                     parametersGrid.setParams(params);
                 } catch (Exception ex) {
-                    logger.log(Level.SEVERE, "Error updating parameters", ex); // NOI18N
+                    LOG.log(Level.SEVERE, "Error updating parameters", ex); // NOI18N
                 }
             });
             Component customComponent = ce.createEditor(aPane);

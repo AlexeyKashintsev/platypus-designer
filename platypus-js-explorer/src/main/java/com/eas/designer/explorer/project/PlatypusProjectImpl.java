@@ -251,6 +251,15 @@ public class PlatypusProjectImpl implements PlatypusProject {
     }
 
     @Override
+    public DatabaseConnection getDbConnection(String aDatasourceName) {
+        String datasourceName = aDatasourceName;
+        if (datasourceName == null) {
+            datasourceName = settings.getDefaultDataSourceName();
+        }
+        return DatabaseConnections.lookup(datasourceName);
+    }
+
+    @Override
     public DatabasesClient getBasesProxy() {
         return basesProxy;
     }

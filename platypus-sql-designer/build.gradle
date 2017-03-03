@@ -2,6 +2,7 @@ nbm {
     moduleName = 'com.eas.designer.application.query'
     specificationVersion = '5'
     implementationVersion = '29'
+    moduleInstall = 'com.eas.designer.application.query.Installer'
     localizingBundle = 'com/eas/designer/application/query/Bundle.properties'
     requires = ['org.openide.windows.WindowManager']
 }
@@ -23,6 +24,7 @@ dependencies {
     compile "org.netbeans.api:org-openide-util-ui:${nbVersion}"
     compile "org.netbeans.api:org-openide-dialogs:${nbVersion}"
     compile "org.netbeans.api:org-openide-windows:${nbVersion}"
+    compile "org.netbeans.api:org-openide-modules:${nbVersion}"
     compile "org.netbeans.api:org-openide-explorer:${nbVersion}"
     compile "org.netbeans.api:org-openide-filesystems:${nbVersion}"
     compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"
@@ -35,6 +37,7 @@ dependencies {
     compile "org.netbeans.api:org-netbeans-modules-settings:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectapi:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-editor-lib:${nbVersion}"
+    compile "org.netbeans.modules:org-netbeans-modules-db-core:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-parsing-api:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-projectuiapi:${nbVersion}"
     compile "org.netbeans.api:org-netbeans-modules-editor-document:${nbVersion}"

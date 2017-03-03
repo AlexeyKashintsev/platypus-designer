@@ -288,10 +288,10 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
             }
         }
         UndoRedo.Manager undoReciever = getLookup().lookup(PlatypusQuerySupport.class).getUndo();
-        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
 
         sqlTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
         sqlTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
         sqlTextDocument.insertString(0, sqlText, null);
         sqlTextDocument.addUndoableEditListener(undoReciever);
@@ -314,7 +314,7 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
         });
 
         sqlFullTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlFullTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.PLATYPUS_SQL_MIME_TYPE_NAME);
+        sqlFullTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
         sqlFullTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
         sqlFullTextDocument.insertString(0, dialectText, null);
         sqlFullTextDocument.addUndoableEditListener(undoReciever);

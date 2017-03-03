@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query.completion;
 
 import com.eas.client.ClientConstants;
@@ -119,10 +115,9 @@ public class SqlCompletionProvider implements CompletionProvider {
     public void fillCompletionByParameters(Parameters aParams, PlatypusQueryDataObject dataObject, CompletionPoint point, CompletionResultSet resultSet) throws Exception {
         if (aParams != null) {
             if (!aParams.isEmpty()) {
-                for (Field field : aParams.toCollection()) {
-                    SqlCompletionItem item = new ParameterSqlCompletionItem((Parameter) field, point.startOffset, point.endOffset);
+                aParams.toCollection().stream().map((field) -> new ParameterSqlCompletionItem((Parameter) field, point.startOffset, point.endOffset)).forEachOrdered((item) -> {
                     addCompletionItem(point, item, resultSet);
-                }
+                });
             } else {
                 SqlCompletionItem item = new EmptySqlCompletionItem(NbBundle.getMessage(SqlCompletionProvider.class, "NoParameters"));
                 addCompletionItem(point, item, resultSet);

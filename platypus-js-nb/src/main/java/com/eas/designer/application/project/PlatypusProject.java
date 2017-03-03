@@ -10,6 +10,7 @@ import com.eas.client.queries.LocalQueriesProxy;
 import com.eas.util.ListenerRegistration;
 import java.awt.Component;
 import java.util.concurrent.ExecutionException;
+import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.netbeans.api.project.Project;
 import org.netbeans.spi.project.ProjectState;
 import org.netbeans.spi.search.SubTreeSearchOptions;
@@ -50,6 +51,8 @@ public interface PlatypusProject extends Project {
     PlatypusIndexer getIndexer();
 
     boolean isDbConnected(String aDatasourceId);
+    
+    DatabaseConnection getDbConnection(String aDatasourceId);
 
     void startConnecting2db(String aDatasourceId);
 

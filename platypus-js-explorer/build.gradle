@@ -23,6 +23,7 @@ dependencies {
     compile "org.netbeans.api:org-openide-util-lookup:${nbVersion}"
     compile "org.netbeans.api:org-openide-windows:${nbVersion}"
     compile "org.netbeans.api:org-openide-dialogs:${nbVersion}"
+    compile "org.netbeans.api:org-openide-modules:${nbVersion}"
     compile "org.netbeans.api:org-openide-explorer:${nbVersion}"
     compile "org.netbeans.api:org-openide-io:${nbVersion}"
     compile "org.netbeans.api:org-openide-actions:${nbVersion}"
