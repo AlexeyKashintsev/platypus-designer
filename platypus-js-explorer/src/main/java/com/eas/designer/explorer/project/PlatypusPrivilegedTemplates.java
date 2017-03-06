@@ -13,7 +13,7 @@ import org.netbeans.spi.project.ui.PrivilegedTemplates;
  */
 public class PlatypusPrivilegedTemplates implements PrivilegedTemplates{
 
-    protected static final String TEMPLATES_PREFIX = "Templates/Platypus/";
+    protected static final String TEMPLATES_PREFIX = "Templates/Platypus.js/";
     protected static String[] TEMPLATES = new String[]{
         TEMPLATES_PREFIX+"PlatypusFolderTemplate",
         TEMPLATES_PREFIX+"PlatypusDbDiagramTemplate.pd",
