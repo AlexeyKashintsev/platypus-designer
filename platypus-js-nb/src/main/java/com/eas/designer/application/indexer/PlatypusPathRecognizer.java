@@ -17,11 +17,13 @@ public class PlatypusPathRecognizer extends PathRecognizer {
     public static final String SOURCE_CP = "platypus/classpath/source"; // NOI18N
     public static final String JAVASCRIPT_MIME_TYPE = "text/javascript";  //NOI18N
     public static final String QUERY_MIME_TYPE = "text/x-platypus-sql";  //NOI18N
+    public static final String NATIVE_QUERY_MIME_TYPE = "text/x-sql";  //NOI18N
 
     private final Set<String> MIME_TYPES = new HashSet<String>() {
         {
             add(JAVASCRIPT_MIME_TYPE);
             add(QUERY_MIME_TYPE);
+            add(NATIVE_QUERY_MIME_TYPE);
         }
     };
 

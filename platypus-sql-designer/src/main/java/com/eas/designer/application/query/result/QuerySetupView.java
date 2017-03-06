@@ -1,49 +1,50 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query.result;
 
 import com.eas.client.forms.components.rt.HasValue;
 import com.eas.client.metadata.Parameter;
 import com.eas.client.metadata.Parameters;
+import com.eas.designer.application.query.PlatypusQueryDataObject;
 import com.eas.designer.application.query.editing.SqlTextEditsComplementor;
-import com.eas.designer.application.query.lexer.SqlLanguageHierarchy;
 import com.eas.script.Scripts;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeListener;
 import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import javax.swing.text.EditorKit;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.NamedParameter;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.statement.Statement;
+import org.netbeans.api.db.explorer.DatabaseConnection;
+import org.netbeans.modules.db.api.sql.execute.SQLExecution;
 import org.netbeans.modules.editor.NbEditorDocument;
 import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.text.CloneableEditorSupport;
 import org.openide.text.NbDocument;
 import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
+import org.openide.util.lookup.Lookups;
 
 /**
  *
  * @author vv
  */
-public class QuerySetupView extends javax.swing.JPanel {
+public class QuerySetupView extends javax.swing.JPanel implements Lookup.Provider {
 
     protected String SAVE_PARAMS_VAULES_ENABLED_KEY = "saveParamsValues";//NOI18N
     protected QueryResultsView parentView;
@@ -51,18 +52,68 @@ public class QuerySetupView extends javax.swing.JPanel {
     protected Dialog dialog;
     protected ParametersGrid parametersGrid;
     protected Document sqlTextDocument;
-    protected EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
     protected CCJSqlParserManager parserManager = new CCJSqlParserManager();
+    protected DatabaseConnection netBeansConnection;
     protected static final Logger LOG = Logger.getLogger(QuerySetupView.class.getName());
 
-    public QuerySetupView(QueryResultsView aParentView) throws Exception {
+    public QuerySetupView(QueryResultsView aParentView, DatabaseConnection aNetBeansConnection) throws Exception {
         super();
         parentView = aParentView;
+        netBeansConnection = aNetBeansConnection;
         initComponents();
         initParametersView();
         initDocument();
         initSqlEditor();
         saveParamsCheckBox.setSelected(isSaveParamsValuesEnabled());
+    }
+
+    @Override
+    public Lookup getLookup() {
+        return Lookups.singleton(new SQLExecution(){
+            @Override
+            public DatabaseConnection getDatabaseConnection() {
+                return netBeansConnection;
+            }
+
+            @Override
+            public void setDatabaseConnection(DatabaseConnection dc) {
+            }
+
+            @Override
+            public void execute() {
+                toolbarRunButtonActionPerformed(null);
+            }
+
+            @Override
+            public void executeSelection() {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(QuerySetupView.class, "MSG_OnlyFullExecutionFromHere"), NotifyDescriptor.INFORMATION_MESSAGE));
+                execute();
+            }
+
+            @Override
+            public void showHistory() {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(QuerySetupView.class, "MSG_CantShowQueryHistoryHere"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+            
+            @Override
+            public boolean isExecuting() {
+                return false;
+            }
+
+            @Override
+            public boolean isSelection() {
+                return false;
+            }
+
+            @Override
+            public void addPropertyChangeListener(PropertyChangeListener pl) {
+            }
+
+            @Override
+            public void removePropertyChangeListener(PropertyChangeListener pl) {
+            }
+
+        });
     }
 
     public final boolean isSaveParamsValuesEnabled() {
@@ -84,7 +135,7 @@ public class QuerySetupView extends javax.swing.JPanel {
 
         toolBar = new javax.swing.JToolBar();
         toolbarRunButton = new javax.swing.JButton();
-        pageSizeComboBox = new javax.swing.JComboBox<QueryResultsView.PageSizeItem>();
+        pageSizeComboBox = new javax.swing.JComboBox<>();
         saveParamsCheckBox = new javax.swing.JCheckBox();
         mainPane = new javax.swing.JSplitPane();
         topPanel = new javax.swing.JPanel();
@@ -100,7 +151,6 @@ public class QuerySetupView extends javax.swing.JPanel {
         toolBar.setRollover(true);
 
         toolbarRunButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/eas/designer/application/query/result/runsql.png"))); // NOI18N
-        toolbarRunButton.setText(org.openide.util.NbBundle.getMessage(QuerySetupView.class, "QuerySetupView.toolbarRunButton.text")); // NOI18N
         toolbarRunButton.setToolTipText(org.openide.util.NbBundle.getMessage(QuerySetupView.class, "toolbarRunButton.Tooltip")); // NOI18N
         toolbarRunButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         toolbarRunButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -162,7 +212,7 @@ public class QuerySetupView extends javax.swing.JPanel {
     }//GEN-LAST:event_pageSizeComboBoxItemStateChanged
 
     private void toolbarRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolbarRunButtonActionPerformed
-        ((JComponent) evt.getSource()).requestFocus();//changes focus to validate entered values
+        toolbarRunButton.requestFocus();//changes focus to validate entered values
         dialogDescriptor.setValue(DialogDescriptor.OK_OPTION);
         dialog.setVisible(false);
     }//GEN-LAST:event_toolbarRunButtonActionPerformed
@@ -203,15 +253,16 @@ public class QuerySetupView extends javax.swing.JPanel {
     }
 
     private void initSqlEditor() throws BadLocationException {
-        txtSqlPane.setEditorKit(editorKit);
+        txtSqlPane.putClientProperty("usedByCloneableEditor", true);
+        txtSqlPane.setContentType(PlatypusQueryDataObject.SQL_MIME_TYPE);
         txtSqlPane.setDocument(sqlTextDocument);
         Component refinedComponent = initCustomEditor(txtSqlPane);
         sqlSourcePanel.add(refinedComponent, BorderLayout.CENTER);
     }
 
     private void initDocument() throws BadLocationException {
-        sqlTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
+        sqlTextDocument = (NbEditorDocument) CloneableEditorSupport.getEditorKit(PlatypusQueryDataObject.SQL_MIME_TYPE).createDefaultDocument();
+        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, PlatypusQueryDataObject.SQL_MIME_TYPE);
         //sqlTextDocument.putProperty(PlatypusQueryDataObject.DATAOBJECT_DOC_PROPERTY, parentView.getQueryDataObject());// to enable code completion
         sqlTextDocument.insertString(0, parentView.getQueryText(), null);
     }

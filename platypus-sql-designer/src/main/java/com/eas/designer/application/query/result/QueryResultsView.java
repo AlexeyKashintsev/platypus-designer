@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query.result;
 
 import com.eas.client.DatabasesClient;
@@ -69,8 +65,10 @@ import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.NamedParameter;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.statement.Statement;
+import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
+import org.netbeans.modules.db.api.sql.execute.SQLExecution;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 import org.openide.util.Exceptions;
@@ -87,6 +85,8 @@ public class QueryResultsView extends javax.swing.JPanel {
     private QuerySetupView querySetupView;
     private ModelGrid grid;
     private final DatabasesClient basesProxy;
+    // Only for NetBeans' lookup puporses. Used by NetBeans Sql code completion.
+    private final DatabaseConnection netBeansConnection;
     private String queryText;
     private Parameters parameters;
     private SqlQuery query;
@@ -106,35 +106,27 @@ public class QueryResultsView extends javax.swing.JPanel {
     private String datasourceName;
     private String queryName;
 
-    public QueryResultsView(DatabasesClient aBasesProxy, String aDatasourceName, String aSchemaName, String aTableName) throws Exception {
-        this(aBasesProxy, aDatasourceName, String.format(SQLUtils.TABLE_NAME_2_SQL, getTableName(aSchemaName, aTableName)));
+    public QueryResultsView(DatabasesClient aBasesProxy, String aDatasourceName, String aSchemaName, String aTableName, DatabaseConnection aNetBeansConnection) throws Exception {
+        this(aBasesProxy, aDatasourceName, String.format(SQLUtils.TABLE_NAME_2_SQL, getTableName(aSchemaName, aTableName)), aNetBeansConnection);
         setName(aTableName);
     }
 
-    public QueryResultsView(PlatypusQueryDataObject aQueryDataObject) throws Exception {
-        this(aQueryDataObject.getBasesProxy(), aQueryDataObject.getDatasourceName(), extractText(aQueryDataObject));
+    public QueryResultsView(PlatypusQueryDataObject aQueryDataObject, DatabaseConnection aNetBeansConnection) throws Exception {
+        this(aQueryDataObject.getBasesProxy(), aQueryDataObject.getDatasourceName(), extractText(aQueryDataObject), aNetBeansConnection);
         if (parameters == null) {
             parsableQueryText = aQueryDataObject.getSqlTextDocument().getText(0, aQueryDataObject.getSqlTextDocument().getLength());
             tryToParseParameters(parsableQueryText);
         }
-        for (Field sourceParam : aQueryDataObject.getModel().getParameters().toCollection()) {
-            Parameter p = parameters.get(sourceParam.getName());
-            if (p != null) {
-                p.setType(sourceParam.getType());
-                p.setMode(((Parameter) sourceParam).getMode());
-            }
-        }
+        refineParametersTypes(aQueryDataObject);
         setName(aQueryDataObject.getName());
-        queryName = IndexerQuery.file2AppElementId(aQueryDataObject.getPrimaryFile());
-        if (queryName != null && !queryName.isEmpty()) {
-            loadParametersValues();
-        }
+        setQueryName(IndexerQuery.file2AppElementId(aQueryDataObject.getPrimaryFile()));
     }
 
-    public QueryResultsView(DatabasesClient aBasesProxy, String aDatasourceName, String aQueryText) throws Exception {
+    public QueryResultsView(DatabasesClient aBasesProxy, String aDatasourceName, String aQueryText, DatabaseConnection aNetBeansConnection) throws Exception {
         initComponents();
         initPageSizes();
         initCopyMessage();
+        netBeansConnection = aNetBeansConnection;
         basesProxy = aBasesProxy;
         datasourceName = aDatasourceName;
         queryText = aQueryText;
@@ -142,6 +134,23 @@ public class QueryResultsView extends javax.swing.JPanel {
         setName(getGeneratedTitle());
     }
 
+    public void refineParametersTypes(PlatypusQueryDataObject aQueryDataObject) throws Exception{
+        for (Field sourceParam : aQueryDataObject.getModel().getParameters().toCollection()) {
+            Parameter p = parameters.get(sourceParam.getName());
+            if (p != null) {
+                p.setType(sourceParam.getType());
+                p.setMode(((Parameter) sourceParam).getMode());
+            }
+        }
+    }
+
+    public void setQueryName(String aQueryName) throws BackingStoreException{
+        queryName = aQueryName;
+        if (queryName != null && !queryName.isEmpty()) {
+            loadParametersValues();
+        }
+    }
+    
     protected static String extractText(PlatypusQueryDataObject aQueryDataObject) throws Exception {
         StoredQueryFactory factory = new StoredQueryFactory(aQueryDataObject.getBasesProxy(), aQueryDataObject.getProject().getQueries(), aQueryDataObject.getProject().getIndexer());
         String queryText = aQueryDataObject.getSqlTextDocument().getText(0, aQueryDataObject.getSqlTextDocument().getLength());
@@ -292,7 +301,6 @@ public class QueryResultsView extends javax.swing.JPanel {
         toolBar.setRollover(true);
 
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/eas/designer/application/query/result/refresh-records-btn.png"))); // NOI18N
-        refreshButton.setText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "QueryResultsView.refreshButton.text")); // NOI18N
         refreshButton.setToolTipText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "refreshButton.Tooltip")); // NOI18N
         refreshButton.setFocusable(false);
         refreshButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -305,7 +313,6 @@ public class QueryResultsView extends javax.swing.JPanel {
         toolBar.add(refreshButton);
 
         nextPageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/eas/designer/application/query/result/next.png"))); // NOI18N
-        nextPageButton.setText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "QueryResultsView.nextPageButton.text")); // NOI18N
         nextPageButton.setToolTipText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "nextPageButton.Tooltip")); // NOI18N
         nextPageButton.setFocusable(false);
         nextPageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -342,7 +349,6 @@ public class QueryResultsView extends javax.swing.JPanel {
         toolBar.add(deleteButton);
 
         commitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/eas/designer/application/query/result/commit-record-btn.png"))); // NOI18N
-        commitButton.setText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "QueryResultsView.commitButton.text")); // NOI18N
         commitButton.setFocusable(false);
         commitButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         commitButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -354,7 +360,6 @@ public class QueryResultsView extends javax.swing.JPanel {
         toolBar.add(commitButton);
 
         runButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/eas/designer/application/query/result/runsql.png"))); // NOI18N
-        runButton.setText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "QueryResultsView.runButton.text")); // NOI18N
         runButton.setToolTipText(org.openide.util.NbBundle.getMessage(QueryResultsView.class, "runButton.Tooltip")); // NOI18N
         runButton.setFocusable(false);
         runButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -740,7 +745,7 @@ public class QueryResultsView extends javax.swing.JPanel {
     private void showQuerySetupDialog() {
         try {
             if (querySetupView == null) {
-                querySetupView = new QuerySetupView(this);
+                querySetupView = new QuerySetupView(this, netBeansConnection);
             }
             DialogDescriptor nd = new DialogDescriptor(querySetupView, getName());
             Dialog dlg = DialogDisplayer.getDefault().createDialog(nd);

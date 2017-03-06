@@ -15,6 +15,7 @@ import com.eas.client.metadata.Field;
 import com.eas.client.model.gui.view.model.ModelView;
 import com.eas.client.utils.scalableui.JScalableScrollPane;
 import com.eas.client.model.gui.DatamodelDesignUtils;
+import com.eas.client.utils.scalableui.ScaleListener;
 import com.eas.designer.application.query.result.QueryResultTopComponent;
 import com.eas.designer.application.query.result.QueryResultsView;
 import com.eas.gui.JDropDownButton;
@@ -33,6 +34,7 @@ import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
+import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.openide.ErrorManager;
 import org.openide.util.NbBundle;
 import org.openide.windows.WindowManager;
@@ -127,7 +129,7 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
                 FieldsEntity ent = modelView.getSelectedEntities().iterator().next();
                 if (ent != null) {
                     try {
-                        QueryResultsView resultsView = new QueryResultsView(ent.getModel().getBasesProxy(), ent.getTableDatasourceName(), ent.getTableSchemaName(), ent.getTableName());
+                        QueryResultsView resultsView = new QueryResultsView(ent.getModel().getBasesProxy(), ent.getTableDatasourceName(), ent.getTableSchemaName(), ent.getTableName(), netBeansConnection);
                         QueryResultTopComponent window = (QueryResultTopComponent) WindowManager.getDefault().findTopComponent(QUERY_RESULT_TOPCOMPONENT_PREFFERED_ID);
                         window.openAtTabPosition(0);
                         window.addResultsView(resultsView);
@@ -230,16 +232,18 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
     protected JScrollPane dbSchemeScroll;
 //    protected JScrollPane dbSchemeScroll = null;
     protected SqlActionsController sqlController;
+    protected DatabaseConnection netBeansConnection;
     protected static final String[] zoomLevelsData = new String[]{"25%", "50%", "75%", "100%", "150%", "200%", "300%"};
     protected static final Dimension BTN_DIMENSION = new Dimension(28, 28);
 
     /**
      * Creates new form DbStructureEditorView
      */
-    public DbSchemeEditorView(DbSchemeModel aModel, TablesSelectorCallback aSelectorCallback) throws Exception {
+    public DbSchemeEditorView(DbSchemeModel aModel, TablesSelectorCallback aSelectorCallback, UndoManager aUndo, DatabaseConnection aNetBeansConnection) throws Exception {
         super();
         schemeModel = aModel;
         sqlController = new SqlActionsController(schemeModel);
+        netBeansConnection = aNetBeansConnection;
 
         // fill actions
         fillActions();
@@ -257,18 +261,27 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
 
         dbSchemeScroll = new JScalableScrollPane();
         //dbSchemeScroll = new JScrollPane();
-        
+
         dbSchemeScroll.setViewportView(modelView);
         if (dbSchemeScroll instanceof JScalableScrollPane) {
-            ((JScalableScrollPane) dbSchemeScroll).getScalablePanel().getDrawWall().setComponentPopupMenu(popupSchema);
+            JScalableScrollPane scalable = (JScalableScrollPane) dbSchemeScroll;
+            scalable.getScalablePanel().getDrawWall().setComponentPopupMenu(popupSchema);
+            comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
 
-            ((JScalableScrollPane) dbSchemeScroll).addScaleListener((float oldScale, float newScale) -> {
-                comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
-                String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
-                if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
-                    ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+            scalable.addScaleListener(new ScaleListener() {
+
+                @Override
+                public void scaleChanged(float oldScale, float newScale) {
+                    if (newScale < .1f || Float.isNaN(newScale)) {
+                        scalable.getScalablePanel().setScale(.1f);
+                    } else {
+                        String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
+                        if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
+                            ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+                        }
+                        comboZoom.setSelectedItem(newSelectedZoom);
+                    }
                 }
-                comboZoom.setSelectedItem(newSelectedZoom);
             });
         }
         pnlScheme.add(dbSchemeScroll, BorderLayout.CENTER);
@@ -279,10 +292,6 @@ public class DbSchemeEditorView extends JPanel implements ContainerListener {
         checkFkDragHandlers();
         registerUndoListeners();
         fillProxyActions();
-    }
-
-    public DbSchemeEditorView(DbSchemeModel aModel, TablesSelectorCallback aSelectorCallback, UndoManager aUndo) throws Exception {
-        this(aModel, aSelectorCallback);
         setUndo(aUndo);
     }
 

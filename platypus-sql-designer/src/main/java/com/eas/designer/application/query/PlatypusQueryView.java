@@ -13,10 +13,13 @@ import com.eas.client.model.gui.view.model.QueryModelView;
 import com.eas.client.model.query.QueryEntity;
 import com.eas.client.model.query.QueryParametersEntity;
 import com.eas.client.utils.scalableui.JScalableScrollPane;
+import com.eas.client.utils.scalableui.ScaleListener;
+import com.eas.designer.application.indexer.IndexerQuery;
 import com.eas.designer.application.project.PlatypusProject;
-import com.eas.designer.application.query.actions.QueryResultsAction;
-import com.eas.designer.application.query.lexer.SqlLanguageHierarchy;
 import com.eas.designer.application.query.nodes.QueryRootNode;
+import com.eas.designer.application.query.result.QueryResultTopComponent;
+import com.eas.designer.application.query.result.QueryResultsView;
+import com.eas.designer.application.query.result.QuerySetupView;
 import com.eas.designer.datamodel.nodes.EntityNode;
 import com.eas.designer.datamodel.nodes.FieldNode;
 import com.eas.designer.explorer.model.windows.ModelInspector;
@@ -47,13 +50,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
-import javax.swing.text.EditorKit;
+import org.netbeans.api.db.explorer.DatabaseConnection;
 import org.openide.ErrorManager;
 import org.openide.awt.UndoRedo;
 import org.openide.cookies.SaveCookie;
 import org.openide.explorer.ExplorerManager;
 import org.openide.nodes.Node;
-import org.openide.text.CloneableEditorSupport;
 import org.openide.text.NbDocument;
 import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
@@ -67,6 +69,8 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.TopComponentGroup;
 import org.openide.windows.WindowManager;
 import org.netbeans.modules.db.api.sql.execute.SQLExecution;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 
 /**
  *
@@ -75,6 +79,7 @@ import org.netbeans.modules.db.api.sql.execute.SQLExecution;
 public class PlatypusQueryView extends CloneableTopComponent {
 
     public static final String SQL_SYNTAX_OK = "Sql - OK";
+    private static final String QUERY_RESULT_TOPCOMPONENT_PREFFERED_ID = "QueryResultTopComponent";
 
     protected class DataObjectListener implements PropertyChangeListener {
 
@@ -166,16 +171,118 @@ public class PlatypusQueryView extends CloneableTopComponent {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (isEnabled()) {
-                QueryResultsAction.runQuery(dataObject);
+            if (dataObject.getBasesProxy() != null && sqlExecution.getDatabaseConnection() != null) {
+                try {
+                    QueryResultTopComponent window = (QueryResultTopComponent) WindowManager.getDefault().findTopComponent(QUERY_RESULT_TOPCOMPONENT_PREFFERED_ID);
+                    window.openAtTabPosition(0);
+                    window.addResultsView(new QueryResultsView(dataObject, sqlExecution.getDatabaseConnection()));
+                    window.requestActive();
+                } catch (Exception ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(PlatypusQueryView.class, "LBL_CantQueryWithoutClient"), NotifyDescriptor.WARNING_MESSAGE));
             }
         }
 
         @Override
         public boolean isEnabled() {
-            return dataObject.getBasesProxy() != null;
+            return dataObject.getBasesProxy() != null && sqlExecution.getDatabaseConnection() != null;
         }
     }
+
+    private class PlatypusSqlExecution implements SQLExecution {
+
+        private DatabaseConnection conn;
+
+        public PlatypusSqlExecution() {
+            super();
+        }
+
+        @Override
+        public DatabaseConnection getDatabaseConnection() {
+            return conn;
+        }
+
+        @Override
+        public void setDatabaseConnection(DatabaseConnection dc) {
+            conn = dc;
+        }
+
+        private void showQueryResults(String queryText) {
+            if (queryText != null && !queryText.isEmpty()) {
+                try {
+                    QueryResultsView resultsView = new QueryResultsView(dataObject.getBasesProxy(), dataObject.getDatasourceName(), queryText, conn);
+                    resultsView.refineParametersTypes(dataObject);
+                    resultsView.setName(dataObject.getName());
+                    resultsView.setQueryName(IndexerQuery.file2AppElementId(dataObject.getPrimaryFile()));
+
+                    QueryResultTopComponent window = (QueryResultTopComponent) WindowManager.getDefault().findTopComponent(QUERY_RESULT_TOPCOMPONENT_PREFFERED_ID);
+                    window.openAtTabPosition(0);
+                    window.addResultsView(resultsView);
+                    window.requestActive();
+                } catch (Exception ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+        }
+
+        @Override
+        public void execute() {
+            if (dataObject.getBasesProxy() != null && conn != null) {
+                String queryText = tabContent.getSelectedComponent() == pnlQuerySource
+                        ? txtSqlPane.getText()
+                        : txtSqlDialectPane.getText();
+                showQueryResults(queryText);
+            } else {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(PlatypusQueryView.class, "LBL_CantQueryWithoutClient"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+
+        @Override
+        public void executeSelection() {
+            if (dataObject.getBasesProxy() != null && conn != null) {
+                String selectedText = tabContent.getSelectedComponent() == pnlQuerySource
+                        ? txtSqlPane.getSelectedText()
+                        : txtSqlDialectPane.getSelectedText();
+                if (selectedText != null && !selectedText.isEmpty()) {
+                    showQueryResults(selectedText);
+                } else {
+                    String queryText = tabContent.getSelectedComponent() == pnlQuerySource
+                            ? txtSqlPane.getText()
+                            : txtSqlDialectPane.getText();
+                    showQueryResults(queryText);
+                }
+            } else {
+                DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(PlatypusQueryView.class, "LBL_CantQueryWithoutClient"), NotifyDescriptor.WARNING_MESSAGE));
+            }
+        }
+
+        @Override
+        public boolean isExecuting() {
+            return false;
+        }
+
+        @Override
+        public boolean isSelection() {
+            return false;
+        }
+
+        @Override
+        public void addPropertyChangeListener(PropertyChangeListener pl) {
+        }
+
+        @Override
+        public void removePropertyChangeListener(PropertyChangeListener pl) {
+        }
+
+        @Override
+        public void showHistory() {
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(NbBundle.getMessage(QuerySetupView.class/* Don't edit to PlatypusueryView.class !!!*/, "MSG_CantShowQueryHistoryHere"), NotifyDescriptor.WARNING_MESSAGE));
+        }
+
+    }
+
     public static final String PLATYPUS_QUERIES_GROUP_NAME = "PlatypusModel";
     static final long serialVersionUID = 1041132023802024L;
     /**
@@ -235,16 +342,17 @@ public class PlatypusQueryView extends CloneableTopComponent {
 
         initComponents();
 
-        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
-        txtSqlPane.setEditorKit(editorKit);
+        txtSqlPane.putClientProperty("usedByCloneableEditor", true);
+        txtSqlPane.setContentType(PlatypusQueryDataObject.SQL_MIME_TYPE);
         txtSqlPane.setDocument(dataObject.getSqlTextDocument());
-        Component refinedComponent = initCustomEditor(txtSqlPane);
-        pnlSqlSource.add(refinedComponent, BorderLayout.CENTER);
+        Component decoratedSqlPane = initCustomEditor(txtSqlPane);
+        pnlSqlSource.add(decoratedSqlPane, BorderLayout.CENTER);
 
-        txtSqlDialectPane.setEditorKit(editorKit);
+        txtSqlDialectPane.putClientProperty("usedByCloneableEditor", true);
+        txtSqlDialectPane.setContentType(PlatypusQueryDataObject.SQL_MIME_TYPE);
         txtSqlDialectPane.setDocument(dataObject.getSqlFullTextDocument());
-        refinedComponent = initCustomEditor(txtSqlDialectPane);
-        pnlSqlDialectSource.add(refinedComponent, BorderLayout.CENTER);
+        Component decoratedSqlDialectPane = initCustomEditor(txtSqlDialectPane);
+        pnlSqlDialectSource.add(decoratedSqlDialectPane, BorderLayout.CENTER);
         initDbRelatedViews();
 
         modelValidChangeListener = dataObject.addModelValidChangeListener(() -> {
@@ -348,13 +456,21 @@ public class PlatypusQueryView extends CloneableTopComponent {
                 querySchemeScroll.setViewportView(modelView);
                 querySchemeScroll.getScalablePanel().getDrawWall().setComponentPopupMenu(popupFromNWhere);
 
-                querySchemeScroll.addScaleListener((float oldScale, float newScale) -> {
-                    comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
-                    String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
-                    if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
-                        ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+                querySchemeScroll.addScaleListener(new ScaleListener() {
+                    @Override
+                    public void scaleChanged(float oldScale, float newScale) {
+                        if (newScale < .1f || Float.isNaN(newScale)) {
+                            querySchemeScroll.getScalablePanel().setScale(.1f);
+                        } else {
+                            comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
+                            String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
+                            if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
+                                ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+                            }
+                            comboZoom.setSelectedItem(newSelectedZoom);
+                        }
                     }
-                    comboZoom.setSelectedItem(newSelectedZoom);
+
                 });
                 tablesSelector.setBasesProxy(dataObject.getBasesProxy());
                 setupDiagramToolbar();

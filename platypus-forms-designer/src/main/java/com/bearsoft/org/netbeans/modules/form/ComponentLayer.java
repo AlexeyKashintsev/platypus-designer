@@ -223,7 +223,6 @@ class ComponentLayer extends JPanel {
         @Override
         public void paint(Graphics g) {
             try {
-                FormLAF.setUseDesignerDefaults(formModel);
                 super.paint(g);
             } catch (Exception ex) {
                 ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ex);
@@ -251,8 +250,6 @@ class ComponentLayer extends JPanel {
                 label.paint(g);
                 g.translate(-insets.left, -insets.top);
                 g.setClip(oldClip);
-            } finally {
-                FormLAF.setUseDesignerDefaults(null);
             }
         }
     }

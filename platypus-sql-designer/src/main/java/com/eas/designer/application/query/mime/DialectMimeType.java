@@ -7,6 +7,5 @@ import org.openide.filesystems.MIMEResolver;
  * @author mg
  */
 @MIMEResolver.ExtensionRegistration(displayName="#LBL_PlatypusDialect", extension="dialect", mimeType="text/x-platypus-sql")
-public class DialectMimeType {
-    
+public class DialectMimeType {    
 }

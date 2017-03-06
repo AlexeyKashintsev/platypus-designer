@@ -1,16 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.eas.designer.application.query.lexer;
+package com.eas.designer.application.query;
 
 import net.sf.jsqlparser.parser.ParseException;
 import org.openide.text.Annotation;
 
-/**
- *
- * @author mg
- */
 public class SqlErrorAnnotation extends Annotation {
 
     protected ParseException ex;

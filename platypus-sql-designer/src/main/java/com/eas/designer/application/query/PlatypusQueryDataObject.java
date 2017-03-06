@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.application.query;
 
 import com.eas.client.ClientConstants;
@@ -27,8 +23,6 @@ import com.eas.designer.application.PlatypusUtils;
 import com.eas.designer.application.indexer.IndexerQuery;
 import com.eas.designer.application.project.PlatypusProject;
 import com.eas.designer.application.query.editing.DocumentTextCompiler;
-import com.eas.designer.application.query.lexer.SqlErrorAnnotation;
-import com.eas.designer.application.query.lexer.SqlLanguageHierarchy;
 import com.eas.designer.application.query.nodes.QueryNodeChildren;
 import com.eas.designer.application.query.nodes.QueryRootNode;
 import com.eas.designer.application.query.nodes.QueryRootNodePropertiesUndoRecorder;
@@ -288,11 +282,9 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
             }
         }
         UndoRedo.Manager undoReciever = getLookup().lookup(PlatypusQuerySupport.class).getUndo();
-        EditorKit editorKit = CloneableEditorSupport.getEditorKit(SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
 
-        sqlTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
-        sqlTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
+        sqlTextDocument = (NbEditorDocument) CloneableEditorSupport.getEditorKit(SQL_MIME_TYPE).createDefaultDocument();
+        //sqlTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
         sqlTextDocument.insertString(0, sqlText, null);
         sqlTextDocument.addUndoableEditListener(undoReciever);
         sqlTextDocument.addDocumentListener(new DocumentListener() {
@@ -313,9 +305,8 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
             }
         });
 
-        sqlFullTextDocument = (NbEditorDocument) editorKit.createDefaultDocument();
-        sqlFullTextDocument.putProperty(NbEditorDocument.MIME_TYPE_PROP, SqlLanguageHierarchy.NETBEANS_SQL_MIME_TYPE_NAME);
-        sqlFullTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
+        sqlFullTextDocument = (NbEditorDocument) CloneableEditorSupport.getEditorKit(SQL_MIME_TYPE).createDefaultDocument();
+        //sqlFullTextDocument.putProperty(DATAOBJECT_DOC_PROPERTY, this);
         sqlFullTextDocument.insertString(0, dialectText, null);
         sqlFullTextDocument.addUndoableEditListener(undoReciever);
         sqlFullTextDocument.addDocumentListener(new DocumentListener() {
@@ -353,6 +344,7 @@ public class PlatypusQueryDataObject extends PlatypusDataObject {
         modelNode = new QueryRootNode(new QueryNodeChildren(this, model, undoReciever, getLookup()), this);
         modelNode.addPropertyChangeListener(new QueryRootNodePropertiesUndoRecorder(undoReciever));
     }
+    public static final String SQL_MIME_TYPE = "text/x-sql";
 
     protected void checkQueryRead() throws Exception {
         if (model == null || sqlText == null) {

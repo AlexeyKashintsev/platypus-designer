@@ -108,7 +108,6 @@ import org.openide.util.Lookup;
 import org.openide.util.Utilities;
 import org.openide.util.lookup.Lookups;
 import org.openide.util.lookup.ProxyLookup;
-import org.openide.windows.TopComponent;
 
 /**
  * A transparent layer (glass pane) handling user operations in designer (mouse
@@ -466,12 +465,7 @@ public class HandleLayer extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         if (componentDrag != null) {
             if (!isSuspended()) {
-                try {
-                    FormLAF.setUseDesignerDefaults(getFormModel());
-                    componentDrag.paintFeedback(g2);
-                } finally {
-                    FormLAF.setUseDesignerDefaults(null);
-                }
+                componentDrag.paintFeedback(g2);
             }
         } else { // just paint the selection of selected components
             g2.setColor(formSettings.getSelectionBorderColor());

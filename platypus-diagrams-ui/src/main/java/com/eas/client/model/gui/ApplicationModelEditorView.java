@@ -86,12 +86,16 @@ public class ApplicationModelEditorView extends JPanel implements Customizer {
 
         @Override
         public void scaleChanged(float oldScale, float newScale) {
-            comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
-            String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
-            if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
-                ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+            if (newScale < .1f || Float.isNaN(newScale)) {
+                scalablePane.getScalablePanel().setScale(.1f);
+            } else {
+                comboZoom.setModel(new DefaultComboBoxModel<>(zoomLevelsData));
+                String newSelectedZoom = String.valueOf(Math.round(newScale * 100)) + "%";
+                if (((DefaultComboBoxModel<String>) comboZoom.getModel()).getIndexOf(newSelectedZoom) == -1) {
+                    ((DefaultComboBoxModel<String>) comboZoom.getModel()).insertElementAt(newSelectedZoom, 0);
+                }
+                comboZoom.setSelectedItem(newSelectedZoom);
             }
-            comboZoom.setSelectedItem(newSelectedZoom);
         }
     }
     private final JScalableScrollPane scalablePane = new JScalableScrollPane();
@@ -107,7 +111,9 @@ public class ApplicationModelEditorView extends JPanel implements Customizer {
     protected static final String[] zoomLevelsData = new String[]{"25%", "50%", "75%", "100%", "150%", "200%", "300%"};
     protected static final Dimension BTN_DIMENSION = new Dimension(28, 28);
 
-    /** Creates new form ApplicationModelEditorView */
+    /**
+     * Creates new form ApplicationModelEditorView
+     */
     public ApplicationModelEditorView(TablesSelectorCallback aTablesSelectorCallback, AppElementSelectorCallback aAppElementSelector) throws Exception {
         super();
         // create views
@@ -167,11 +173,12 @@ public class ApplicationModelEditorView extends JPanel implements Customizer {
     protected void registerUndoListeners() {
         modelView.addUndoableEditListener(undoListener);
     }
-/*
+
+    /*
     public void rerouteConnectors() {
         modelView.rerouteConnectors();
     }
-*/
+     */
     public void setModel(ApplicationDbModel aModel) throws Exception {
         if (modelView.getModel() != aModel) {
             modelView.setModel(aModel);
@@ -380,5 +387,5 @@ public class ApplicationModelEditorView extends JPanel implements Customizer {
     public String getLocalizedString(String aKey) {
         return DatamodelDesignUtils.getLocalizedString(aKey);
     }
-    
+
 }

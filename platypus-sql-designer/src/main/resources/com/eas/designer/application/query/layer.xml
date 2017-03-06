@@ -8,24 +8,18 @@
     </folder>
     <folder name="Editors">
         <folder name="text">
+            <folder name="x-sql">       
+                <file name="com-eas-designer-application-indexer-FileIndexerFactory.instance"/>
+            </folder>
+        </folder>
+        <folder name="text">
             <folder name="x-platypus-sql">       
                 <file name="com-eas-designer-application-indexer-FileIndexerFactory.instance"/>
                 <attr name="displayName" bundlevalue="com.eas.designer.application.query.lexer.Bundle#text/x-platypus-sql"/>
                 <folder name="CompletionProviders">
                     <file name="com-eas-designer-application-query-completion-SqlCompletionProvider.instance"/>
                 </folder>
-                <folder name="FontsColors">
-                    <folder name="NetBeans">
-                        <folder name="Defaults">
-                            <file name="FontsAndColors.xml" url="lexer/FontsAndColors.xml"/>
-                        </folder>
-                    </folder>
-                </folder>
                 <file name="org-netbeans-modules-editor-NbEditorKit.instance"/>
-                <file name="language.instance">
-                    <attr name="instanceCreate" methodvalue="com.eas.designer.application.query.lexer.LexSqlTokenId.language"/>
-                    <attr name="instanceOf" stringvalue="org.netbeans.api.lexer.Language"/>
-                </file>
             </folder>
         </folder>
     </folder>   

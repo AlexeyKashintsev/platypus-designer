@@ -162,21 +162,14 @@ public class RADComponentCreator {
      * @param targetComp target component (where the new component is added)
      * @return the component if it was successfully created and added (all
      * errors are reported immediately)
+     * @throws java.lang.Exception
      */
-    public RADComponent<?> copyComponent(final RADComponent<?> sourceComp,
-            final RADComponent<?> targetComp) {
-        final TargetInfo target = getTargetInfo(sourceComp.getBeanClass(), targetComp,
-                false, false);
+    public RADComponent<?> copyComponent(final RADComponent<?> sourceComp, final RADComponent<?> targetComp) throws Exception {
+        final TargetInfo target = getTargetInfo(sourceComp.getBeanClass(), targetComp, false, false);
         if (target == null) {
             return null;
         }
-
-        try { // Look&Feel UI defaults remapping needed
-            return FormLAF.<RADComponent<?>>executeWithLookAndFeel(formModel, () -> copyComponent2(sourceComp, null, target));
-        } catch (Exception ex) { // should not happen
-            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ex);
-            return null;
-        }
+        return copyComponent2(sourceComp, null, target);
     }
 
     public boolean moveComponent(RADComponent<?> radComp, RADComponent<?> targetComp) throws Exception {
@@ -244,11 +237,8 @@ public class RADComponentCreator {
             releasePrecreatedComponent();
         }
 
-        try { // Look&Feel UI defaults remapping needed
-            FormLAF.<RADVisualComponent<?>>executeWithLookAndFeel(formModel, () -> {
-                preRadComp = createVisualComponent(compClass);
-                return preRadComp;
-            });
+        try {
+            preRadComp = createVisualComponent(compClass);
             return preRadComp;
         } catch (Exception ex) { // should not happen
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ex);
@@ -293,13 +283,11 @@ public class RADComponentCreator {
             final LayoutConstraints<?> aConstraints,
             boolean exactTargetMatch) {
         // check adding form class to itself
-
         final TargetInfo target = getTargetInfo(compClass, targetComp,
                 !exactTargetMatch, !exactTargetMatch);
         if (target != null) {
-
-            try { // Look&Feel UI defaults remapping needed
-                return FormLAF.<RADComponent<?>>executeWithLookAndFeel(formModel, () -> createAndAddComponent2(compClass, target, aConstraints));
+            try {
+                return createAndAddComponent2(compClass, target, aConstraints);
             } catch (Exception ex) { // should not happen
                 ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ex);
                 return null;
@@ -870,20 +858,13 @@ public class RADComponentCreator {
         String className = classSource;
         Class<?> loadedClass = null;
         try {
-            if (FormLAF.inLAFBlock()) {
-                // Force update to new class loader
-                FormLAF.setUseDesignerDefaults(null);
-                FormLAF.setUseDesignerDefaults(formModel);
-            }
             loadedClass = FormUtils.loadSystemClass(className);
         } catch (Exception | LinkageError ex) {
             error = ex;
         }
-
         if (loadedClass == null) {
             showClassLoadingErrorMessage(error, classSource);
         }
-
         return loadedClass;
     }
 

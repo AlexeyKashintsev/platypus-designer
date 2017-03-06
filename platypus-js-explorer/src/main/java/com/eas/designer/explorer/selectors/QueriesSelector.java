@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eas.designer.explorer.selectors;
 
 import com.eas.designer.application.indexer.PlatypusPathRecognizer;
@@ -21,5 +17,6 @@ public class QueriesSelector extends AppElementSelector {
     @Override
     public void fillAllowedMimeTypes(Set<String> allowedMimeTypes) {
         allowedMimeTypes.add(PlatypusPathRecognizer.QUERY_MIME_TYPE);
+        allowedMimeTypes.add(PlatypusPathRecognizer.NATIVE_QUERY_MIME_TYPE);
     }
 }

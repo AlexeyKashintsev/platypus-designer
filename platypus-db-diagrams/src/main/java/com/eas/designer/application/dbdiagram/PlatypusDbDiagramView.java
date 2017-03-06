@@ -246,7 +246,7 @@ public class PlatypusDbDiagramView extends CloneableTopComponent {
                                 ((UndoRedo.Manager) getUndoRedo()).undoableEditHappened(new UndoableEditEvent(this, anEdit));
                                 return true;
                             }
-                        });
+                        }, dataObject.getProject().getDbConnection(dataObject.getModel().getDatasourceName()));
                 add(editor, BorderLayout.CENTER);
                 updateTitle();
                 dataObject.addPropertyChangeListener(dataObjectListener);
