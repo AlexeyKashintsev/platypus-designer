@@ -17,11 +17,6 @@ To build plugins as NetBeans modules cluster from sources, run the following com
 gradlew suite
 ```
 
-To build plugins as NetBeans plugin archives (nbm) from sources, run the following command:
-```
-gradlew nbms
-```
-
 ## Run
 If you whant to run just assembled plugins as a cluster of modules, execute the following command:
 ```
@@ -38,3 +33,9 @@ cd PlatypusJS
 gradlew install
 ```
 These commands will build Platypus.js jars and install artifacts in local Maven repository.
+Normally, you wouldn't need to build Platypus.js by yourself and Platypus.js sources will be fetched from JCenter repository.
+
+To build plugins as NetBeans plugin archives (nbm) from sources, run the following command:
+```
+gradlew nbms
+```
