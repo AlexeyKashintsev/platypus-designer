@@ -29,7 +29,7 @@ While building, you will need Platypus.js artifacts. They will be resolved as de
 Normally, you wouldn't need to build Platypus.js by yourself and Platypus.js artifacts will be fetched from JCenter repository.
 But, if you what to build these Platypus.js designer modules in isolation, please, clone Platypus.js sources and build them with the following commands:
 ```
-git clone https://github.com/altsoft/PlatypusJS.git
+git clone https://github.com/marat-gainullin/platypus-js.git
 cd PlatypusJS
 gradlew install
 ```
