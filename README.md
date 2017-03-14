@@ -30,7 +30,7 @@ Normally, you wouldn't need to build Platypus.js by yourself and Platypus.js art
 But, if you what to build these Platypus.js designer modules in isolation, please, clone Platypus.js sources and build them with the following commands:
 ```
 git clone https://github.com/marat-gainullin/platypus-js.git
-cd PlatypusJS
+cd platypus-js
 gradlew install
 ```
 These commands will build Platypus.js jars and install artifacts in local Maven repository.
