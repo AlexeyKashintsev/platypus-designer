@@ -10,7 +10,7 @@ dependencies {
     providedCompile files(org.gradle.internal.jvm.Jvm.current().toolsJar)
     providedCompile 'com.eas.platypus:platypus-js-common-utils:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-core:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.0'
+    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.1'
     providedCompile 'com.eas.platypus:platypus-js-scripting:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-servlet:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-server:5.11.0'

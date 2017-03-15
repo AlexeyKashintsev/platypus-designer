@@ -1721,7 +1721,7 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
             if (getParent() != null && getParent().getParent() != null
                     && getParent().getParent() instanceof JScalablePanel) {
                 JScalablePanel sp = (JScalablePanel) getParent().getParent();
-                sp.ZoomIn();
+                sp.zoomIn();
             }
         }
 
@@ -1763,7 +1763,7 @@ public abstract class ModelView<E extends Entity<?, SqlQuery, E>, M extends Mode
                     && getParent().getParent() instanceof JScalablePanel) {
                 JScalablePanel sp = (JScalablePanel) getParent().getParent();
                 if (sp.getScale() > 0.1f) {
-                    sp.ZoomOut();
+                    sp.zoomOut();
                 }
             }
         }

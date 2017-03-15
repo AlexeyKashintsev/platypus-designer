@@ -11,11 +11,11 @@ dependencies {
     providedCompile 'com.eas.platypus:platypus-js-common-utils:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-core:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-sql-parser:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-forms:5.11.0'
+    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.1'
+    providedCompile 'com.eas.platypus:platypus-js-forms:5.11.1'
     providedCompile 'com.eas.platypus:platypus-js-scripting:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-grid:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-scalable-widget:5.11.0'
+    providedCompile 'com.eas.platypus:platypus-js-scalable-widget:5.11.1'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-text:${nbVersion}"
     compile "org.netbeans.api:org-openide-util:${nbVersion}"

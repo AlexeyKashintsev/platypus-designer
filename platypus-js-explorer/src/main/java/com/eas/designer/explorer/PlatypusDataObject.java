@@ -80,7 +80,7 @@ public abstract class PlatypusDataObject extends MultiDataObject {
                     try {
                         validateModel();
                     } catch (Exception ex) {
-                        Logger.getLogger(PlatypusDataObject.class.getName()).log(Level.WARNING, ex.getMessage(), ex);
+                        Logger.getLogger(PlatypusDataObject.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                     } finally {
                         Scripts.setContext(null);
                         EventQueue.invokeLater(() -> {

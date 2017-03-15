@@ -9,8 +9,8 @@ dependencies {
     providedCompile 'com.vividsolutions:jts:1.13'
     providedCompile 'com.eas.platypus:platypus-js-common-utils:5.11.0'
     providedCompile 'com.eas.platypus:platypus-js-core:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.0'
-    providedCompile 'com.eas.platypus:platypus-js-scalable-widget:5.11.0'
+    providedCompile 'com.eas.platypus:platypus-js-datamodel:5.11.1'
+    providedCompile 'com.eas.platypus:platypus-js-scalable-widget:5.11.1'
     providedCompile 'com.eas.platypus:platypus-js-routing:5.11.0'
     compile "org.netbeans.api:org-openide-awt:${nbVersion}"
     compile "org.netbeans.api:org-openide-actions:${nbVersion}"
