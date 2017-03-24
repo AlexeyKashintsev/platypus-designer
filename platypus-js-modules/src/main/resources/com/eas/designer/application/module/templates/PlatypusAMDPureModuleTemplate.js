@@ -2,7 +2,7 @@
  * 
  * @author ${user}
  */
-define('${appElementName}', function () {
+define('${appElementName}', [], function () {
     function module_constructor() {
         var self = this;
 
