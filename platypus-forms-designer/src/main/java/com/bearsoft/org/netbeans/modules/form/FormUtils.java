@@ -986,17 +986,6 @@ public class FormUtils {
         });
     }
 
-    private static int findPropertyIndex(RADProperty<?>[] properties, String property) {
-        int index = -1;
-        for (int i = 0; i < properties.length; i++) {
-            if (property.equals(properties[i].getName())) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
-
     /**
      * Loads a class using IDE system class loader. Usable for form module
      * support classes, property editors, etc.

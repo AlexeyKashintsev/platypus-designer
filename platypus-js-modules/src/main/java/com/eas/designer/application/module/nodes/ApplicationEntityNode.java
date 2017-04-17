@@ -36,15 +36,16 @@ public class ApplicationEntityNode extends EntityNode<ApplicationDbEntity> {
     }
 
     @Override
-    public void setName(String val) {
-        Object oldVal = entity.getName();
-        if (val != null && !val.equals(oldVal)) {
-            if (isValidName(val)) {
-                entity.setName(val);
-                super.setName(val);
+    public void setName(String aValue) {
+        Object oldValue = entity.getName();
+        if (aValue != null && !aValue.trim().equals(oldValue)) {
+            aValue = aValue.trim();
+            if (isValidName(aValue)) {
+                entity.setName(aValue);
+                super.setName(aValue);
             } else {
                 IllegalArgumentException t = new IllegalArgumentException();
-                throw Exceptions.attachLocalizedMessage(t, String.format(NbBundle.getMessage(ApplicationEntityNode.class, "MSG_InvalidEntityName"), val)); //NOI18N
+                throw Exceptions.attachLocalizedMessage(t, String.format(NbBundle.getMessage(ApplicationEntityNode.class, "MSG_InvalidEntityName"), aValue)); //NOI18N
             }
         }
     }
