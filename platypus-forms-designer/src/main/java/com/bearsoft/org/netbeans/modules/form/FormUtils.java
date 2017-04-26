@@ -143,7 +143,7 @@ public class FormUtils {
             return Forms.lookupPublishedParent(this);
         }
 
-        @ScriptFunction(jsDoc = "Js name of the widget")
+        @ScriptFunction(jsDoc = "JavaScript name of the widget")
         @Override
         public String getName() {
             return super.getName();

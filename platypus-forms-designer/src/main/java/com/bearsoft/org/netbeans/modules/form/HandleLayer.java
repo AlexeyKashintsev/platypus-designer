@@ -1840,7 +1840,7 @@ public class HandleLayer extends JPanel {
 
     // ------
     boolean mouseOnVisual(Point p) {
-        Rectangle r = formDesigner.getComponentLayer().getDesignerOuterBounds();
+        Rectangle r = formDesigner.getComponentLayer().getDesignerBounds();
         return r.contains(p);
     }
 
@@ -2484,36 +2484,24 @@ public class HandleLayer extends JPanel {
             targetContainer = getTargetContainer(p, modifiers);
 
             if (isTopComponent()) {
-                Rectangle r = formDesigner.getTopDesignComponent().getBeanInstance().getBounds();//formDesigner.getComponentLayer().getDesignerInnerBounds();
-                int w = r.width;
-                int h = r.height;
-                if ((resizeType & LayoutSupportManager.RESIZE_DOWN) != 0) {
-                    h = p.y - r.y;
-                    if (h < 0) {
-                        h = 0;
-                    }
-                }
+                Dimension draggedSize = formDesigner.getComponentLayer().getDesignerOuterBounds().getSize();
+                Dimension targetSize = formDesigner.getTopDesignComponent().getBeanInstance().getSize();
                 if ((resizeType & LayoutSupportManager.RESIZE_RIGHT) != 0) {
-                    w = p.x - r.x;
-                    if (w < 0) {
-                        w = 0;
+                    targetSize.width = p.x - (draggedSize.width - targetSize.width);
+                    if (targetSize.width < 0) {
+                        targetSize.width = 0;
                     }
                 }
-                movingBounds[0].width = w;
-                movingBounds[0].height = h;
-                /*
-                 * Will be returned to working code without RADVisualFormContainer when structural changes 
-                 * of replicants/real components in the form will be clear.
-                 * Also, we have to invectigate undo/redo functioning.
-                 */
-                if (isTopComponent()/* && formDesigner.getTopDesignComponent() instanceof RADVisualFormContainer*/) {
-                    Dimension size = new Dimension(movingBounds[0].width, movingBounds[0].height);
-                    changeTopCompSize(size);
-                    /*
-                     formDesigner.getComponentLayer().setDesignerSize(size);
-                     formDesigner.getComponentLayer().revalidate();
-                     */
+                if ((resizeType & LayoutSupportManager.RESIZE_DOWN) != 0) {
+                    targetSize.height = p.y - (draggedSize.height - targetSize.height);
+                    if (targetSize.height < 0) {
+                        targetSize.height = 0;
+                    }
                 }
+                // movingBounds - this is for undo/redo recording
+                movingBounds[0].width = targetSize.width;
+                movingBounds[0].height = targetSize.height;
+                changeTopCompSize(targetSize);
             } else {
                 if (realDrag && targetContainer != null && targetContainer.getLayoutSupport() != null) {
                     oldMove(p);

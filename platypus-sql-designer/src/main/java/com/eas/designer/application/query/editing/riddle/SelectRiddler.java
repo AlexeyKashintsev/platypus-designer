@@ -77,7 +77,7 @@ public class SelectRiddler implements SelectVisitor, OrderByVisitor, SelectItemV
                 }
             }
         }
-// from item is the first table or subquery in from clause. Other from items are in joins section
+        // from item is the first table or subquery in from clause. Other from items are in joins section
         if (plainSelect.getFromItem() != null) {
             plainSelect.getFromItem().accept(this);
             if (plainSelect.getFromItem() instanceof Table) {
@@ -88,7 +88,7 @@ public class SelectRiddler implements SelectVisitor, OrderByVisitor, SelectItemV
                 }
             }
         }
-// continuation of from clause. 
+        // continuation of from clause. 
         if (plainSelect.getJoins() != null) {
             for (int i = plainSelect.getJoins().size() - 1; i >= 0; i--) {
                 Join join = plainSelect.getJoins().get(i);

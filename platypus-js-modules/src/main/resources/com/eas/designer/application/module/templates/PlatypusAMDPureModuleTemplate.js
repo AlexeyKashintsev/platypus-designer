@@ -2,15 +2,12 @@
  * 
  * @author ${user}
  */
-define('${appElementName}', [], function () {
-    function module_constructor() {
+define('${appElementName}', [], function (ModuleName) {
+    function ${appElementName}() {
         var self = this;
 
-        // TODO : place constructor code here
-
-        self.execute = function () {
-            // TODO : place application code here
+        self.implementMe = function(onSuccess, onFailure){
         };
     }
-    return module_constructor;
+    return ${appElementName};
 });

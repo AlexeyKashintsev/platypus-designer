@@ -56,6 +56,7 @@ public class InsertRiddler implements ItemsListVisitor {
                         expressionList.getExpressions().remove(i);
                     }
                 }
+                insert.getItemsList().accept(this);
             } else {
                 for (int i = insert.getColumns().size() - 1; i >= 0; i--) {
                     Column column = insert.getColumns().get(i);

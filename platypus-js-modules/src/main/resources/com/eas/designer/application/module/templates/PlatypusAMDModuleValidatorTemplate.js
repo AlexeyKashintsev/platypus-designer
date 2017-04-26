@@ -6,7 +6,7 @@
  * @stateless
  */
 define('${appElementName}', ['logger'], function (Logger, ModuleName) {
-    function module_constructor() {
+    function ${appElementName}() {
         var self = this;
         /**
          * Method for validating of changes log to be applied within a particular datasources.
@@ -26,5 +26,5 @@ define('${appElementName}', ['logger'], function (Logger, ModuleName) {
             }
         };
     }
-    return module_constructor;
+    return ${appElementName};
 });

@@ -2,15 +2,15 @@
  * 
  * @author ${user}
  */
-define('${appElementName}', ['orm'], function (Orm, ModuleName) {
-    function module_constructor() {
+define('${appElementName}', ['orm', 'invoke'], function (Orm, Invoke, ModuleName) {
+    function ${appElementName}() {
         var self = this, model = Orm.loadModel(ModuleName);
 
-        // TODO : place constructor code here
-
-        self.execute = function () {
-            // TODO : place application code here
+        self.implementMe = function(onSuccess, onFailure){
+            Invoke.later(function(){ // Asynchronous work imitation
+                onSuccess();
+            });
         };
     }
-    return module_constructor;
+    return ${appElementName};
 });

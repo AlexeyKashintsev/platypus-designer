@@ -931,8 +931,8 @@ public class RADComponentCreator {
                 || comp instanceof ModelTextArea
                 || comp instanceof ModelFormattedField) {
             changes.put("text", varName); // NOI18N
-        } else if (comp instanceof FormUtils.Panel) {
-            changes.put("background", Color.white); // NOI18N
+        //} else if (comp instanceof FormUtils.Panel) {
+        //    changes.put("background", Color.white); // NOI18N
         }
 
         for (Map.Entry<String, Object> change : changes.entrySet()) {

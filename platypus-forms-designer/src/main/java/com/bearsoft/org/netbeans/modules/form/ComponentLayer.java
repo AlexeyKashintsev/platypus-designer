@@ -124,8 +124,16 @@ class ComponentLayer extends JPanel {
         return r;
     }
 
-    Rectangle getDesignerOuterBounds() {
+    Rectangle getDesignerBounds() {
         return designerPanel.getBounds();
+    }
+
+    Rectangle getDesignerOuterBounds() {
+        Rectangle r = designerPanel.getBounds();
+        Insets i = designerPanel.getInsets();
+        r.width += i.left + i.right;
+        r.height += i.top + i.bottom;
+        return r;
     }
 
     Insets getDesignerOutsets() {
@@ -134,19 +142,21 @@ class ComponentLayer extends JPanel {
 
     protected void ensureBackgroundOpaque(JComponent aComponent) {
         if (aComponent instanceof JRootPane) {
-            if(((JRootPane) aComponent).isBackgroundSet())
+            if (((JRootPane) aComponent).isBackgroundSet()) {
                 componentContainer.setBackground(((JRootPane) aComponent).getBackground());
-            else
+            } else {
                 componentContainer.setBackground(FormLoaderSettings.getInstance().getFormDesignerBackgroundColor());
+            }
             ((JRootPane) aComponent).setOpaque(false);
             ((JComponent) ((JRootPane) aComponent).getContentPane()).setOpaque(false);
             ((JRootPane) aComponent).setBackground(BLACK_TRANSPARENT_COLOR);
             ((JComponent) ((JRootPane) aComponent).getContentPane()).setBackground(BLACK_TRANSPARENT_COLOR);
         } else {
-            if(aComponent.isBackgroundSet())
+            if (aComponent.isBackgroundSet()) {
                 componentContainer.setBackground(aComponent.getBackground());
-            else
+            } else {
                 componentContainer.setBackground(FormLoaderSettings.getInstance().getFormDesignerBackgroundColor());
+            }
             aComponent.setOpaque(false);
             aComponent.setBackground(BLACK_TRANSPARENT_COLOR);
         }

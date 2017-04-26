@@ -45,8 +45,8 @@ public class StatementRiddler implements StatementVisitor {
         SelectRiddler selectRiddler = new SelectRiddler(riddleTask);
         ExpressionRiddler expressionRiddler = new ExpressionRiddler(selectRiddler, riddleTask);
         selectRiddler.setExpressionVisitor(expressionRiddler);
-        InsertRiddler insertDeParser = new InsertRiddler(expressionRiddler, selectRiddler);
-        insertDeParser.riddle(insert);
+        InsertRiddler insertRiddler = new InsertRiddler(expressionRiddler, selectRiddler);
+        insertRiddler.riddle(insert);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class StatementRiddler implements StatementVisitor {
         SelectRiddler selectRiddler = new SelectRiddler(riddleTask);
         ExpressionRiddler expressionRiddler = new ExpressionRiddler(selectRiddler, riddleTask);
         selectRiddler.setExpressionVisitor(expressionRiddler);
-        ReplaceRiddler replaceDeParser = new ReplaceRiddler(expressionRiddler, selectRiddler);
-        replaceDeParser.riddle(replace);
+        ReplaceRiddler replaceRiddler = new ReplaceRiddler(expressionRiddler, selectRiddler);
+        replaceRiddler.riddle(replace);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class StatementRiddler implements StatementVisitor {
     public void visit(Update update) {
         SelectRiddler selectRiddler = new SelectRiddler(riddleTask);
         ExpressionRiddler expressionRiddler = new ExpressionRiddler(selectRiddler, riddleTask);
-        UpdateRiddler updateDeParser = new UpdateRiddler(expressionRiddler);
+        UpdateRiddler updateRiddler = new UpdateRiddler(expressionRiddler);
         selectRiddler.setExpressionVisitor(expressionRiddler);
-        updateDeParser.riddle(update);
+        updateRiddler.riddle(update);
     }
 }

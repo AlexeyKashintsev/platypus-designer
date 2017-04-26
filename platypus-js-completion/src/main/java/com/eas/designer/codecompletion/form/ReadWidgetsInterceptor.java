@@ -13,13 +13,13 @@ import org.openide.loaders.DataObjectNotFoundException;
  * @author mg
  */
 @FunctionInterceptor.Registration
-public class ReadFormInterceptor extends FormInterceptor {
+public class ReadWidgetsInterceptor extends FormInterceptor {
 
-    private static final String READ_FORM_NAME = "readForm";
-    private static final Pattern PATTERN = Pattern.compile(".+\\." + READ_FORM_NAME);
+    private static final String READ_WIDGETS_NAME = "readWidgets";
+    private static final Pattern PATTERN = Pattern.compile(".+\\." + READ_WIDGETS_NAME);
 
-    public ReadFormInterceptor() {
-        super(READ_FORM_NAME);
+    public ReadWidgetsInterceptor() {
+        super(READ_WIDGETS_NAME);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ReadFormInterceptor extends FormInterceptor {
 
     @Override
     protected void fillJsForm(JsObject jsForm, int loadFormOffset, ModelElementFactory factory) throws IOException, Exception {
-        fillWindowType(jsForm.getFileObject(), loadFormOffset, factory, jsForm);
+        // no window expected.
         // fillWidgetsFromLiteral
     }
 }

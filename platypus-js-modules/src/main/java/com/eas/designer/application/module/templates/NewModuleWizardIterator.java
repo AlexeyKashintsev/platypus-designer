@@ -20,13 +20,6 @@ public class NewModuleWizardIterator extends NewApplicationElementWizardIterator
 
     @TemplateRegistrations({
         @TemplateRegistration(
-                folder = "Platypus.js/Resources",
-                position = 300,
-                content = {"PlatypusModelTemplate.model"},
-                displayName = "#Templates/Other/PlatypusModelTemplate",
-                description = "Model.html",
-                scriptEngine = "freemarker"),
-        @TemplateRegistration(
                 folder = "Platypus.js",
                 position = 200,
                 content = {"PlatypusAMDPureModuleTemplate.js",},
@@ -35,10 +28,38 @@ public class NewModuleWizardIterator extends NewApplicationElementWizardIterator
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
                 folder = "Platypus.js",
-                position = 300,
+                position = 210,
                 content = {"PlatypusAMDModuleTemplate.js", "PlatypusAMDModuleTemplate.model"},
                 displayName = "#Templates/Other/PlatypusAMDModuleTemplate",
                 description = "Module.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
+                folder = "Platypus.js",
+                position = 220,
+                content = {"PlatypusAMDModuleStatelessTemplate.js", "PlatypusAMDModuleStatelessTemplate.model"},
+                displayName = "#Templates/Other/PlatypusAMDModuleStatelessTemplate",
+                description = "ModuleStateless.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
+                folder = "Platypus.js",
+                position = 230,
+                content = {"PlatypusAMDModuleStatefullTemplate.js", "PlatypusAMDModuleStatefullTemplate.model"},
+                displayName = "#Templates/Other/PlatypusAMDModuleStatefullTemplate",
+                description = "ModuleStatefull.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
+                folder = "Platypus.js",
+                position = 240,
+                content = {"PlatypusAMDModuleResidentTemplate.js", "PlatypusAMDModuleResidentTemplate.model"},
+                displayName = "#Templates/Other/PlatypusAMDModuleResidentTemplate",
+                description = "ModuleResident.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
+                folder = "Platypus.js",
+                position = 250,
+                content = {"PlatypusAMDModuleRestTemplate.js", "PlatypusAMDModuleRestTemplate.model"},
+                displayName = "#Templates/Other/PlatypusAMDModuleRestTemplate",
+                description = "ModuleRest.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
                 folder = "Platypus.js/Specific",
@@ -48,25 +69,11 @@ public class NewModuleWizardIterator extends NewApplicationElementWizardIterator
                 description = "ModuleValidator.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
-                folder = "Platypus.js/Specific",
+                folder = "Platypus.js/Resources",
                 position = 300,
-                content = {"PlatypusAMDModuleResidentTemplate.js", "PlatypusAMDModuleResidentTemplate.model"},
-                displayName = "#Templates/Other/PlatypusAMDModuleResidentTemplate",
-                description = "ModuleResident.html",
-                scriptEngine = "freemarker"),
-        @TemplateRegistration(
-                folder = "Platypus.js/Specific",
-                position = 300,
-                content = {"PlatypusAMDModuleStatelessTemplate.js", "PlatypusAMDModuleStatelessTemplate.model"},
-                displayName = "#Templates/Other/PlatypusAMDModuleStatelessTemplate",
-                description = "ModuleStateless.html",
-                scriptEngine = "freemarker"),
-        @TemplateRegistration(
-                folder = "Platypus.js/Specific",
-                position = 300,
-                content = {"PlatypusAMDModuleStatefullTemplate.js", "PlatypusAMDModuleStatefullTemplate.model"},
-                displayName = "#Templates/Other/PlatypusAMDModuleStatefullTemplate",
-                description = "ModuleStatefull.html",
+                content = {"PlatypusModelTemplate.model"},
+                displayName = "#Templates/Other/PlatypusModelTemplate",
+                description = "Model.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
                 folder = "Platypus.js/Global modules",
@@ -83,32 +90,32 @@ public class NewModuleWizardIterator extends NewApplicationElementWizardIterator
                 description = "Module.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
-                folder = "Platypus.js/Global modules/Specific",
-                position = 300,
-                content = {"PlatypusModuleValidatorTemplate.js", "PlatypusModuleValidatorTemplate.model"},
-                displayName = "#Templates/Other/PlatypusModuleValidatorTemplate",
-                description = "ModuleValidator.html",
-                scriptEngine = "freemarker"),
-        @TemplateRegistration(
-                folder = "Platypus.js/Global modules/Specific",
+                folder = "Platypus.js/Global modules",
                 position = 300,
                 content = {"PlatypusModuleResidentTemplate.js", "PlatypusModuleResidentTemplate.model"},
                 displayName = "#Templates/Other/PlatypusModuleResidentTemplate",
                 description = "ModuleResident.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
-                folder = "Platypus.js/Global modules/Specific",
+                folder = "Platypus.js/Global modules",
                 position = 300,
                 content = {"PlatypusModuleStatelessTemplate.js", "PlatypusModuleStatelessTemplate.model"},
                 displayName = "#Templates/Other/PlatypusModuleStatelessTemplate",
                 description = "ModuleStateless.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
-                folder = "Platypus.js/Global modules/Specific",
+                folder = "Platypus.js/Global modules",
                 position = 300,
                 content = {"PlatypusModuleStatefullTemplate.js", "PlatypusModuleStatefullTemplate.model"},
                 displayName = "#Templates/Other/PlatypusModuleStatefullTemplate",
                 description = "ModuleStatefull.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
+                folder = "Platypus.js/Global modules/Specific",
+                position = 300,
+                content = {"PlatypusModuleValidatorTemplate.js", "PlatypusModuleValidatorTemplate.model"},
+                displayName = "#Templates/Other/PlatypusModuleValidatorTemplate",
+                description = "ModuleValidator.html",
                 scriptEngine = "freemarker")
     })
     public static NewApplicationElementWizardIterator createIterator() {
