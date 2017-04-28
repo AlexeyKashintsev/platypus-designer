@@ -34,13 +34,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblCleanCommand" max="32767" attributes="0"/>
                   <Component id="txtCleanCommand" max="32767" attributes="0"/>
                   <Component id="lblBuildCommand" max="32767" attributes="0"/>
                   <Component id="txtBuildCommand" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="chGlobalApi" min="-2" pref="228" max="-2" attributes="0"/>
                           <Component id="chAcceptDesignerDatasources" min="-2" pref="372" max="-2" attributes="0"/>
@@ -48,39 +48,52 @@
                       <EmptySpace min="0" pref="173" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblProjectFolder" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblServeType" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblClientType" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblSourcePath" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblRunPath" alignment="0" pref="110" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="lblClientType" max="32767" attributes="0"/>
+                          <Component id="lblServeType" pref="110" max="32767" attributes="0"/>
                           <Component id="lblDefDatasource" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="txtSourcePath" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbConnections" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbClientType" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbAppServerType" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtRunPath" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnAddDatasource" alignment="1" min="-2" pref="105" max="-2" attributes="0"/>
-                                  <Component id="btnBrowse" alignment="1" min="-2" pref="105" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="lblClientServerMessage" min="-2" pref="179" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cbClientType" max="32767" attributes="0"/>
+                                  <Component id="cbAppServerType" max="32767" attributes="0"/>
+                                  <Component id="cbConnections" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddDatasource" min="-2" pref="105" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblTestPath" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblProjectFolder" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblSourcePath" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblRunPath" alignment="0" pref="110" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtProjectFolder" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="txtTestPath" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtSourcePath" alignment="0" pref="300" max="32767" attributes="0"/>
+                                  <Component id="txtRunPath" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnBrowse" min="-2" pref="105" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -103,7 +116,12 @@
                   <Component id="txtSourcePath" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblSourcePath" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblTestPath" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTestPath" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cbClientType" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblClientType" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -296,6 +314,19 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTestPath">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/eas/designer/explorer/project/ui/Bundle.properties" key="ProjectGeneralCustomizer.lblTestPath.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtTestPath">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTestPathFocusLost"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTestPathActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

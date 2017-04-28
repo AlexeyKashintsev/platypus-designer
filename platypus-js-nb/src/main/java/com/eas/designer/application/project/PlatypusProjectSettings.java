@@ -19,6 +19,7 @@ public interface PlatypusProjectSettings {
     public static final int DEFAULT_SERVLET_CONTAINER_DEBUG_PORT = 5007;
     public static final Level DEFAULT_LOG_LEVEL                  = Level.INFO;
     public static final String DEFAULT_APP_FOLDER                = "app"; //NOI18N
+    public static final String DEFAULT_TEST_FOLDER               = "test"; //NOI18N
     public static final String PROJECT_COMMANDS_FILE             = ".platypus"; //NOI18N
     public static final String PROJECT_PRIVATE_SETTINGS_FILE     = "private.properties"; //NOI18N
     public static final String PROJECT_SETTINGS_FILE             = "project.properties"; //NOI18N
@@ -32,6 +33,7 @@ public interface PlatypusProjectSettings {
     public static final String CLIENT_TYPE_KEY                   = "run.clientType"; //NOI18N
     public static final String SERVER_TYPE_KEY                   = "run.serverType"; //NOI18N
     public static final String SOURCE_PATH_KEY                   = "run.sourcePath"; //NOI18N
+    public static final String TEST_PATH_KEY                   = "run.testPath"; //NOI18N
     public static final String HTTP_PORT_KEY                     = "http.port";//NOI18N
     public static final String PLATYPUS_PORT_KEY                 = "platypus.port";//NOI18N
     public static final String WEB_APPLICATION_CONTEXT_KEY       = "webApplication.context";//NOI18N
@@ -84,6 +86,20 @@ public interface PlatypusProjectSettings {
      * @param aValue Subfolder value
      */
     void setSourcePath(String aValue);
+
+    /**
+     * Gets test sources path within the project.
+     *
+     * @return Source path subfolder
+     */
+    String getTestPath();
+
+    /**
+     * Sets test sources path within the project.
+     *
+     * @param aValue Subfolder value
+     */
+    void setTestPath(String aValue);
 
     /**
      * Get the default data source name

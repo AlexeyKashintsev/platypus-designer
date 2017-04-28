@@ -529,6 +529,11 @@ public class PlatypusProjectImpl implements PlatypusProject {
     }
 
     @Override
+    public final FileObject getTestRoot() {
+        return settings.getTestPath() != null ? getDirectory(settings.getTestPath()) : getProjectDirectory();
+    }
+
+    @Override
     public final FileObject getApiRoot() throws IllegalStateException {
         FileObject webInfDir = getDirectory(WEB_INF_DIRECTORY);
         FileObject classes = webInfDir.getFileObject(CLASSES_DIRECTORY_NAME);
@@ -630,6 +635,7 @@ public class PlatypusProjectImpl implements PlatypusProject {
         protected ListenerRegistration datasourceListener;
         protected ClassPath sourceCp;
         protected ClassPath apiCp;
+        protected ClassPath testCp;
 
         @Override
         protected void projectOpened() {
@@ -637,8 +643,10 @@ public class PlatypusProjectImpl implements PlatypusProject {
                 datasourceListener = DatabaseConnections.getDefault().addListener(this);
                 apiCp = ClassPath.getClassPath(getApiRoot(), PlatypusPathRecognizer.API_CP);
                 sourceCp = ClassPath.getClassPath(getSrcRoot(), PlatypusPathRecognizer.SOURCE_CP);
+                testCp = ClassPath.getClassPath(getSrcRoot(), PlatypusPathRecognizer.TEST_CP);
                 GlobalPathRegistry.getDefault().register(PlatypusPathRecognizer.API_CP, new ClassPath[]{apiCp});
                 GlobalPathRegistry.getDefault().register(PlatypusPathRecognizer.SOURCE_CP, new ClassPath[]{sourceCp});
+                GlobalPathRegistry.getDefault().register(PlatypusPathRecognizer.TEST_CP, new ClassPath[]{testCp});
                 GlobalPathRegistry.getDefault().register(ClassPath.SOURCE, new ClassPath[]{apiCp, sourceCp});
                 Logger.getLogger(PlatypusProjectImpl.class.getName()).log(Level.INFO, "Project {0} opened", getDisplayName());
                 settings.load();
@@ -658,6 +666,7 @@ public class PlatypusProjectImpl implements PlatypusProject {
                 }
                 GlobalPathRegistry.getDefault().unregister(PlatypusPathRecognizer.API_CP, new ClassPath[]{apiCp});
                 GlobalPathRegistry.getDefault().unregister(PlatypusPathRecognizer.SOURCE_CP, new ClassPath[]{sourceCp});
+                GlobalPathRegistry.getDefault().unregister(PlatypusPathRecognizer.TEST_CP, new ClassPath[]{testCp});
                 GlobalPathRegistry.getDefault().unregister(ClassPath.SOURCE, new ClassPath[]{apiCp, sourceCp});
                 Logger.getLogger(PlatypusProjectImpl.class.getName()).log(Level.INFO, "Project {0} closed", getDisplayName());
             } catch (Exception ex) {
@@ -687,6 +696,7 @@ public class PlatypusProjectImpl implements PlatypusProject {
     private final class PlatypusClassPathProvider implements ClassPathProvider {
 
         private ClassPath sourceClassPath;
+        private ClassPath testClassPath;
         private ClassPath apiClassPath;
 
         /**
@@ -701,6 +711,8 @@ public class PlatypusProjectImpl implements PlatypusProject {
         public ClassPath findClassPath(FileObject file, String type) {
             if (PlatypusPathRecognizer.SOURCE_CP.equals(type) || ClassPath.SOURCE.equals(type)) {
                 return getSourceClassPath();
+            } else if (PlatypusPathRecognizer.TEST_CP.equals(type)) {
+                return getTestClassPath();
             } else if (PlatypusPathRecognizer.API_CP.equals(type)) {
                 return getApiClassPath();
             }
@@ -712,6 +724,13 @@ public class PlatypusProjectImpl implements PlatypusProject {
                 sourceClassPath = ClassPathSupport.createClassPath(getSrcRoot());
             }
             return sourceClassPath;
+        }
+
+        public synchronized ClassPath getTestClassPath() {
+            if (testClassPath == null) {
+                testClassPath = ClassPathSupport.createClassPath(getTestRoot());
+            }
+            return testClassPath;
         }
 
         public synchronized ClassPath getApiClassPath() {

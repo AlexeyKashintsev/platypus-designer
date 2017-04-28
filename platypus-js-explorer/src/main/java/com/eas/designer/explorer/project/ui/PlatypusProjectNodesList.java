@@ -35,6 +35,7 @@ public class PlatypusProjectNodesList implements NodeList<FileObject> {
     private static final String JAVASCRIPT_FILE_EXTENSION = "js";
     private static final String PACKAGE_PREFIX = "com/eas/designer/explorer/project/ui/";
     public static final ImageIcon sourceIcon = ImageUtilities.loadImageIcon(PACKAGE_PREFIX + "package.gif", true);
+    public static final ImageIcon testIcon = ImageUtilities.loadImageIcon(PACKAGE_PREFIX + "package.gif", true);
     public static final ImageIcon apiIcon = ImageUtilities.loadImageIcon(PACKAGE_PREFIX + "interface.png", true);
     public static final ImageIcon libIcon = ImageUtilities.loadImageIcon(PACKAGE_PREFIX + "libraries.gif", true);
     public static final DataFilter APPLICATION_TYPES_FILTER = new ApplicationTypesFilter();
@@ -53,7 +54,7 @@ public class PlatypusProjectNodesList implements NodeList<FileObject> {
 
     @Override
     public List<FileObject> keys() {
-        return Arrays.asList(new FileObject[]{project.getSrcRoot(), project.getApiRoot(), project.getLibRoot()});
+        return Arrays.asList(new FileObject[]{project.getSrcRoot(), project.getTestRoot(), project.getApiRoot(), project.getLibRoot()});
     }
 
     @Override
@@ -75,6 +76,13 @@ public class PlatypusProjectNodesList implements NodeList<FileObject> {
                     sourceIcon,
                     PlatypusUtils.ELEMENTS_SOURCES_GROUP,
                     NbBundle.getMessage(PlatypusProjectImpl.class, PlatypusUtils.ELEMENTS_SOURCES_GROUP));
+        } else if (project.getTestRoot() == aFilePoint) {
+            return new CategoryNode(project,
+                    DataFolder.findFolder(aFilePoint),
+                    testIcon,
+                    testIcon,
+                    PlatypusUtils.ELEMENTS_TEST_GROUP,
+                    NbBundle.getMessage(PlatypusProjectImpl.class, PlatypusUtils.ELEMENTS_TEST_GROUP));
         } else if (project.getApiRoot() == aFilePoint) {
             return new CategoryNode(project,
                     DataFolder.findFolder(aFilePoint),
@@ -103,8 +111,10 @@ public class PlatypusProjectNodesList implements NodeList<FileObject> {
     public static class ApplicationTypesFilter implements DataFilter {
 
         @Override
-        public boolean acceptDataObject(DataObject d) {
-            return d.getPrimaryFile().isFolder() || JAVASCRIPT_FILE_EXTENSION.equals(d.getPrimaryFile().getExt()) || d instanceof PlatypusDataObject;
+        public boolean acceptDataObject(DataObject aDataObject) {
+            return aDataObject.getPrimaryFile().isFolder()
+                    || JAVASCRIPT_FILE_EXTENSION.equals(aDataObject.getPrimaryFile().getExt())
+                    || aDataObject instanceof PlatypusDataObject;
         }
     }
 }

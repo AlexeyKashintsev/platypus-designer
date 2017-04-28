@@ -166,6 +166,25 @@ public class PlatypusProjectSettingsImpl implements PlatypusProjectSettings {
         }
     }
 
+    @Override
+    public String getTestPath() {
+        return projectProperties.get(TEST_PATH_KEY);
+    }
+
+    @Override
+    public void setTestPath(String aValue) {
+        String oldValue = getTestPath();
+        if (oldValue == null ? aValue != null : !oldValue.equals(aValue)) {
+            if (aValue != null && !aValue.isEmpty()) {
+                projectProperties.setProperty(TEST_PATH_KEY, aValue);
+            } else {
+                projectProperties.remove(TEST_PATH_KEY);
+            }
+            projectPropertiesDirty = true;
+            changeSupport.firePropertyChange(TEST_PATH_KEY, oldValue, aValue);
+        }
+    }
+
     /**
      * Get the default data source name
      *

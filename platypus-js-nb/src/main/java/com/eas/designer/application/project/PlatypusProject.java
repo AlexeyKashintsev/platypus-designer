@@ -85,6 +85,8 @@ public interface PlatypusProject extends Project {
     ProjectState getState();
 
     FileObject getSrcRoot();
+    
+    FileObject getTestRoot();
 
     FileObject getApiRoot();
 

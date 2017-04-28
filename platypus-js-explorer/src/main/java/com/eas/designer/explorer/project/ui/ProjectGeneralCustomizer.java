@@ -61,6 +61,9 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 if (projectSettings.getSourcePath() != null) {
                     txtSourcePath.setText(projectSettings.getSourcePath());
                 }
+                if (projectSettings.getTestPath() != null) {
+                    txtTestPath.setText(projectSettings.getTestPath());
+                }
                 if (projectSettings.getCleanCommand() != null) {
                     txtCleanCommand.setText(projectSettings.getCleanCommand());
                 }
@@ -131,6 +134,8 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         chAcceptDesignerDatasources = new javax.swing.JCheckBox();
         lblProjectFolder = new javax.swing.JLabel();
         txtProjectFolder = new javax.swing.JTextField();
+        lblTestPath = new javax.swing.JLabel();
+        txtTestPath = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -255,6 +260,19 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
 
         txtProjectFolder.setEditable(false);
 
+        lblTestPath.setText(org.openide.util.NbBundle.getMessage(ProjectGeneralCustomizer.class, "ProjectGeneralCustomizer.lblTestPath.text")); // NOI18N
+
+        txtTestPath.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTestPathFocusLost(evt);
+            }
+        });
+        txtTestPath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTestPathActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -272,30 +290,39 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                             .addComponent(chAcceptDesignerDatasources, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 173, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblProjectFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblServeType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblClientType, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSourcePath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblRunPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblClientType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblServeType, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                             .addComponent(lblDefDatasource, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtSourcePath, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbConnections, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbClientType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbAppServerType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtRunPath))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAddDatasource, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnBrowse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblClientServerMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtProjectFolder))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbClientType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbAppServerType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbConnections, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAddDatasource, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblTestPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblProjectFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSourcePath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblRunPath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProjectFolder)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtTestPath, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSourcePath, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                    .addComponent(txtRunPath))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -314,7 +341,11 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSourcePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSourcePath))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTestPath)
+                    .addComponent(txtTestPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbClientType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblClientType))
@@ -444,6 +475,14 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
         projectSettings.setAcceptDesignerDatasources(chAcceptDesignerDatasources.isSelected());
     }//GEN-LAST:event_chAcceptDesignerDatasourcesActionPerformed
 
+    private void txtTestPathFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTestPathFocusLost
+        projectSettings.setTestPath(txtTestPath.getText());
+    }//GEN-LAST:event_txtTestPathFocusLost
+
+    private void txtTestPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTestPathActionPerformed
+        projectSettings.setTestPath(txtTestPath.getText());
+    }//GEN-LAST:event_txtTestPathActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddDatasource;
     private javax.swing.JButton btnBrowse;
@@ -462,10 +501,12 @@ public class ProjectGeneralCustomizer extends javax.swing.JPanel {
     private javax.swing.JLabel lblRunPath;
     private javax.swing.JLabel lblServeType;
     private javax.swing.JLabel lblSourcePath;
+    private javax.swing.JLabel lblTestPath;
     private javax.swing.JTextField txtBuildCommand;
     private javax.swing.JTextField txtCleanCommand;
     private javax.swing.JTextField txtProjectFolder;
     private javax.swing.JTextField txtRunPath;
     private javax.swing.JTextField txtSourcePath;
+    private javax.swing.JTextField txtTestPath;
     // End of variables declaration//GEN-END:variables
 }

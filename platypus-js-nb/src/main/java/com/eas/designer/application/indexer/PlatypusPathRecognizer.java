@@ -15,6 +15,7 @@ public class PlatypusPathRecognizer extends PathRecognizer {
 
     public static final String API_CP = "platypus/classpath/api"; // NOI18N
     public static final String SOURCE_CP = "platypus/classpath/source"; // NOI18N
+    public static final String TEST_CP = "platypus/classpath/test"; // NOI18N
     public static final String JAVASCRIPT_MIME_TYPE = "text/javascript";  //NOI18N
     public static final String QUERY_MIME_TYPE = "text/x-platypus-sql";  //NOI18N
     public static final String NATIVE_QUERY_MIME_TYPE = "text/x-sql";  //NOI18N
@@ -27,7 +28,7 @@ public class PlatypusPathRecognizer extends PathRecognizer {
         }
     };
 
-    private final Set<String> SOURCES_CP_IDS = new HashSet<>(Arrays.asList(new String[]{SOURCE_CP, API_CP}));
+    private final Set<String> SOURCES_CP_IDS = new HashSet<>(Arrays.asList(new String[]{SOURCE_CP, TEST_CP, API_CP}));
 
     @Override
     public Set<String> getSourcePathIds() {
