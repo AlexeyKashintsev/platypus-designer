@@ -53,7 +53,7 @@ import org.openide.util.NbBundle;
  */
 public class AssistantMessages {
 
-    private static AssistantMessages defaultInstance = new AssistantMessages();
+    private static final AssistantMessages defaultInstance = new AssistantMessages();
     private boolean initialized = false;
     private Map<String, String[]> contextToMessages;
 
