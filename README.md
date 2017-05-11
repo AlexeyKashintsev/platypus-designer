@@ -17,12 +17,19 @@ To build plugins as NetBeans modules cluster from sources, run the following com
 gradlew suite
 ```
 
+To build Platypus.js designer modules as NetBeans plugin archives (nbm) from sources, run the following command:
+```
+gradlew nbms
+```
+
 ## Run
 If you whant to run just assembled plugins as a cluster of modules, execute the following command:
 ```
 gradlew netBeansRun "-PnetBeansInstallDir=c:\program files\netbeans 8.2"
 ```
 Note, that you need NetBeans 8.2 installed to use it with these plugins.
+
+If you have just built NBM files with `gradlew nbms` command, please install them as regular NetBeans plugins into your NetBeans and run it in a usual way.
 
 ## Notes
 While building, you will need Platypus.js artifacts. They will be resolved as dependencies from either remote or local maven repository.
@@ -35,7 +42,3 @@ gradlew install
 ```
 These commands will build Platypus.js jars and install artifacts in local Maven repository.
 
-To build Platypus.js designer modules as NetBeans plugin archives (nbm) from sources, run the following command:
-```
-gradlew nbms
-```
