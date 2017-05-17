@@ -62,6 +62,13 @@ public class NewModuleWizardIterator extends NewApplicationElementWizardIterator
                 description = "ModuleRest.html",
                 scriptEngine = "freemarker"),
         @TemplateRegistration(
+                folder = "Platypus.js",
+                position = 260,
+                content = {"PlatypusAMDModuleWebSocketTemplate.js", "PlatypusAMDModuleWebSocketTemplate.model"},
+                displayName = "#Templates/Other/PlatypusAMDModuleWebSocketTemplate",
+                description = "ModuleWebSocket.html",
+                scriptEngine = "freemarker"),
+        @TemplateRegistration(
                 folder = "Platypus.js/Specific",
                 position = 300,
                 content = {"PlatypusAMDModuleValidatorTemplate.js", "PlatypusAMDModuleValidatorTemplate.model"},

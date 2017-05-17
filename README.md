@@ -11,7 +11,7 @@ The Platypus.js designer plugins for NetBeans IDE include the following developm
 * ORM configuration visual editor for application modules.
 * User interface visual editor.
 
-## Build instructions
+## Build
 To build plugins as NetBeans modules cluster from sources, run the following command:
 ```
 gradlew suite
@@ -27,9 +27,10 @@ If you whant to run just assembled plugins as a cluster of modules, execute the 
 ```
 gradlew netBeansRun "-PnetBeansInstallDir=c:\program files\netbeans 8.2"
 ```
-Note, that you need NetBeans 8.2 installed to use it with these plugins.
 
-If you have just built NBM files with `gradlew nbms` command, please install them as regular NetBeans plugins into your NetBeans and run it in a usual way.
+If you have just built NBM files with `gradlew nbms` command, please install them as regular NetBeans plugins into your NetBeans and run it in an usual way.
+
+Note, that you need NetBeans 8.2 installed to use it with these plugins.
 
 ## Notes
 While building, you will need Platypus.js artifacts. They will be resolved as dependencies from either remote or local maven repository.
